@@ -62,7 +62,7 @@ use strict;
 use Exporter;
 use Net::Blogger::Engine::Base;
 
-$Net::Blogger::Engine::Movabletype::mt::VERSION   = '0.1.2';
+$Net::Blogger::Engine::Movabletype::mt::VERSION   = '0.2';
 
 @Net::Blogger::Engine::Movabletype::mt::ISA       = qw ( Exporter Net::Blogger::Engine::Base );
 @Net::Blogger::Engine::Movabletype::mt::EXPORT    = qw ();
@@ -206,6 +206,49 @@ sub setPostCategories {
   return ($call) ? $call->result() : undef;
 }
 
+=head2 $pkg->getTrackbackPings(\%args)
+
+=over
+
+=item *
+
+B<postid>
+
+String.
+
+=back
+
+Returns an array reference of hash references who keys are :
+
+=over
+
+=item 
+
+I<pingTitle>
+
+=item 
+
+I<pingURL>
+
+=item 
+
+I<pingIP>
+
+=back
+
+=cut
+
+sub getTrackbackPings {
+  my $self = shift;
+  my $args = { @_ };
+  my $call = $self->_Client()->call(
+				    "mt.getTrackbackPings",
+				    $self->_Type(string=>$args->{'postid'})
+				   );
+
+  return ($call) ? $call->result() : undef;
+}
+
 =head2 $pkg->supportMethods()
 
 Returns an array reference.
@@ -220,11 +263,11 @@ sub supportedMethods {
 
 =head1 VERSION
 
-0.1.2
+0.2
 
 =head1 DATE
 
-May 04, 2002
+June 27, 2002
 
 =head1 AUTHOR
 

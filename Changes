@@ -1,5 +1,9 @@
 Revision history for Perl extension Net::Blogger.
 
+0.8.1	 - Thu Jun 17 2002
+
+	 - Added support for the mt.getTrackbackPings method in Net::Blogger::Engine::Movabletype::mt.pm
+
 0.8	 - Fri May 31 2002
 
 	 - Added Net::Blogger::Engine::Slash and Net::Blogger::Engine::Slash::slashcode
