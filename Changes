@@ -1,0 +1,183 @@
+Revision history for Perl extension Net::Blogger.
+
+0.6.2.1
+
+
+   Updated POD
+	
+0.6.2
+
+
+   Added support for the UserLand metaWeblog API in
+   the RadioUserLand engine
+
+0.6.1
+
+
+   Bugs fixes in Blogger::Engine::Base
+
+0.6
+
+
+   Moved most of the code in to Blogger::API::Core,
+   Blogger::API::Extended, Blogger::Engine::Base and
+   Blogger::Engine::Blogger
+
+   Replaced use of Frontier::Client with XMLRPC::Lite
+   (in Blogger::Engine::Base)
+
+   Updated POD
+
+0.5.1
+
+
+   Modified internals to load implementation specific
+   subclass based on the engine argument passed to
+   the constructor. Props to Simon Kittles for the
+   smack upside the head about the right way to do
+   this :-)
+
+   Updated POD.
+
+0.5
+
+
+   Added Blogger API getPost method.
+
+   Updated POD.
+
+0.4.6.1
+
+
+   Added Blogger.pm BLOGGER_PROXY constant.
+
+   Added Blogger.pm Proxy and MaxPostPostLength
+   accessors for corresponding constants. Previously,
+   these values were either read from a scalar
+   constant or an AUTOLOAD method. The change allows
+   [insert blogger-mimicking interface here]
+   subclasses to override the methods and specify an
+   approriate value.
+
+   Updated POD
+
+0.4.5
+
+
+    Added Blogger API getRecentPosts method.
+
+    Updated POD
+
+0.4.4.1
+
+
+   Clarified a few error messages;
+
+   Fixed remaining instances of
+   "Error::Simple->record() and return0. in
+   &AUTOLOAD
+
+
+
+0.4.4
+
+
+    Added use of Error.pm
+
+    Added Blogger.pm LastError method.
+
+
+    Wrapped Frontier::Client method calls in eval
+    statements to prevent unnecessary die-ing.
+
+    Added stub function and methods calls for Blogger.pm
+    private _TrimPostBody method.
+
+    Changed return value of Blogger.pm PostFromFile to
+    (boolean, array)
+
+    Updated POD.
+
+0.4.3
+
+
+    Made sure all Blogger.pm methods begin with title
+    case.
+
+0.4.2
+
+
+
+    Added private Blogger.pm _Encode method. Code courtesy of
+    Matt Sergeant's rssmirror.pl script. Someone, give this
+    guy a YAS grant.
+
+
+    Added --tail flag to Blogger.pm PostFromFile method.
+
+
+    Fixed a bug in Blogger.pm _PostInChunks method where I
+    would end up subscripting outside of the string.
+
+0.4.1
+
+
+     Added idiot-level escaping of entities in Blogger.pm
+     newPost and editPost methods. Duh.
+
+0.4
+
+
+     Switched to named-based pair arguments.
+
+     Added Blogger API deletePost method.
+
+     Added the Blogger.pm PostFromFile method. Experimental
+
+     Changed Blogger.pm MAX_POSTLENGTH constant.
+
+     Updated POD
+
+0.3.1
+
+
+     Updated POD
+
+
+0.3
+
+
+     Added the Blogger API getTemplate and setTemplate
+     methods.
+
+     Added the Blogger.pm _PostInChunks method.
+
+     Changed the order in which parameters are passed to
+     editPost.
+
+     Changed the return value of both the Blogger API
+     newPost and editPost methods.
+
+0.2
+
+
+     Added the Blogger API getUsersBlogs and editPost
+     methods.
+
+     Adde the Blogger.pm GetBlogId method.
+
+     Removed the Blogger.pm Publish method.
+
+     Modifed the Blogger API newPost method to accept the
+     option to publish.
+
+0.1
+
+
+     Initial setup.
+
+     Added the constructor methods.
+
+     Added the Blogger API newPost method.
+
+     Added the Blogger.pm Publish method.
