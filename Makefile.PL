@@ -7,7 +7,7 @@ WriteMakefile(
 	       ABSTRACT => 'Modules to interact with the Blogger API') : (),
 	      'VERSION_FROM' => 'lib/Net/Blogger.pm',
 	      'PREREQ_PM'    => {
-				 SOAP::Lite    => 0.51, 
+				 SOAP::Lite    => '0.55',
 				 Carp          => 0,
 				 Error         => 0,
 				 URI           => 0, 

@@ -31,7 +31,7 @@ This package inherits I<Net::Blogger::Engine::Userland> and implements methods s
 package Net::Blogger::Engine::Radio;
 use strict;
 
-$Net::Blogger::Engine::Radio::VERSION   = 0.2.2;
+$Net::Blogger::Engine::Radio::VERSION   = '0.2.3';
 @Net::Blogger::Engine::Radio::ISA       = qw (
                                          Exporter
                                          Net::Blogger::Engine::Userland
@@ -115,17 +115,27 @@ sub metaWeblog {
 
 =head1 VERSION
 
-0.2.2
+0.2.3
 
 =head1 DATE
 
-April 15, 2002
+May 04, 2002
 
 =head1 AUTHOR
 
 Aaron Straup Cope
 
 =head1 CHANGES
+
+=head2 0.2.3
+
+=over
+
+=item *
+
+Added quotes to I<$VERSION>
+
+=back
 
 =head2 0.2.2
 

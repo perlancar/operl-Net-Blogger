@@ -19,7 +19,7 @@ This package should not be called directly. It is a base class used by I<Net::Bl
 package Net::Blogger::Engine::Userland;
 use strict;
 
-$Net::Blogger::Engine::Userland::VERSION   = 0.2.2;
+$Net::Blogger::Engine::Userland::VERSION   = '0.2.3';
 @Net::Blogger::Engine::Userland::ISA       = qw ( Exporter Net::Blogger::Engine::Base );
 @Net::Blogger::Engine::Userland::EXPORT    = qw ();
 @Net::Blogger::Engine::Userland::EXPORT_OK = qw ();
@@ -122,17 +122,27 @@ return 1;
 
 =head1 VERSION
 
-0.2.2
+0.2.3
 
 =head1 DATE
 
-April 15, 2002
+May 04, 2002
 
 =head1 AUTHOR
 
 Aaron Straup Cope
 
 =head1 CHANGES
+
+=head2 0.2.3
+
+=over
+
+=item *
+
+Added quotes to I<$VERSION>
+
+=back
 
 =head2 0.2.2
 

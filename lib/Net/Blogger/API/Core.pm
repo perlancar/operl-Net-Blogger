@@ -19,7 +19,7 @@ It is inherited by I<Net::Blogger::Engine::Base.pm>
 package Net::Blogger::API::Core;
 use strict;
 
-$Net::Blogger::API::Core::VERSION   = 0.1.2;
+$Net::Blogger::API::Core::VERSION   = '0.1.3';
 @Net::Blogger::API::Core::ISA       = qw ( Exporter );
 @Net::Blogger::API::Core::EXPORT    = qw ();
 @Net::Blogger::API::Core::EXPORT_OK = qw ();
@@ -430,13 +430,23 @@ sub getTemplate {
 
 =head1 VERSION
 
-0.1.2
+0.1.3
 
 =head1 DATE
 
-April 15, 2002
+May 04, 2002
 
 =head1 CHANGES
+
+=head2 0.1.3
+
+=over
+
+=item *
+
+Added quotes to I<$VERSION>
+
+=back
 
 =head2 0.1.2
 

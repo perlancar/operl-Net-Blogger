@@ -85,7 +85,7 @@ use Exporter;
 
 use vars qw ( $AUTOLOAD $LAST_ERROR );
 
-$Net::Blogger::VERSION   = 0.6.3;
+$Net::Blogger::VERSION   = '0.7';
 @Net::Blogger::ISA       = qw (Exporter);
 @Net::Blogger::EXPORT    = qw ();
 @Net::Blogger::EXPORT_OK = qw ();
@@ -493,11 +493,11 @@ sub AUTOLOAD {
 
 =head1 VERSION
 
-0.6.3
+0.7
 
 =head1 DATE
 
-April 15, 2002
+May 04, 2002
 
 =head1 AUTHOR
 
@@ -512,6 +512,20 @@ L<Net::Blogger::Engine::Base>
 http://plant.blogger.com/api/
 
 =head1 CHANGES
+
+=head2 0.6.4
+
+=over
+
+=item *
+
+Added support for the I<metaWeblog> API to the Movabletype engine.
+
+=item *
+
+Added quotes to all the VERSION numbers
+
+=back
 
 =head2 0.6.3
 

@@ -20,7 +20,7 @@ use strict;
 use constant BLOGGER_PROXY  => "http://plant.blogger.com/api/RPC2";
 use constant MAX_POSTLENGTH => 65536;
 
-$Net::Blogger::Engine::Blogger::VERSION   = 0.1.2;
+$Net::Blogger::Engine::Blogger::VERSION   = '0.1.3';
 @Net::Blogger::Engine::Blogger::ISA       = qw ( Exporter Net::Blogger::Engine::Base );
 @Net::Blogger::Engine::Blogger::EXPORT    = qw ();
 @Net::Blogger::Engine::Blogger::EXPORT_OK = qw ();
@@ -93,17 +93,27 @@ B<setTemplate()>
 
 =head1 VERSION
 
-0.1.2
+0.1.3
 
 =head1 DATE
 
-April 15, 2002
+May 04, 2002
 
 =head1 AUTHOR
 
 Aaron Straup Cope
 
 =head1 CHANGES
+
+=head2 0.1.3
+
+=over
+
+=item *
+
+Added quotes to I<$VERSION>
+
+=back
 
 =head2 0.1.2
 

@@ -37,7 +37,7 @@ use strict;
 
 use vars qw ( $AUTOLOAD );
 
-$Net::Blogger::Engine::Base::VERSION        = 0.1.3;
+$Net::Blogger::Engine::Base::VERSION        = '0.2';
 @Net::Blogger::Engine::Base::ISA            = qw ( Exporter Net::Blogger::API::Core Net::Blogger::API::Extended );
 @Net::Blogger::Engine::Base::ISA::EXPORT    = qw ();
 @Net::Blogger::Engine::Base::ISA::EXPORT_OK = qw ();
@@ -91,7 +91,7 @@ String. A valid password for the username/blogid pair.
 
 sub new {
     my $pkg = shift;
-    
+
     my $self = {};
     bless $self,$pkg;
 
@@ -111,6 +111,9 @@ sub init {
 
     $self->{'debug'}   = $args->{'debug'};
     $self->{"_posts"}  = [];
+
+    (my $caller = (caller(2))[3]) =~ /(.*)::([^::]+)::([^::]+)$/;
+    $self->{'__parent'} = $2;
 
     return 1;
 }
@@ -221,8 +224,14 @@ sub _ClientFault {
 =cut
 
 sub _Type {
-    my $self = shift;
-    return XMLRPC::Data->type(@_);
+  my $self = shift;
+  my $name = shift;
+
+  if ($name =~ /^(hash|array)$/) {
+    return XMLRPC::Data->name(args=>@_);
+  }
+
+  return XMLRPC::Data->type($name,@_);
 }
 
 sub DESTROY {
@@ -247,6 +256,15 @@ sub AUTOLOAD {
 
     if (my $arg = shift) { 
 	$self->{ $property } = $arg; 
+
+	if (exists $self->{'__meta'}) {
+	  $self->{'__meta'}->$property($arg);
+	}
+
+	if (exists $self->{'__mt'}) {
+	  $self->{'__mt'}->$property($arg);
+	}
+
     }
    
     if ($AUTOLOAD eq "Proxy") {
@@ -258,11 +276,11 @@ sub AUTOLOAD {
 
 =head1 VERSION
 
-0.1.3
+0.2
 
 =head1 DATE
 
-April 15, 2002
+May 04, 2002
 
 =head1 AUTHOR
 
@@ -277,6 +295,24 @@ L<Net::Blogger::API::Extended>
 L<SOAP::Lite>
 
 =head1 CHANGES
+
+=head2 0.2
+
+=over
+
+=item *
+
+Added hooks to set child API (metaWeblog,mt) login data when parent object changes.
+
+=item *
+
+Modified I<_Type> to handle hash references.
+
+=item *
+
+Added quotes to I<$VERSION>
+
+=back
 
 =head2 0.1.3
 

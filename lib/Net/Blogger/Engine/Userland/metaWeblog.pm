@@ -28,7 +28,7 @@ This package is meant to be subclassed. It should not be used on it's own.
 package Net::Blogger::Engine::Userland::metaWeblog;
 use strict;
 
-$Net::Blogger::Engine::Userland::metaWeblog::VERSION   = 0.1.2;
+$Net::Blogger::Engine::Userland::metaWeblog::VERSION   = '0.2';
 
 @Net::Blogger::Engine::Userland::metaWeblog::ISA       = qw ( Exporter Net::Blogger::Engine::Base );
 @Net::Blogger::Engine::Userland::metaWeblog::EXPORT    = qw ();
@@ -59,7 +59,7 @@ sub newPost {
 				  $self->_Type(string=>$self->BlogId()),
 				  $self->_Type(string=>$self->Username()),
 				  $self->_Type(string=>$self->Password()),
-				  $self->_Type(struct=>$args),
+				  $self->_Type(hash=>$args),
 				  $self->_Type(boolean=>$publish),
 				 );
 
@@ -145,6 +145,11 @@ TBW
 sub getCategories {
   my $self = shift;
 
+  if ($self->{'__parent'} eq "Movabletype") {
+    $self->LastError("This method is not supported by the $self->{'__parent'} engine.");
+    return undef;
+  }
+
   my $call = $self->_Client()->call(
 				    "metaWeblog.getCategories",
 				    $self->_Type(string=>$self->BlogId()),
@@ -157,11 +162,11 @@ sub getCategories {
 
 =head1 VERSION
 
-0.1.2
+0.2
 
 =head1 DATE
 
-April 15, 2002
+May 04, 202
 
 =head1 AUTHOR
 
@@ -174,6 +179,20 @@ http://www.xmlrpc.com/metaWeblogApi
 http://groups.yahoo.com/group/weblog-devel/message/200
 
 =head1 CHANGES
+
+=head2 0.2
+
+=over
+
+=item *
+
+Added hooks to I<getCategories> to catch call by Movabletype engine.
+
+=item *
+
+Added quotes to I<$VERSION>
+
+=back
 
 =head2 0.1.2
 

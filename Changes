@@ -1,5 +1,33 @@
 Revision history for Perl extension Net::Blogger.
 
+0.7	 - Sat May 04 2002
+
+	 - Added hooks to Net::Blogger::Engine::Base::_Type to deal with
+	   arrays and hashes correctly
+
+	 - Updated POD in Net::Blogger::Engine::Movabletype::mt
+
+0.7_b1	 - Sat May 04 2002
+
+	 - Added support for the metaWeblog API in the MovableType
+	   engine
+
+	 - Added support for the mt (MovableType) API in the MovableType
+	   engine
+
+	 - Added hooks in Net::Blogger::Base to filter changes to login 
+	   data in a parent engine to child APIs
+
+	 - Added hooks in Net::Blogger::Engine::Userland::metaWeblog to
+	   catch calls to methods not supported by the Movabletype engine.
+	   Ugh.
+
+	 - Added quotes to $VERSION in all packages.
+
+	 - Updated POD in Movabletype.pm
+
+	 - Upped version requirement for SOAP::Lite to 0.55
+
 0.6.3	 - Mon Apr 15 2002
 
 	 - Went through all the packages and fixed POD errors (ugh.)
