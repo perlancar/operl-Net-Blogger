@@ -20,7 +20,7 @@ It is inherited by I<Net::Blogger::Engine::Base.pm>
 package Net::Blogger::API::Core;
 use strict;
 
-$Net::Blogger::API::Core::VERSION   = '0.21';
+$Net::Blogger::API::Core::VERSION   = '0.3';
 @Net::Blogger::API::Core::ISA       = qw ( Exporter );
 @Net::Blogger::API::Core::EXPORT    = qw ();
 @Net::Blogger::API::Core::EXPORT_OK = qw ();
@@ -554,11 +554,11 @@ sub check_getTemplate {
 
 =head1 VERSION
 
-0.21
+0.3
 
 =head1 DATE
 
-$Date: 2003/03/05 04:30:42 $
+$Date: 2004/02/10 15:55:45 $
 
 =head1 AUTHOR
 
@@ -572,7 +572,7 @@ L<Net::Blogger::API::Extended>
 
 =head1 LICENSE
 
-Copyright (c) 2001-2003 Aaron Straup Cope.
+Copyright (c) 2001-2004 Aaron Straup Cope.
 
 This is free software, you may use it and distribute it under the same terms as Perl itself.
 

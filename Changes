@@ -1,5 +1,12 @@
 Revision history for Perl extension Net::Blogger.
 
+0.87	 - Tue Feb 10, 2004
+
+	 - Added NOTES concerning content-negotiation (RT bug
+	   #2615) and the Atom API
+
+	 - Updated POD
+
 0.86	 - Tue Jul 15 2003
 
 	 - Blessed as 0.86

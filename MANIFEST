@@ -16,3 +16,4 @@ MANIFEST
 Makefile.PL
 t/00-basic.t
 TODO
+META.yml                                 Module meta-data (added by MakeMaker)

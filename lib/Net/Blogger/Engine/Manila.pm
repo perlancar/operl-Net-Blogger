@@ -18,7 +18,7 @@ specific to  UserLand Manila server.
 package Net::Blogger::Engine::Manila;
 use strict;
 
-$Net::Blogger::Engine::Manila::VERSION   = '0.24';
+$Net::Blogger::Engine::Manila::VERSION   = '0.3';
 @Net::Blogger::Engine::Manila::ISA       = qw ( Exporter Net::Blogger::Engine::Userland );
 @Net::Blogger::Engine::Manila::EXPORT    = qw ();
 @Net::Blogger::Engine::Manila::EXPORT_OK = qw ();
@@ -66,11 +66,11 @@ sub getUsersBlogs {
 
 =head1 VERSION
 
-0.24
+0.3
 
 =head1 DATE
 
-$Date: 2003/03/05 14:53:06 $
+$Date: 2004/02/10 15:55:45 $
 
 =head1 AUTHOR
 
@@ -84,7 +84,7 @@ http://frontier.userland.com/emulatingBloggerInManila
 
 =head1 LICENSE
 
-Copyright (c) 2001-2003 Aaron Straup Cope.
+Copyright (c) 2001-2004 Aaron Straup Cope.
 
 This is free software, you may use it and distribute it under the
 same terms as Perl itself.

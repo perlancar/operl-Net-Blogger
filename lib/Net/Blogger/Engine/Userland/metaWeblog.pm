@@ -28,7 +28,7 @@ This package is meant to be subclassed. It should not be used on it's own.
 package Net::Blogger::Engine::Userland::metaWeblog;
 use strict;
 
-$Net::Blogger::Engine::Userland::metaWeblog::VERSION   = '0.5';
+$Net::Blogger::Engine::Userland::metaWeblog::VERSION   = '0.6';
 
 @Net::Blogger::Engine::Userland::metaWeblog::ISA       = qw ( Exporter Net::Blogger::Engine::Base );
 @Net::Blogger::Engine::Userland::metaWeblog::EXPORT    = qw ();
@@ -406,11 +406,11 @@ sub getCategories {
 
 =head1 VERSION
 
-0.5
+0.6
 
 =head1 DATE
 
-$Date: 2003/05/21 16:20:02 $
+$Date: 2004/02/10 15:55:45 $
 
 =head1 AUTHOR
 
@@ -434,7 +434,7 @@ http://www.xmlrpc.com/discuss/msgReader$2393
 
 =head1 LICENSE
 
-Copyright (c) 2002-2003 Aaron Straup Cope. All Rights Reserved.
+Copyright (c) 2002-2004 Aaron Straup Cope. All Rights Reserved.
 
 This is free software, you may use it and distribute it under the
 same terms as Perl itself.

@@ -57,14 +57,15 @@ the Blogger XML-RPC API.
 
 =head1 DESCRIPTION
 
-Blogger.pm provides an OOP-ish interface for accessing a weblog via the 
-Blogger XML-RPC API.
+Blogger.pm provides an OOP-ish interface for accessing a weblog 
+via the Blogger XML-RPC API.
 
 =head1 ENGINES
 
-Blogger.pm relies on "engines" to implement it's functionality. The Blogger.pm 
-package itself is little more than a wrapper file that happens to use a default 
-"Blogger" engine is none other is specified.
+Blogger.pm relies on "engines" to implement it's functionality. 
+The Blogger.pm package itself is little more than a wrapper file
+that happens to use a default "Blogger" engine is none other is 
+specified.
 
    my $manila = Net::Blogger->new(engine=>"manila");
 
@@ -97,7 +98,7 @@ use strict;
 
 use vars qw ( $AUTOLOAD $LAST_ERROR );
 
-$Net::Blogger::VERSION   = '0.86';
+$Net::Blogger::VERSION   = '0.87';
 
 =head1 PACKAGE METHODS
 
@@ -515,13 +516,38 @@ sub AUTOLOAD {
     return $self->{"_class"}->$AUTOLOAD(@_);
 }
 
+=head1 NOTES
+
+=head2 The Atom API
+
+In January 2004, Blogger announced their support for the Atom
+API. 
+
+As of this writing (version 0.87) this package does B<not> 
+support the Atom API. If you need to do things Atom-ish, your
+best bet is to use the L<XML::Atom> package.
+
+=head2 Content negotiation
+
+Persons trying to connect to a server using shortened URLs and
+content negotiation should not be surprised if they encounter
+weirdness and/or errors. Specifically, a HTTP 406 error.
+
+Some preliminary investigation suggests that, if there's a bug
+at play here, it's a bug somewhere deep in SOAP::Lite/HTTP::* 
+land. 
+
+Patches are welcome. Otherwise, you've been warned. :-)
+
+See also : 
+
 =head1 VERSION
 
-0.86
+0.87
 
 =head1 DATE
 
-$Date: 2003/07/15 12:57:24 $
+$Date: 2004/02/10 15:55:45 $
 
 =head1 AUTHOR
 
@@ -543,10 +569,10 @@ Hopefully, few. Please reports all bugs to :
 
 =head1 LICENSE
 
-Copyright (c) 2001-2003 Aaron Straup Cope.
+Copyright (c) 2001-2004 Aaron Straup Cope.
 
-This is free software, you may use it and distribute it under the same
-terms as Perl itself.
+This is free software, you may use it and distribute it under 
+the same terms as Perl itself.
 
 =cut
 
