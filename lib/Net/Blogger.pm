@@ -85,7 +85,7 @@ use Exporter;
 
 use vars qw ( $AUTOLOAD $LAST_ERROR );
 
-$Net::Blogger::VERSION   = '0.8.3';
+$Net::Blogger::VERSION   = '0.8.4';
 @Net::Blogger::ISA       = qw (Exporter);
 @Net::Blogger::EXPORT    = qw ();
 @Net::Blogger::EXPORT_OK = qw ();
@@ -442,11 +442,11 @@ sub AUTOLOAD {
 
 =head1 VERSION
 
-0.8.3
+0.8.4
 
 =head1 DATE
 
-September 23, 2002
+January 10, 2003
 
 =head1 AUTHOR
 
@@ -461,6 +461,20 @@ L<Net::Blogger::Engine::Base>
 http://plant.blogger.com/api/
 
 =head1 CHANGES
+
+=head2 0.8,4
+
+=over 4
+
+=item *
+
+Added support for the I<metaWeblog.newMediaObject> method.
+
+=item *
+
+Updated POD
+
+=back
 
 =head2 0.8.3
 
@@ -839,7 +853,6 @@ Added the Blogger API I<newPost> method.
 
 Added the Blogger.pm I<Publish> method.
 
-
 =back
 
 =head1 BUGS
@@ -850,7 +863,7 @@ Please reports all bugs to http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Net::B
 
 =head1 LICENSE
 
-Copyright (c) 2001-2002 Aaron Straup Cope.
+Copyright (c) 2001-2003 Aaron Straup Cope.
 
 This is free software, you may use it and distribute it under the same terms as Perl itself.
 

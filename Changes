@@ -1,5 +1,11 @@
 Revision history for Perl extension Net::Blogger.
 
+0.8.4	 - Fri Jan 10 2003
+
+	 - Added support for the metaWeblog.newMediaObject method
+
+	 - Updated POD
+
 0.8.3	 - Mon Sep 23 2002
 
 	 - Updated docs and POD (props to a nice person name 'rho' who was good enough to carefully read the docs and submit bug reports)

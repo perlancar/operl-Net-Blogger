@@ -1,0 +1,10 @@
+- Add support for new(er) Movable Type 'mt' methods
+
+- Change the interface to expect a hash reference instead; provide
+  backwards compatibility
+
+- use Test::More for tests
+
+- Finish POD in all the various child modules
+
+$Id: TODO,v 1.1 2003/01/10 15:45:58 asc Exp $
