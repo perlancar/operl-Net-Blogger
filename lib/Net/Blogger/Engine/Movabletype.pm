@@ -2,7 +2,7 @@
 
 =head1 NAME 
 
-Net::Blogger::Engine::Movabletype
+Net::Blogger::Engine::Movabletype - Movabletype Blogger API engine
 
 =head1 SYNOPSIS
 
@@ -17,7 +17,7 @@ This package inherits I<Net::Blogger::Engine::Base> and implements methods speci
 package Net::Blogger::Engine::Movabletype;
 use strict;
 
-$Net::Blogger::Engine::Movabletype::VERSION   = 0.1.1;
+$Net::Blogger::Engine::Movabletype::VERSION   = 0.1.2;
 @Net::Blogger::Engine::Movabletype::ISA       = qw ( Exporter Net::Blogger::Engine::Base );
 @Net::Blogger::Engine::Movabletype::EXPORT    = qw ();
 @Net::Blogger::Engine::Movabletype::EXPORT_OK = qw ();
@@ -50,11 +50,11 @@ sub getRecentPosts {
 
 =head1 VERSION
 
-0.1.1
+0.1.2
 
 =head1 DATE
 
-$Date: 2002/01/29 15:13:16 $
+April 15, 2002
 
 =head1 AUTHOR
 
@@ -66,11 +66,21 @@ http://aaronland.net/weblog/archive/3719
 
 =head1 CHANGES
 
+=head2 0.1.2
+
+=over
+
+=item *
+
+Updated POD
+
+=back
+
 =head2 0.1.1
 
 =over
 
-=item 
+=item * 
 
 Updated POD
 
@@ -80,7 +90,7 @@ Updated POD
 
 =over
 
-=item 
+=item * 
 
 Initial revision
 

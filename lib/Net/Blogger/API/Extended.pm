@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Net::Blogger::API::Extended
+Net::Blogger::API::Extended - provides helper methods not defined in the Blogger API.
 
 =head1 SYNOPSIS
 
@@ -17,7 +17,7 @@ This package is inherited by I<Net::Blogger::Engine::Base> and provides helper m
 package Net::Blogger::API::Extended;
 use strict;
 
-$Net::Blogger::API::Extended::VERSION   = 0.1.1;
+$Net::Blogger::API::Extended::VERSION   = 0.1.2;
 @Net::Blogger::API::Extended::ISA       = qw ( Exporter );
 @Net::Blogger::API::Extended::EXPORT    = qw ();
 @Net::Blogger::API::Extended::EXPORT_OK = qw ();
@@ -47,9 +47,11 @@ Valid arguments are
 
 =over
 
-=item B<blogname> => string.
+=item *
 
-=back.
+B<blogname> => string.
+
+=back
 
 Returns a string. If no blogname is specified, the current blogid for the object is returned.
 
@@ -109,19 +111,27 @@ Valid arguments are
 
 =over 
 
-=item B<file> (required)
+=item *
+
+B<file> (required)
 
 /path/to/file
 
-=item B<postid> 
+=item *
+
+B<postid> 
 
 String.
 
-=item B<publish> 
+=item *
+
+B<publish> 
 
 Boolean.
 
-=item B<tail> 
+=item *
+
+B<tail> 
 
 Boolean.
 
@@ -232,15 +242,21 @@ Valid arguments are
 
 =over 
 
-=item B<file> (required)
+=item *
+
+B<file> (required)
 
 /path/to/file
 
-=item B<postid> 
+=item *
+
+B<postid> 
 
 String.
 
-=item B<publish> 
+=item *
+
+B<publish> 
 
 Boolean.
 
@@ -337,7 +353,7 @@ sub _TrimPostBody {
 
 =head1 VERSION
 
-0.1.1
+0.1.2
 
 =head1 NAME
 
@@ -345,7 +361,7 @@ Aaron Straup Cope
 
 =head1 DATE
 
-$Date: 2002/01/30 12:43:04 $
+April 15, 2002
 
 =head1 SEE ALSO
 
@@ -355,11 +371,21 @@ L<Net::Blogger::API::Core>
 
 =head1 CHANGES
 
+=head2 0.1.2
+
+=over
+
+=item *
+
+Updated POD
+
+=back
+
 =head2 0.1.1
 
 =over
 
-=item 
+=item * 
 
 Updated POD
 
@@ -369,7 +395,7 @@ Updated POD
 
 =over
 
-=item
+=item *
 
 Initial revision
 

@@ -1,5 +1,9 @@
 Revision history for Perl extension Net::Blogger.
 
+0.6.3	 - Mon Apr 15 2002
+
+	 - Went through all the packages and fixed POD errors (ugh.)
+
 0.6.2.2	 - Sun Apr 14 2002
 
 	 - No changes. But, since I uploaded the current codebase 

@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Net::Blogger::API::Core
+Net::Blogger::API::Core - Blogger API methods
 
 =head1 SYNOPSIS
 
@@ -19,7 +19,7 @@ It is inherited by I<Net::Blogger::Engine::Base.pm>
 package Net::Blogger::API::Core;
 use strict;
 
-$Net::Blogger::API::Core::VERSION   = 0.1.1;
+$Net::Blogger::API::Core::VERSION   = 0.1.2;
 @Net::Blogger::API::Core::ISA       = qw ( Exporter );
 @Net::Blogger::API::Core::EXPORT    = qw ();
 @Net::Blogger::API::Core::EXPORT_OK = qw ();
@@ -58,11 +58,15 @@ Valid arguments are :
 
 =over
 
-=item B<postbody> (required)
+=item *
+
+B<postbody> (required)
 
 Scalar ref.
 
-=item B<publish> 
+=item *
+
+B<publish> 
 
 Boolean.
 
@@ -150,7 +154,9 @@ Valid arguments are
 
 =over
 
-=item B<numposts>
+=item *
+
+B<numposts>
 
 Int. If no argument is passed to the method, default is 1.
 
@@ -202,15 +208,21 @@ Valid arguments are :
 
 =over
 
-=item B<postbody> (required)
+=item *
+
+B<postbody> (required)
 
 Scalar ref or a valid filehandle.
 
-=item B<postid> (required)
+=item *
+
+B<postid> (required)
 
 String.
 
-=item B<publish> 
+=item *
+
+B<publish> 
 
 Boolean.
 
@@ -268,11 +280,15 @@ Valid arguments are
 
 =over
 
-=item B<postid> (required)
+=item *
+
+B<postid> (required)
 
 String.
 
-=item B<publish> 
+=item *
+
+B<publish> 
 
 Boolean.
 
@@ -317,11 +333,15 @@ Valid arguments are
 
 =over
 
-=item B<template>  (required)
+=item *
+
+B<template>  (required)
 
 Scalar ref.
 
-=item B<type> (required)
+=item *
+
+B<type> (required)
 
 String. Valid types are "main" and "archiveIndex"
 
@@ -375,7 +395,9 @@ Valid types are
 
 =over
 
-=item B<type> (required)
+=item *
+
+B<type> (required)
 
 String. Valid types are "main" and "archiveIndex"
 
@@ -408,19 +430,29 @@ sub getTemplate {
 
 =head1 VERSION
 
-0.1.1
+0.1.2
 
 =head1 DATE
 
-$Date: 2002/01/30 12:43:03 $
+April 15, 2002
 
 =head1 CHANGES
+
+=head2 0.1.2
+
+=over
+
+=item *
+
+Updated POD
+
+=back
 
 =head2 0.1.1
 
 =over
 
-=item 
+=item * 
 
 Updated POD
 
@@ -430,7 +462,7 @@ Updated POD
 
 =over
 
-=item
+=item *
 
 Initial revision.
 

@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Net::Blogger::Engine::Blogger
+Net::Blogger::Engine::Blogger - Pyra Blogger API engine
 
 =head1 SYNOPSIS
 
@@ -20,7 +20,7 @@ use strict;
 use constant BLOGGER_PROXY  => "http://plant.blogger.com/api/RPC2";
 use constant MAX_POSTLENGTH => 65536;
 
-$Net::Blogger::Engine::Blogger::VERSION   = 0.1.1;
+$Net::Blogger::Engine::Blogger::VERSION   = 0.1.2;
 @Net::Blogger::Engine::Blogger::ISA       = qw ( Exporter Net::Blogger::Engine::Base );
 @Net::Blogger::Engine::Blogger::EXPORT    = qw ();
 @Net::Blogger::Engine::Blogger::EXPORT_OK = qw ();
@@ -75,11 +75,15 @@ sub DESTROY {
 
 =over
 
-=item B<Delays>
+=item *
+
+B<Delays>
 
 It remains uncertain how long a program needs to wait between the time that a new post is submitted to the Blogger servers and that that may post may be acted upon. The applies to the Blogger API I<getPost>, I<editPost> and I<deletePost> methods equally. Anything under a 10 second will often result in a "post not found" fault. A delay of 10 seconds or more is usually successful. Your mileage may vary.
 
-=item B<setTemplate()>
+=item *
+
+B<setTemplate()>
 
 <quote src = "ev">There are some blogs for which setTemplate will return a permission denied error. Newly created blogs will work. Sufficiently older blogs will work. A meanwhile work-around: edit the template through Blogger UI first.</quote>
 
@@ -89,11 +93,11 @@ It remains uncertain how long a program needs to wait between the time that a ne
 
 =head1 VERSION
 
-0.1.1
+0.1.2
 
 =head1 DATE
 
-$Date: 2002/01/29 15:10:27 $
+April 15, 2002
 
 =head1 AUTHOR
 
@@ -101,11 +105,21 @@ Aaron Straup Cope
 
 =head1 CHANGES
 
+=head2 0.1.2
+
+=over
+
+=item *
+
+Updated POD
+
+=back
+
 =head2 0.1.1
 
 =over
 
-=item 
+=item * 
 
 Updated POD
 
@@ -115,7 +129,7 @@ Updated POD
 
 =over
 
-=item
+=item *
 
 Initial revision. 
 

@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Net::Blogger::Engine::Radio
+Net::Blogger::Engine::Radio - UserLand Radio Blogger API engine
 
 =head1 SYNOPSIS
 
@@ -31,7 +31,7 @@ This package inherits I<Net::Blogger::Engine::Userland> and implements methods s
 package Net::Blogger::Engine::Radio;
 use strict;
 
-$Net::Blogger::Engine::Radio::VERSION   = 0.2.1;
+$Net::Blogger::Engine::Radio::VERSION   = 0.2.2;
 @Net::Blogger::Engine::Radio::ISA       = qw (
                                          Exporter
                                          Net::Blogger::Engine::Userland
@@ -115,11 +115,11 @@ sub metaWeblog {
 
 =head1 VERSION
 
-0.2.1
+0.2.2
 
 =head1 DATE
 
-$Date: 2002/03/18 22:54:56 $
+April 15, 2002
 
 =head1 AUTHOR
 
@@ -127,11 +127,21 @@ Aaron Straup Cope
 
 =head1 CHANGES
 
+=head2 0.2.2
+
+=over
+
+=item * 
+
+Updated POD
+
+=back
+
 =head2 0.2.1
 
 =over
 
-=item 
+=item * 
 
 Updated POD
 
@@ -141,11 +151,11 @@ Updated POD
 
 =over
 
-=item
+=item *
 
 Added hooks to enable I<metaWeblog> methods
 
-=item
+=item *
 
 Updated POD
 
@@ -155,7 +165,7 @@ Updated POD
 
 =over
 
-=item
+=item *
 
 Initial revision.
 

@@ -2,57 +2,57 @@
 
 =head1 NAME
 
-Net::Blogger.pm
+Net::Blogger - an OOP-ish interface for accessing a weblog via the Blogger XML-RPC API.
 
 =head1 SYNOPSIS
 
-    use Net::Blogger;
-    my $b = Net::Blogger->new(appkey=>APPKEY);
+ use Net::Blogger;
+ my $b = Net::Blogger->new(appkey=>APPKEY);
 
-    $b->BlogId(BLOGID);
-    $b->Username(USERNAME);
-    $b->Password(PASSWORD);
+ $b->BlogId(BLOGID);
+ $b->Username(USERNAME);
+ $b->Password(PASSWORD);
 
-    $b->BlogId($b->GetBlogId(blogname=>'superfoobar'));
+ $b->BlogId($b->GetBlogId(blogname=>'superfoobar'));
 
-    # Get recent posts
+ # Get recent posts
 
-    my ($ok,@p) = $b->getRecentPosts(numposts=>20);
+ my ($ok,@p) = $b->getRecentPosts(numposts=>20);
 
-    if (! $ok) {
-	croak $b->LastError();
-    }
+ if (! $ok) {
+   croak $b->LastError();
+ }
 
-    map { print "\t $_->{'postid'}\n"; } @p;
+ map { print "\t $_->{'postid'}\n"; } @p;
 
-    # Post from a file
+ # Post from a file
 
-    my ($ok,@p) = $b->PostFromFile(file=>"/usr/blogger-test");
+ my ($ok,@p) = $b->PostFromFile(file=>"/usr/blogger-test");
 
-    if (! $ok) {
-	croak $b->LastError();
-    }
+ if (! $ok) {
+   croak $b->LastError();
+ }
 
-    # Deleting posts
+ # Deleting posts
 
-    map {
-	$b->deletePost(postid=>"$_") || croak $b->LastError();
-    } @p;
+ map {
+   $b->deletePost(postid=>"$_") || croak $b->LastError();
+ } @p;
 
-    # Getting and setting templates
+ # Getting and setting templates
 
-    my $t = $b->getTemplate(type => 'main');
-    $b->setTemplate(type=>'main',template=>\$t) || croak $b->LastError();
+ my $t = $b->getTemplate(type => 'main');
+ $b->setTemplate(type=>'main',template=>\$t) || croak $b->LastError();
 
-    # New post
+ # New post
 
-    my $txt = "hello world.";
-    my $id = $b->newPost(postbody=>\$txt) || croak $b->LastError();
+ my $txt = "hello world.";
+ my $id = $b->newPost(postbody=>\$txt) || croak $b->LastError();
 
-    # Get post
+ # Get post
 
-    my $post = $b->getPost($id) || croak $b->LastError();
-    print "Text for last post was $post->{'content'}\n";
+ my $post = $b->getPost($id) || croak $b->LastError();
+ print "Text for last post was $post->{'content'}\n";
 
 =head1 DESCRIPTION
 
@@ -85,10 +85,11 @@ use Exporter;
 
 use vars qw ( $AUTOLOAD $LAST_ERROR );
 
-$Net::Blogger::VERSION   = 0.6.2.2;
+$Net::Blogger::VERSION   = 0.6.3;
 @Net::Blogger::ISA       = qw (Exporter);
 @Net::Blogger::EXPORT    = qw ();
 @Net::Blogger::EXPORT_OK = qw ();
+
 
 =head1 CONSTRUCTOR METHODS
 
@@ -98,25 +99,35 @@ Instantiate a new Blogger object.
 
 Valid arguments are :
 
-=over 
+=over
 
-=item B<engine> (required)
+=item *
+
+B<engine> (required)
 
 String. Default is "blogger".
 
-=item B<appkey> 
+=item * 
+
+B<appkey> 
 
 String. The magic appkey for connecting to the Blogger XMLRPC server.
 
-=item B<blogid>
+=item * 
+
+B<blogid>
 
 String. The unique ID that Blogger uses for your weblog
 
-=item B<username>
+=item * 
+
+B<username>
 
 String. A valid username for blogid
 
-=item B<password>
+=item * 
+
+B<password>
 
 String. A valid password for the username/blogid pair.
 
@@ -161,8 +172,6 @@ Fetch the I<blogid>, I<url> and I<blogName> for each of the Blogger blogs the cu
 
 Returns an array ref of hashes.
 
-=cut
-
 =head2 $pkg->newPost(%args)
 
 Add a new post to the Blogger server. 
@@ -171,11 +180,15 @@ Valid arguments are :
 
 =over
 
-=item B<postbody> (required)
+=item *
+
+B<postbody> (required)
 
 Scalar ref.
 
-=item B<publish> 
+=item * 
+
+B<publish>
 
 Boolean.
 
@@ -197,11 +210,13 @@ Valid arguments are
 
 =over
 
-=item B<numposts>
+=item * 
+
+B<numposts>
 
 Int. If no argument is passed to the method, default is 1.
 
-"NumberOfPosts is limited to 20 at this time. Let me know if this 
+"NumberOfPosts is limitemd to 20 at this time. Let me know if this 
 gets annoying. Letting this number get too high could result in some 
 expensive db access, so I want to be careful with it." --Ev
 
@@ -217,15 +232,21 @@ Valid arguments are :
 
 =over
 
-=item B<postbody> (required)
+=item * 
+
+B<postbody> (required)
 
 Scalar ref or a valid filehandle.
 
-=item B<postid> (required)
+=item * 
+
+B<postid> (required)
 
 String.
 
-=item B<publish> 
+=item * 
+
+B<publish> 
 
 Boolean.
 
@@ -243,11 +264,15 @@ Valid arguments are
 
 =over
 
-=item B<postid> (required)
+=item * 
+
+B<postid> (required)
 
 String.
 
-=item B<publish> 
+=item * 
+
+B<publish> 
 
 Boolean.
 
@@ -263,11 +288,15 @@ Valid arguments are
 
 =over
 
-=item B<postid> (required)
+=item * 
+
+B<postid> (required)
 
 String.
 
-=item B<publish> 
+=item * 
+
+B<publish> 
 
 Boolean.
 
@@ -306,17 +335,21 @@ sub deletePost {
 
 Set the body of the template matching type I<$type>.
 
-<quote src = "ev">template is the HTML (XML, whatever -- Blogger can output any sort of text). Must contain opening and closing <Blogger> tags to be valid and accepted.</quote>
+"template is the HTML (XML, whatever -- Blogger can output any sort of text). Must contain opening and closing <Blogger> tags to be valid and accepted." --Evan
 
 Valid arguments are 
 
 =over
 
-=item B<template>  (required)
+=item * 
+
+B<template>  (required)
 
 Scalar ref.
 
-=item B<type> (required)
+=item * 
+
+B<type> (required)
 
 String. Valid types are "main" and "archiveIndex"
 
@@ -332,7 +365,9 @@ Valid types are
 
 =over
 
-=item B<type> (required)
+=item * 
+
+B<type> (required)
 
 String. Valid types are "main" and "archiveIndex"
 
@@ -354,9 +389,13 @@ Valid arguments are
 
 =over
 
-=item B<blogname> => string.
+=item * 
 
-=back.
+B<blogname> 
+
+String.
+
+=back
 
 Returns a string. If no blogname is specified, the current blogid for the object is returned.
 
@@ -372,19 +411,27 @@ Valid arguments are
 
 =over 
 
-=item B<file> (required)
+=item *
+
+B<file> (required)
 
 /path/to/file
 
-=item B<postid> 
+=item * 
+
+B<postid> 
 
 String.
 
-=item B<publish> 
+=item * 
+
+B<publish> 
 
 Boolean.
 
-=item B<tail> 
+=item * 
+
+B<tail> 
 
 Boolean.
 
@@ -408,15 +455,21 @@ Valid arguments are
 
 =over 
 
-=item B<file> (required)
+=item * 
+
+B<file> (required)
 
 /path/to/file
 
-=item B<postid> 
+=item * 
+
+B<postid> 
 
 String.
 
-=item B<publish> 
+=item * 
+
+B<publish> 
 
 Boolean.
 
@@ -440,11 +493,11 @@ sub AUTOLOAD {
 
 =head1 VERSION
 
-0.6.2.2
+0.6.3
 
 =head1 DATE
 
-April 14, 2002
+April 15, 2002
 
 =head1 AUTHOR
 
@@ -460,11 +513,31 @@ http://plant.blogger.com/api/
 
 =head1 CHANGES
 
+=head2 0.6.3
+
+=over
+
+=item *
+
+Updated POD for I<Net::Blogger> and all child packages.
+
+=back
+
+=head2 0.6.2.2
+
+=over
+
+=item *
+
+No changes. But, since I uploaded the current codebase to the CPAN as v 0.6.1.2, I decided to upload a new version with a new version number just to keep everyone on first.
+
+=back
+
 =head2 0.6.2.1
 
 =over
 
-=item 
+=item * 
 
 Updated POD.
 
@@ -474,7 +547,7 @@ Updated POD.
 
 =over
 
-=item 
+=item * 
 
 Added support for the UserLand metaWeblog API in the I<RadioUserLand> engine
 
@@ -484,7 +557,7 @@ Added support for the UserLand metaWeblog API in the I<RadioUserLand> engine
 
 =over
 
-=item
+=item *
 
 Bugs fixes in I<Net::Blogger::Engine::Base>
 
@@ -494,15 +567,15 @@ Bugs fixes in I<Net::Blogger::Engine::Base>
 
 =over
 
-=item
+=item *
 
 Moved most of the code in to I<Net::Blogger::API::Core>, I<Net::Blogger::API::Extended>, I<Net::Blogger::Engine::Base> and I<Net::Blogger::Engine::Blogger>
 
-=item
+=item *
 
-Replaced use of Frontier::Client with XMLRPC::Lite (in I<Net::Blogger::Engine::Base>)
+Replaced use of Frontier::Client with XMLRPC::Litem (in I<Net::Blogger::Engine::Base>)
 
-=item 
+=item * 
 
 Updated POD
 
@@ -512,11 +585,11 @@ Updated POD
 
 =over
 
-=item
+=item *
 
 Modified internals to load implementation specific subclass based on the I<engine> argument passed to the constructor. Props to Simon Kittles for the smack upside the head about the right way to do this :-)
 
-=item 
+=item * 
 
 Updated POD.
 
@@ -526,11 +599,11 @@ Updated POD.
 
 =over
 
-=item 
+=item * 
 
 Added Blogger API I<getPost> method.
 
-=item
+=item *
 
 Updated POD.
 
@@ -540,7 +613,7 @@ Updated POD.
 
 =over
 
-=item
+=item *
 
 Added conditional, where necessary, to see if a maximum post length is applicable.
 
@@ -550,15 +623,15 @@ Added conditional, where necessary, to see if a maximum post length is applicabl
 
 =over
 
-=item
+=item *
 
 Added Blogger.pm I<BLOGGER_PROXY> constant.
 
-=item
+=item *
 
 Added Blogger.pm I<Proxy> and I<MaxPostPostLength> accessors for corresponding constants. Previously, these values were either read from a scalar constant or an AUTOLOAD method. The change allows [insert blogger-mimicking interface here] subclasses to override the methods and specify an approriate value.
 
-=item 
+=item * 
 
 Updated POD
 
@@ -568,11 +641,11 @@ Updated POD
 
 =over
 
-=item 
+=item * 
 
 Added Blogger API I<getRecentPosts> method.
 
-=item
+=item *
 
 Updated POD
 
@@ -582,11 +655,11 @@ Updated POD
 
 =over
 
-=item
+=item *
 
 Clarified a few error messages;
 
-=item
+=item *
 
 Fixed remaining instances of "Error::Simple->record() and return 0" in &AUTOLOAD
 
@@ -596,27 +669,27 @@ Fixed remaining instances of "Error::Simple->record() and return 0" in &AUTOLOAD
 
 =over
 
-=item 
+=item * 
 
 Added use of Error.pm
 
-=item 
+=item * 
 
 Added Blogger.pm I<LastError> method.
 
-=item 
+=item * 
 
 Wrapped Frontier::Client method calls in eval statements to prevent unnecessary die-ing.
 
-=item 
+=item * 
 
 Added stub function and methods calls for Blogger.pm private I<_TrimPostBody> method.
 
-=item 
+=item * 
 
 Changed return value of Blogger.pm I<PostFromFile> to (boolean, array)
 
-=item 
+=item * 
 
 Updated POD.
 
@@ -626,7 +699,7 @@ Updated POD.
 
 =over
 
-=item 
+=item * 
 
 Made sure all Blogger.pm methods begin with title case.
 
@@ -636,15 +709,15 @@ Made sure all Blogger.pm methods begin with title case.
 
 =over
 
-=item 
+=item * 
 
 Added private Blogger.pm I<_Encode> method. Code courtesy of Matt Sergeant's rssmirror.pl script. I<Someone, give this guy a YAS grant.>
 
-=item
+=item *
 
 Added --tail flag to Blogger.pm I<PostFromFile> method.
 
-=item 
+=item * 
 
 Fixed a bug in Blogger.pm I<_PostInChunks> method where I would end up subscripting outside of the string.
 
@@ -654,7 +727,7 @@ Fixed a bug in Blogger.pm I<_PostInChunks> method where I would end up subscript
 
 =over
 
-=item
+=item *
 
 Added idiot-level escaping of entities in Blogger.pm I<newPost> and I<editPost> methods. Duh.
 
@@ -664,23 +737,23 @@ Added idiot-level escaping of entities in Blogger.pm I<newPost> and I<editPost> 
 
 =over
 
-=item
+=item *
 
 Switched to named-based pair arguments.
 
-=item
+=item *
 
 Added Blogger API I<deletePost> method.
 
-=item 
+=item * 
 
 Added the Blogger.pm I<PostFromFile> method. I<Experimental>
 
-=item
+=item *
 
 Changed Blogger.pm MAX_POSTLENGTH constant.
 
-=item
+=item *
 
 Updated POD
 
@@ -690,7 +763,7 @@ Updated POD
 
 =over
 
-=item
+=item *
 
 Updated POD
 
@@ -700,19 +773,19 @@ Updated POD
 
 =over
 
-=item
+=item *
 
 Added the Blogger API I<getTemplate> and I<setTemplate> methods.
 
-=item 
+=item * 
 
 Added the Blogger.pm I<_PostInChunks> method.
 
-=item 
+=item * 
 
 Changed the order in which parameters are passed to I<editPost>.
 
-=item 
+=item * 
 
 Changed the return value of both the Blogger API I<newPost> and I<editPost> methods.
 
@@ -722,21 +795,22 @@ Changed the return value of both the Blogger API I<newPost> and I<editPost> meth
 
 =over
 
-=item 
+=item * 
 
 Added the Blogger API I<getUsersBlogs> and I<editPost> methods.
 
-=item 
+=item * 
 
 Adde the Blogger.pm I<GetBlogId> method.
 
-=item 
+=item * 
 
 Removed the Blogger.pm I<Publish> method.
 
-=item
+=item *
 
 Modifed the Blogger API I<newPost> method to accept the option to publish. 
+
 
 =back
 
@@ -744,21 +818,22 @@ Modifed the Blogger API I<newPost> method to accept the option to publish.
 
 =over
 
-=item
+=item *
 
-Initial setup. 
+Initial setup.
 
-=item
+=item *
 
 Added the constructor methods.
 
-=item
+=item *
 
 Added the Blogger API I<newPost> method.
 
-=item
+=item *
 
 Added the Blogger.pm I<Publish> method.
+
 
 =back
 

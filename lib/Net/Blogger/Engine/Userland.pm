@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Net::Blogger::Engine::Userland
+Net::Blogger::Engine::Userland - base class for UserLand Blogger API engines
 
 =head1 SYNOPSIS
 
@@ -19,7 +19,7 @@ This package should not be called directly. It is a base class used by I<Net::Bl
 package Net::Blogger::Engine::Userland;
 use strict;
 
-$Net::Blogger::Engine::Userland::VERSION   = 0.1.1;
+$Net::Blogger::Engine::Userland::VERSION   = 0.2.2;
 @Net::Blogger::Engine::Userland::ISA       = qw ( Exporter Net::Blogger::Engine::Base );
 @Net::Blogger::Engine::Userland::EXPORT    = qw ();
 @Net::Blogger::Engine::Userland::EXPORT_OK = qw ();
@@ -122,11 +122,11 @@ return 1;
 
 =head1 VERSION
 
-0.1.1
+0.2.2
 
 =head1 DATE
 
-$Date: 2002/01/29 15:10:27 $
+April 15, 2002
 
 =head1 AUTHOR
 
@@ -134,11 +134,21 @@ Aaron Straup Cope
 
 =head1 CHANGES
 
-=head2 
+=head2 0.2.2
 
 =over
 
-=item 
+=item *
+
+Updated POD
+
+=back
+
+=head2 0.2.1
+
+=over
+
+=item * 
 
 Updated POD
 
@@ -148,11 +158,11 @@ Updated POD
 
 =over
 
-=item
+=item *
 
 Switched base class to Net::Blogger::Base
 
-=item
+=item *
 
 Update POD.
 
@@ -162,7 +172,7 @@ Update POD.
 
 =over
 
-=item
+=item *
 
 Modified Net::Blogger::Manila.pm I<Proxy> method to conform to the way Manila servers do XML-RPC.
 

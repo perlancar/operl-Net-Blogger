@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Net::Blogger::Engine::Userland::metaWeblog
+Net::Blogger::Engine::Userland::metaWeblog - UserLand metaWeblog API engine
 
 =head1 SYNOPSIS
 
@@ -28,7 +28,7 @@ This package is meant to be subclassed. It should not be used on it's own.
 package Net::Blogger::Engine::Userland::metaWeblog;
 use strict;
 
-$Net::Blogger::Engine::Userland::metaWeblog::VERSION   = 0.1.1;
+$Net::Blogger::Engine::Userland::metaWeblog::VERSION   = 0.1.2;
 
 @Net::Blogger::Engine::Userland::metaWeblog::ISA       = qw ( Exporter Net::Blogger::Engine::Base );
 @Net::Blogger::Engine::Userland::metaWeblog::EXPORT    = qw ();
@@ -157,11 +157,11 @@ sub getCategories {
 
 =head1 VERSION
 
-0.1.1
+0.1.2
 
 =head1 DATE
 
-$Date: 2002/03/18 22:53:52 $
+April 15, 2002
 
 =head1 AUTHOR
 
@@ -175,11 +175,21 @@ http://groups.yahoo.com/group/weblog-devel/message/200
 
 =head1 CHANGES
 
+=head2 0.1.2
+
+=over
+
+=item * 
+
+Updated POD
+
+=back
+
 =head2 0.1.1
 
 =over
 
-=item 
+=item * 
 
 Updated POD
 
@@ -189,7 +199,7 @@ Updated POD
 
 =over
 
-=item 
+=item * 
 
 Initial revision
 

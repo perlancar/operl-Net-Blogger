@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Net::Blogger::Engine::Base
+Net::Blogger::Engine::Base - base class for Blogger API engines
 
 =head1 SYNOPSIS
 
@@ -37,7 +37,7 @@ use strict;
 
 use vars qw ( $AUTOLOAD );
 
-$Net::Blogger::Engine::Base::VERSION        = 0.1.2;
+$Net::Blogger::Engine::Base::VERSION        = 0.1.3;
 @Net::Blogger::Engine::Base::ISA            = qw ( Exporter Net::Blogger::API::Core Net::Blogger::API::Extended );
 @Net::Blogger::Engine::Base::ISA::EXPORT    = qw ();
 @Net::Blogger::Engine::Base::ISA::EXPORT_OK = qw ();
@@ -61,19 +61,27 @@ Valid arguments are :
 
 =over
 
-=item B<appkey> 
+=item *
+
+B<appkey> 
 
 String. The magic appkey for connecting to the Blogger XMLRPC server.
 
-=item B<blogid>
+=item *
+
+B<blogid>
 
 String. The unique ID that Blogger uses for your weblog
 
-=item B<username>
+=item *
+
+B<username>
 
 String. A valid username for blogid
 
-=item B<password>
+=item *
+
+B<password>
 
 String. A valid password for the username/blogid pair.
 
@@ -250,11 +258,11 @@ sub AUTOLOAD {
 
 =head1 VERSION
 
-0.1.2
+0.1.3
 
 =head1 DATE
 
-$Date: 2002/03/04 13:56:04 $
+April 15, 2002
 
 =head1 AUTHOR
 
@@ -270,11 +278,21 @@ L<SOAP::Lite>
 
 =head1 CHANGES
 
+=head2 0.1.3
+
+=over
+
+=item *
+
+Updated POD
+
+=back
+
 =head2 0.1.2
 
 =over
 
-=item 
+=item * 
 
 Updated POD
 
@@ -284,11 +302,11 @@ Updated POD
 
 =over
 
-=item
+=item *
 
 The XML-RPC client is instantiated and set using a discreet object (rather than via a hash key for the Bloggger.pm object) because the I<XMLRPC::Lite::proxy> method and the I<Net::Blogger::Engine::Base::Proxy> method (which is AUTOLOAD-ed) are getting confused. (WTF?)
 
-=item
+=item *
 
 No need to pass I<$self> to I<&_ClientFault>.
 
@@ -298,7 +316,7 @@ No need to pass I<$self> to I<&_ClientFault>.
 
 =over
 
-=item
+=item *
 
 Initial revision.
 

@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Net::Blogger::Manila
+Net::Blogger::Manila - UserLand Manila Blogger API engine
 
 =head1 SYNOPSIS
 
@@ -17,7 +17,7 @@ This package inherits I<Net::Blogger::Engine::Userland> and implements methods s
 package Net::Blogger::Engine::Manila;
 use strict;
 
-$Net::Blogger::Engine::Manila::VERSION   = 0.2.1;
+$Net::Blogger::Engine::Manila::VERSION   = 0.2.2;
 @Net::Blogger::Engine::Manila::ISA       = qw ( Exporter Net::Blogger::Engine::Userland );
 @Net::Blogger::Engine::Manila::EXPORT    = qw ();
 @Net::Blogger::Engine::Manila::EXPORT_OK = qw ();
@@ -61,11 +61,11 @@ sub getUsersBlogs {
 
 =head1 VERSION
 
-0.2.1
+0.2.2
 
 =head1 DATE
 
-$Date: 2002/01/29 15:10:27 $
+April 15, 2002
 
 =head1 AUTHOR
 
@@ -73,11 +73,21 @@ Aaron Straup Cope
 
 =head1 CHANGES
 
+=head2 0.2.2
+
+=over
+
+=item *
+
+Updated POD
+
+=back
+
 =head2 0.2.1
 
 =over
 
-=item 
+=item * 
 
 Updated POD
 
@@ -87,11 +97,11 @@ Updated POD
 
 =over
 
-=item
+=item *
 
 Switched base class to Net::Blogger::Engine::Userland
 
-=item
+=item *
 
 Update POD.
 
@@ -101,19 +111,19 @@ Update POD.
 
 =over
 
-=item
+=item *
 
 Modified Net::Blogger::Manila.pm I<Proxy> method to conform to the way Manila servers do XML-RPC.
 
-=item 
+=item * 
 
 Added Net::Blogger::Manila.pm I<MaxPostLength> method.
 
-=item
+=item *
 
 Added Net::Blogger::Manila.pm private I<init> method to handle possible proxy argument.
 
-=item
+=item *
 
 Updated POD.
 
@@ -123,7 +133,7 @@ Updated POD.
 
 =over
 
-=item
+=item *
 
 Initial setup.
 
