@@ -85,7 +85,7 @@ use Exporter;
 
 use vars qw ( $AUTOLOAD $LAST_ERROR );
 
-$Net::Blogger::VERSION   = 0.6.2.1;
+$Net::Blogger::VERSION   = 0.6.2.2;
 @Net::Blogger::ISA       = qw (Exporter);
 @Net::Blogger::EXPORT    = qw ();
 @Net::Blogger::EXPORT_OK = qw ();
@@ -440,11 +440,11 @@ sub AUTOLOAD {
 
 =head1 VERSION
 
-0.6.2.1
+0.6.2.2
 
 =head1 DATE
 
-$Date: 2002/03/18 22:57:53 $
+April 14, 2002
 
 =head1 AUTHOR
 
