@@ -11,6 +11,8 @@ my $blogger = undef;
 my $success = 0;
 
 my $debug = &ask_yesno("Enable debugging output");
+diag("debugging is ".(($debug) ? "enabled" : "disabled" )."\n");
+
 $blogger  = Net::Blogger->new(debug=>$debug);
 
 isa_ok($blogger,"Net::Blogger");
@@ -27,12 +29,26 @@ ok($blogger->BlogId($id));
 my $post    = &ask("Please enter some text");
 my $publish = &ask_yesno("Publish this text");
 
-ok($blogger->newPost(postbody=>\$post,publish=>$publish));
+my $ok = $blogger->newPost(postbody => \$post,
+			   publish  => $publish);
+   
+if (! $ok) {
+   diag("New post failed, the Blogger API server reported the following error:\n".
+	$blogger->lastError()."\n");
+}
+
+ok($ok);
 
 #
 
 sub ask_yesno {
-  my $answer = &ask(@_);
+  my $question = shift;	
+
+  &diag("\n$question? [y/n] ");
+
+  my $answer = <STDIN>;
+  chomp $answer;
+
   return ($answer =~ /^y(es)*$/i) ? 1 : 0;
 }
 
@@ -64,3 +80,5 @@ sub ask_password {
 
     return $pass;
 }
+
+# $Id: 00-basic.t,v 1.3 2003/07/14 14:15:00 asc Exp $

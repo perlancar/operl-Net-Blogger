@@ -24,14 +24,16 @@ Net::Blogger::Engine::Base - base class for Blogger API engines
 
 =head1 DESCRIPTION
 
-Base.pm is used a base class by implementation specific modules for the Blogger API.
+Base.pm is used a base class by implementation specific modules
+for the Blogger API.
 
-If an implementation follows the Blogger API to the letter then, conceivably, all 
-it's package would need to define is a constructor and I<Proxy> method to define the 
+If an implementation follows the Blogger API to the letter then,
+conceivably, all it's package would need to define is a constructor 
+and I<Proxy> method to define the 
 URI of it's XML-RPC server.
 
-Base.pm inherits the functionality of Net::Blogger::Base::API and Net::Blogger::Base::Ext 
-and defines private methods used by each.
+Base.pm inherits the functionality of Net::Blogger::Base::API and
+Net::Blogger::Base::Ext and defines private methods used by each.
 
 =cut
 
@@ -40,7 +42,7 @@ use strict;
 
 use vars qw ( $AUTOLOAD );
 
-$Net::Blogger::Engine::Base::VERSION        = '0.32';
+$Net::Blogger::Engine::Base::VERSION        = '0.5';
 @Net::Blogger::Engine::Base::ISA            = qw ( Exporter Net::Blogger::API::Core Net::Blogger::API::Extended );
 @Net::Blogger::Engine::Base::ISA::EXPORT    = qw ();
 @Net::Blogger::Engine::Base::ISA::EXPORT_OK = qw ();
@@ -127,9 +129,9 @@ sub init {
     # to remember what I was smoking when I wrote
     # this...
 
-    (my $caller = (caller(2))[3]) =~ /(.*)::([^::]+)::([^::]+)$/;
-    $self->{'__parent'} = $2;
+    (my $caller = (caller(2))[3]) =~ /(.*)[:]{2}([^:]{1,})[:]{2}([^:]{1,})$/;
 
+    $self->{'__parent'} = $2;
     return 1;
 }
 
@@ -272,7 +274,7 @@ sub AUTOLOAD {
     }
 
     unless ($AUTOLOAD =~ /^(Proxy|Uri|AppKey|BlogId|Username|Password)$/) {
-	$self->LastError("Unkown method '$AUTOLOAD' called. Skipping.");
+	$self->LastError("Unknown method '$AUTOLOAD' called. Skipping.");
 	return undef;
     }
 
@@ -306,11 +308,11 @@ sub AUTOLOAD {
 
 =head1 VERSION
 
-0.32
+0.5
 
 =head1 DATE
 
-$Date: 2003/03/05 04:30:42 $
+$Date: 2003/07/14 13:22:42 $
 
 =head1 AUTHOR
 

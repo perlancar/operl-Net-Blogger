@@ -62,7 +62,7 @@ use strict;
 use Exporter;
 use Net::Blogger::Engine::Base;
 
-$Net::Blogger::Engine::Movabletype::mt::VERSION   = '0.21';
+$Net::Blogger::Engine::Movabletype::mt::VERSION   = '0.3';
 
 @Net::Blogger::Engine::Movabletype::mt::ISA       = qw ( Exporter Net::Blogger::Engine::Base );
 @Net::Blogger::Engine::Movabletype::mt::EXPORT    = qw ();
@@ -72,7 +72,102 @@ $Net::Blogger::Engine::Movabletype::mt::VERSION   = '0.21';
 
 =cut
 
-=head2 $pkg->getCategoryList()
+=head2 $obj->getRecentPostTitles(\%args)
+
+Valid arguments are :
+
+=over 4
+
+=item *
+
+B<count>
+
+Int. 
+
+The number of post titles to fetch. Default is I<20>
+
+=item *
+
+B<asc>
+
+Boolean.
+
+As in: return data ordered by ascending date. By default, items are
+returned 'most recent first'.
+
+=back
+
+Returns an array ref of hash refs. Each hash ref contains the following 
+keys :
+
+=over 4
+
+=item *
+
+B<postid>
+
+=item *
+
+B<userid>
+
+=item *
+
+B<title>
+
+String.
+
+=item *
+
+B<dateCreated>
+
+String, formatted as a W3CDTF datetime.
+
+=back
+
+This method was introduced in Net::Blogger 0.86 and does B<not> accept
+arguments passed as a list. They B<must> be passed by reference.
+
+=cut
+
+sub getRecentPostTitles {
+    my $self = shift;
+    my $args = shift;
+
+    # Translate numbers for humans
+    # to zero-based count.
+
+    my $count = 19;
+
+    if (exists($args->{count})) {
+	$count = ($args->{count} - 1);
+    }
+
+    #
+
+    my $call = $self->_Client()->call(
+				      "mt.getRecentPostTitles",
+				      $self->_Type(string=>$self->BlogId()),
+				      $self->_Type(string=>$self->Username()),
+				      $self->_Type(string=>$self->Password()),
+				      $self->_Type((int=>$_[0] || 20)),
+				      );
+
+    #
+
+    if (! exists($args->{asc})) {
+	return ($call) ? $call->result() : undef;
+    }
+
+    elsif (! $call) {
+	return undef;
+    }
+
+    else {
+	return [ reverse @{$call->result()} ];
+    }
+}
+
+=head2 $obj->getCategoryList()
 
 Returns an array ref of hash references.
 
@@ -91,7 +186,7 @@ sub getCategoryList {
   return ($call) ? $call->result() : undef;
 }
 
-=head2 $pkg->getPostCategories(\%args)
+=head2 $obj->getPostCategories(\%args)
 
 Valid arguments are 
 
@@ -131,7 +226,7 @@ sub getPostCategories {
   return ($call) ? $call->result() : undef;
 }
 
-=head2 $pkg->setPostCategories(\%args)
+=head2 $obj->setPostCategories(\%args)
 
 Valid argument are
 
@@ -216,7 +311,7 @@ sub setPostCategories {
   return ($call) ? $call->result() : undef;
 }
 
-=head2 $pkg->getTrackbackPings(\%args)
+=head2 $obj->getTrackbackPings(\%args)
 
 =over 4
 
@@ -262,7 +357,7 @@ sub getTrackbackPings {
   return ($call) ? $call->result() : undef;
 }
 
-=head2 $pkg->supportMethods()
+=head2 $obj->supportMethods()
 
 Returns an array reference.
 
@@ -274,13 +369,32 @@ sub supportedMethods {
   return ($call) ? $call->result() : undef;
 }
 
+=head2 $obj->publishPost($postid)
+
+Returns true or false.
+
+=cut
+
+sub publishPost {
+    my $self = shift;
+
+    my $call = $self->_Client()->call(
+				      "mt.publishPost",
+				      $self->_Type(int=>$_[0]),
+				      $self->_Type(string=>$self->Username()),
+				      $self->_Type(string=>$self->Password()),
+				      );
+
+    return ($call) ? 1 : 0;    
+}
+
 =head1 VERSION
 
-0.21
+0.3
 
 =head1 DATE
 
-$Date: 2003/03/05 04:30:42 $
+$Date: 2003/07/14 14:00:07 $
 
 =head1 AUTHOR
 

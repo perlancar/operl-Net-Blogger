@@ -2,7 +2,8 @@
 
 =head1 NAME
 
-Net::Blogger - an OOP-ish interface for accessing a weblog via the Blogger XML-RPC API.
+Net::Blogger - an OOP-ish interface for accessing a weblog via
+the Blogger XML-RPC API.
 
 =head1 SYNOPSIS
 
@@ -94,15 +95,9 @@ via the API can be added with all the magic happening behind the curtain, so to 
 package Net::Blogger;
 use strict;
 
-use Exporter;
-
 use vars qw ( $AUTOLOAD $LAST_ERROR );
 
-$Net::Blogger::VERSION   = '0.85';
-@Net::Blogger::ISA       = qw (Exporter);
-@Net::Blogger::EXPORT    = qw ();
-@Net::Blogger::EXPORT_OK = qw ();
-
+$Net::Blogger::VERSION   = '0.86';
 
 =head1 PACKAGE METHODS
 
@@ -499,8 +494,9 @@ Boolean.
 
 =back
 
-If a I<postid> argument is present, the method will call the Blogger API I<editPost> method 
-with postid. Otherwise the method will call the Blogger API I<newPost> method.
+If a I<postid> argument is present, the method will call the Blogger API 
+I<editPost> method with postid. Otherwise the method will call the Blogger 
+API I<newPost> method.
 
 Releases prior to Net::Blogger 0.85 accepted a list of arguments
 rather than a reference. Version 0.85+ are backwards compatible.
@@ -521,11 +517,11 @@ sub AUTOLOAD {
 
 =head1 VERSION
 
-0.85
+0.86
 
 =head1 DATE
 
-$Date: 2003/03/05 04:30:42 $
+$Date: 2003/07/15 12:57:24 $
 
 =head1 AUTHOR
 
@@ -541,15 +537,16 @@ http://plant.blogger.com/api/
 
 =head1 BUGS
 
-Hopefully, few.
+Hopefully, few. Please reports all bugs to :
 
-Please reports all bugs to http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Net::Blogger
+ http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Net::Blogger
 
 =head1 LICENSE
 
 Copyright (c) 2001-2003 Aaron Straup Cope.
 
-This is free software, you may use it and distribute it under the same terms as Perl itself.
+This is free software, you may use it and distribute it under the same
+terms as Perl itself.
 
 =cut
 

@@ -28,7 +28,7 @@ This package is meant to be subclassed. It should not be used on it's own.
 package Net::Blogger::Engine::Userland::metaWeblog;
 use strict;
 
-$Net::Blogger::Engine::Userland::metaWeblog::VERSION   = '0.4';
+$Net::Blogger::Engine::Userland::metaWeblog::VERSION   = '0.5';
 
 @Net::Blogger::Engine::Userland::metaWeblog::ISA       = qw ( Exporter Net::Blogger::Engine::Base );
 @Net::Blogger::Engine::Userland::metaWeblog::EXPORT    = qw ();
@@ -260,6 +260,12 @@ sub newMediaObject {
 
 =item *
 
+B<postid>
+
+Int. I<required>
+
+=item *
+
 B<title>
 
 String.
@@ -400,11 +406,11 @@ sub getCategories {
 
 =head1 VERSION
 
-0.4
+0.5
 
 =head1 DATE
 
-$Date: 2003/03/05 04:30:43 $
+$Date: 2003/05/21 16:20:02 $
 
 =head1 AUTHOR
 

@@ -1,5 +1,38 @@
 Revision history for Perl extension Net::Blogger.
 
+0.86	 - Tue Jul 15 2003
+
+	 - Blessed as 0.86
+
+	 - Wondered whether to bless it as 1.0 now that Pyra/Google
+	   has said they're no longer actively developing the API.
+	   Time enough for that, I guess...
+
+0.86_02	 - Mon Jul 14 2003
+
+	 - Added support for the getRecentPostTitles() and
+           publishPost() methods in ::Engine::Movabletype::mt.pm
+	   
+	 - Added fix to regex(p) in ::Engine::Base.pm used to 
+	   determine parent API engine to make 'warnings' shut
+	   up. (thanks andi!)
+
+	 - Added more error reporting to t/00-basic.t
+
+	 - Updated POD
+
+0.86_01	 - Wed May 22 2003
+
+	 - Updated POD in ::Userland::metaWeblog to indicated
+	   required 'postid' for editPost()
+ 
+	 - Fixed typo in ::Engine::Base.pm
+
+	 - Added [y/n] to ask_yesno() prompt in 00-basic.t
+
+	 - (props to Morbus Iff for pointing most of these things
+	   out to me)
+
 0.85	 - Wed Feb 05 2003
 
 	 - Fixed struct/hash bugs in ::metaWeblog.pm when passing
