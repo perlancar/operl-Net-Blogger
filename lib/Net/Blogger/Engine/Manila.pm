@@ -10,14 +10,15 @@ Net::Blogger::Manila - UserLand Manila Blogger API engine
 
 =head1 DESCRIPTION
 
-This package inherits I<Net::Blogger::Engine::Userland> and implements methods specific to  UserLand Manila server.
+This package inherits I<Net::Blogger::Engine::Userland> and implements methods 
+specific to  UserLand Manila server.
 
 =cut
 
 package Net::Blogger::Engine::Manila;
 use strict;
 
-$Net::Blogger::Engine::Manila::VERSION   = '0.2.3';
+$Net::Blogger::Engine::Manila::VERSION   = '0.24';
 @Net::Blogger::Engine::Manila::ISA       = qw ( Exporter Net::Blogger::Engine::Userland );
 @Net::Blogger::Engine::Manila::EXPORT    = qw ();
 @Net::Blogger::Engine::Manila::EXPORT_OK = qw ();
@@ -25,29 +26,33 @@ $Net::Blogger::Engine::Manila::VERSION   = '0.2.3';
 use Exporter;
 use Net::Blogger::Engine::Userland;
 
-=head1 CONSTRUCTOR METHODS
+=head1 PACKAGE METHODS
 
-=head2 Net::Blogger::Manila->new(%args)
+=head2 __PACKAGE__->new(\%args)
 
-TBW
+Releases prior to Net::Blogger 0.85 accepted a list of arguments
+rather than a reference. Version 0.85+ are backwards compatible.
+
+Returns an object. Woot!
 
 =cut
 
 sub new {
     my $pkg  = shift;
-    my %args = @_;
 
     my $self = {};
     bless $self,$pkg;
-    
-    if (! $self->SUPER::init(%args)) {
+
+    if (! $self->SUPER::init(@_)) {
 	return 0;
     }
 
     return $self;
 }
 
-=head1 Blogger API METHODS
+=head1 Blogger API OBJECT METHODS
+
+=cut
 
 =head2 $pkg->getUsersBlogs()
 
@@ -61,103 +66,25 @@ sub getUsersBlogs {
 
 =head1 VERSION
 
-0.2.3
+0.24
 
 =head1 DATE
 
-May 04, 2002
+$Date: 2003/03/05 04:30:42 $
 
 =head1 AUTHOR
 
 Aaron Straup Cope
 
-=head1 CHANGES
-
-=head2 0.2.3
-
-=over
-
-=item *
-
-Added quotes to I<$VERSION>
-
-=back
-
-=head2 0.2.2
-
-=over
-
-=item *
-
-Updated POD
-
-=back
-
-=head2 0.2.1
-
-=over
-
-=item * 
-
-Updated POD
-
-=back
-
-=head2 0.2
-
-=over
-
-=item *
-
-Switched base class to Net::Blogger::Engine::Userland
-
-=item *
-
-Update POD.
-
-=back
-
-=head2 0.1.1
-
-=over
-
-=item *
-
-Modified Net::Blogger::Manila.pm I<Proxy> method to conform to the way Manila servers do XML-RPC.
-
-=item * 
-
-Added Net::Blogger::Manila.pm I<MaxPostLength> method.
-
-=item *
-
-Added Net::Blogger::Manila.pm private I<init> method to handle possible proxy argument.
-
-=item *
-
-Updated POD.
-
-=back
-
-=head2 0.1
-
-=over
-
-=item *
-
-Initial setup.
-
-=back
-
 =head1 SEE ALSO
 
-L<Blogger>
+L<Net::Blogger>
 
 http://frontier.userland.com/emulatingBloggerInManila
 
 =head1 LICENSE
 
-Copyright (c) 2001-2002 Aaron Straup Cope.
+Copyright (c) 2001-2003 Aaron Straup Cope.
 
 This is free software, you may use it and distribute it under the
 same terms as Perl itself.

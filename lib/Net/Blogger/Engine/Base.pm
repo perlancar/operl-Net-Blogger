@@ -17,7 +17,7 @@ Net::Blogger::Engine::Base - base class for Blogger API engines
 
     my $self = {};
     bless $self,$pkg;
-    
+
     $self->SUPER::init(@_);
     return $self;
  }
@@ -26,9 +26,12 @@ Net::Blogger::Engine::Base - base class for Blogger API engines
 
 Base.pm is used a base class by implementation specific modules for the Blogger API.
 
-If an implementation follows the Blogger API to the letter then, conceivably, all it's package would need to define is a constructor and I<Proxy> method to define the URI of it's XML-RPC server.
+If an implementation follows the Blogger API to the letter then, conceivably, all 
+it's package would need to define is a constructor and I<Proxy> method to define the 
+URI of it's XML-RPC server.
 
-Base.pm inherits the functionality of Net::Blogger::Base::API and Net::Blogger::Base::Ext and defines private methods used by each.
+Base.pm inherits the functionality of Net::Blogger::Base::API and Net::Blogger::Base::Ext 
+and defines private methods used by each.
 
 =cut
 
@@ -37,7 +40,7 @@ use strict;
 
 use vars qw ( $AUTOLOAD );
 
-$Net::Blogger::Engine::Base::VERSION        = '0.3.1';
+$Net::Blogger::Engine::Base::VERSION        = '0.32';
 @Net::Blogger::Engine::Base::ISA            = qw ( Exporter Net::Blogger::API::Core Net::Blogger::API::Extended );
 @Net::Blogger::Engine::Base::ISA::EXPORT    = qw ();
 @Net::Blogger::Engine::Base::ISA::EXPORT_OK = qw ();
@@ -51,9 +54,11 @@ use SOAP::Lite;
 use Net::Blogger::API::Core;
 use Net::Blogger::API::Extended;
 
-=head1 CONSTRUCTOR METHODS
+=head1 PACKAGE METHODS
 
-=head2 Blogger->new(%args)
+=cut
+
+=head2 __PACKAGE->new(\%args)
 
 Instantiate a new Blogger object.
 
@@ -87,6 +92,11 @@ String. A valid password for the username/blogid pair.
 
 =back
 
+Releases prior to Net::Blogger 0.85 accepted a list of arguments
+rather than a reference. Version 0.85+ are backwards compatible.
+
+Returns an object. Woot!
+
 =cut
 
 sub new {
@@ -102,7 +112,7 @@ sub new {
 
 sub init {
     my $self = shift;
-    my $args = { @_ };
+    my $args = (ref($_[0]) eq "HASH") ? shift : { @_ };
 
     $self->AppKey($args->{'appkey'});
     $self->Username($args->{'username'});
@@ -112,19 +122,23 @@ sub init {
     $self->{'debug'}   = $args->{'debug'};
     $self->{"_posts"}  = [];
 
+    # Note to self: this is what comments are for.
+    # It's late, I'm hungry, I don't want to have
+    # to remember what I was smoking when I wrote
+    # this...
+
     (my $caller = (caller(2))[3]) =~ /(.*)::([^::]+)::([^::]+)$/;
     $self->{'__parent'} = $2;
 
     return 1;
 }
 
-=head1 PUBLIC METHODS
+=head1 OBJECT METHODS
 
-There are no public methods. See Net::Blogger::Base::API and Net::Blogger::Base::Ext.
+There are no public methods. See I<Net::Blogger::Base::API> and
+I<Net::Blogger::Base::Ext>.
 
 =cut
-
-=pod
 
 =head1 PRIVATE METHODS
 
@@ -183,16 +197,6 @@ sub Transport {
   return "XMLRPC";
 }
 
-=head1 PRIVATE METHODS
-
-=cut
-
-=head2 $pkg->_Client()
-
-Return an XML-RPC or SOAP client object.
-
-=cut
-
 sub _Client {
     my $self = shift;
 
@@ -242,10 +246,6 @@ sub _ClientFault {
 			  );
     return 0; 
 }
-
-=head2 $pkg->_Type(%args)
-
-=cut
 
 sub _Type {
   my $self = shift;
@@ -306,11 +306,11 @@ sub AUTOLOAD {
 
 =head1 VERSION
 
-0.3.1
+0.32
 
 =head1 DATE
 
-September 02, 2002
+$Date: 2003/03/05 04:30:42 $
 
 =head1 AUTHOR
 
@@ -324,101 +324,9 @@ L<Net::Blogger::API::Extended>
 
 L<SOAP::Lite>
 
-=head1 CHANGES
-
-=head2 0.3.1
-
-=over 4
-
-=item *
-
-Fixed to undef _client only if arg is passed to I<Proxy>
-
-=item * 
-
-Updated POD.
-
-=back
-
-=head2 0.3
-
-=over 4
-
-=item * 
-
-Switched to SOAP::Lite rather than XMLRPC::Lite
-
-=item *
-
-Added I<Transport> and I<Uri>
-
-=back
-
-=head2 0.2
-
-=over 4
-
-=item *
-
-Added hooks to set child API (metaWeblog,mt) login data when parent object changes.
-
-=item *
-
-Modified I<_Type> to handle hash references.
-
-=item *
-
-Added quotes to I<$VERSION>
-
-=back
-
-=head2 0.1.3
-
-=over 4
-
-=item *
-
-Updated POD
-
-=back
-
-=head2 0.1.2
-
-=over 4
-
-=item * 
-
-Updated POD
-
-=back
-
-=head2 0.1.1
-
-=over 4
-
-=item *
-
-The XML-RPC client is instantiated and set using a discreet object (rather than via a hash key for the Bloggger.pm object) because the I<XMLRPC::Lite::proxy> method and the I<Net::Blogger::Engine::Base::Proxy> method (which is AUTOLOAD-ed) are getting confused. (WTF?)
-
-=item *
-
-No need to pass I<$self> to I<&_ClientFault>.
-
-=back
-
-=head2 0.1
-
-=over 4
-
-=item *
-
-Initial revision.
-
-=back
-
 =head1 LICENSE
 
-Copyright (c) 2001-2002 Aaron Straup Cope.
+Copyright (c) 2001-2003 Aaron Straup Cope.
 
 This is free software, you may use it and distribute it under the same terms as Perl itself.
 

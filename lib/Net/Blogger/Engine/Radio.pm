@@ -24,14 +24,15 @@ Net::Blogger::Engine::Radio - UserLand Radio Blogger API engine
 
 =head1 DESCRIPTION
 
-This package inherits I<Net::Blogger::Engine::Userland> and implements methods specifc to a RadioUserLand XML-RPCserver.
+This package inherits I<Net::Blogger::Engine::Userland> and implements 
+methods specifc to a RadioUserLand XML-RPC server.
 
 =cut
 
 package Net::Blogger::Engine::Radio;
 use strict;
 
-$Net::Blogger::Engine::Radio::VERSION   = '0.2.4';
+$Net::Blogger::Engine::Radio::VERSION   = '0.25';
 @Net::Blogger::Engine::Radio::ISA       = qw (
                                          Exporter
                                          Net::Blogger::Engine::Userland
@@ -42,22 +43,26 @@ $Net::Blogger::Engine::Radio::VERSION   = '0.2.4';
 use Exporter;
 use Net::Blogger::Engine::Userland;
 
-=head1 CONSTRUCTOR METHODS
+=head1 PACKAGE METHODS
 
-=head2 $pkg = Net::Blogger::Engine::Radio->new(%args)
+=cut
 
-TBW
+=head2 __PACKAGE__->new(\%args)
+
+Releases prior to Net::Blogger 0.85 accepted a list of arguments
+rather than a reference. Version 0.85+ are backwards compatible.
+
+Returns an object. Woot!
 
 =cut
 
 sub new {
     my $pkg  = shift;
-    my %args = @_;
 
     my $self = {};
     bless $self,$pkg;
     
-    if (! $self->SUPER::init(%args)) {
+    if (! $self->SUPER::init(@_)) {
 	return undef;
     }
 
@@ -66,11 +71,15 @@ sub new {
 
 =head1 Blogger API METHODS
 
+=cut
+
 =head2 $pkg->GetBlogId()
 
-"blogid is ignored. (Radio only manages one weblog, but something interesting could be done here with categories. In your code you must pass "home", all other blogid's cause an error.)"
+ "blogid is ignored. (Radio only manages one weblog, but something
+  interesting could be done here with categories. In your code you
+  must pass "home", all other blogid's cause an error.)"
 
- -- http://radio.userland.com/emulatingBloggerInRadio#howTheBloggerApiMapsOntoRadioWeblogs
+   http://radio.userland.com/emulatingBloggerInRadio#howTheBloggerApiMapsOntoRadioWeblogs
 
 This method overrides I<Net::Blogger::API::Extended::getBlogId> method
 
@@ -94,81 +103,15 @@ sub BlogId {
 
 =head1 VERSION
 
-0.2.4
+0.25
 
 =head1 DATE
 
-July 05, 2002
+$Date: 2003/03/05 03:34:20 $
 
 =head1 AUTHOR
 
 Aaron Straup Cope
-
-=head1 CHANGES
-
-=head2 0.2.4
-
-=over
-
-=item * 
-
-Move $pkg->metaWeblog into I<Net::Blogger::Engine::Userland>
-
-=back
-
-=head2 0.2.3
-
-=over
-
-=item *
-
-Added quotes to I<$VERSION>
-
-=back
-
-=head2 0.2.2
-
-=over
-
-=item * 
-
-Updated POD
-
-=back
-
-=head2 0.2.1
-
-=over
-
-=item * 
-
-Updated POD
-
-=back
-
-=head2 0.2
-
-=over
-
-=item *
-
-Added hooks to enable I<metaWeblog> methods
-
-=item *
-
-Updated POD
-
-=back
-
-=head2 0.1
-
-=over
-
-=item *
-
-Initial revision.
-
-=back
 
 =head1 SEE ALSO
 
@@ -180,7 +123,7 @@ http://frontier.userland.com/emulatingBloggerInManila
 
 =head1 LICENSE
 
-Copyright (c) 2001-2002 Aaron Straup Cope.
+Copyright (c) 2001-2003 Aaron Straup Cope.
 
 This is free software, you may use it and distribute it under the same terms as Perl itself.
 

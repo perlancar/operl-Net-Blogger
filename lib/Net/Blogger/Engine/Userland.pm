@@ -6,20 +6,22 @@ Net::Blogger::Engine::Userland - base class for UserLand Blogger API engines
 
 =head1 SYNOPSIS
 
- TBW
+ It's very dark in here because this is a black box.
 
 =head1 DESCRIPTION
 
-This package inherits I<Net::Blogger::Engine::Base> and implements shared methods for the UserLand Manila and RadioUserland XML-RPC servers.
+This package inherits I<Net::Blogger::Engine::Base> and implements shared methods 
+for the UserLand Manila and RadioUserland XML-RPC servers.
 
-This package should not be called directly. It is a base class used by I<Net::Blogger::Engine::Manila> and I<Net::Blogger::Engine::Radio>
+This package should not be called directly. It is a base class used by
+I<Net::Blogger::Engine::Manila> and I<Net::Blogger::Engine::Radio>
 
 =cut
 
 package Net::Blogger::Engine::Userland;
 use strict;
 
-$Net::Blogger::Engine::Userland::VERSION   = '0.3.1';
+$Net::Blogger::Engine::Userland::VERSION   = '0.32';
 @Net::Blogger::Engine::Userland::ISA       = qw ( Exporter Net::Blogger::Engine::Base );
 @Net::Blogger::Engine::Userland::EXPORT    = qw ();
 @Net::Blogger::Engine::Userland::EXPORT_OK = qw ();
@@ -29,21 +31,22 @@ use Net::Blogger::Engine::Base;
 use Exporter;
 use URI;
 
-=head1 CONSTRUCTOR METHODS
+=head1 OBJECT METHODS
 
 =cut
 
 =pod
 
-=head2 $pkg->init(%args)
+=head2 $pkg->init(\%args)
 
-TBW
+Releases prior to Net::Blogger 0.85 accepted a list of arguments
+rather than a reference. Version 0.85+ are backwards compatible.
 
 =cut
 
 sub init {
-    my $self  = shift;
-    my %args = @_;
+    my $self = shift;
+    my $args = (ref($_[0]) eq "HASH") ? shift : {@_};
 
     my $child = caller();
     
@@ -51,23 +54,26 @@ sub init {
 	return 0;
     }
 
-    if (exists $args{'proxy'}) {
-	$self->Proxy($args{'proxy'});
-	delete $args{'proxy'};
+    if (exists $args->{'proxy'}) {
+	$self->Proxy($args->{'proxy'});
+	delete $args->{'proxy'};
     }
-    
-    return $self->SUPER::init(%args);
-}
 
-=head1 PUBLIC METHODS
+    return $self->SUPER::init($args);
+}
 
 =head2 $pkg->Proxy($uri)
 
 Get/set the URI of the Manila->Blogger proxy.
 
-If no proxy is explicitly defined then the method determines the hostname for the Manila server using the current blogid.
+If no proxy is explicitly defined then the method determines the hostname
+for the Manila server using the current blogid.
 
-"Just to clarify, the URI is /RPC2, even if your blogid (homepage url) is a sub-site url, like http://www.myserver.com/mysite/. It's never something like /mysite/RPC2." --Jake Savin (Userland)
+ "Just to clarify, the URI is /RPC2, even if your blogid (homepage url) is 
+  a sub-site url, like http://www.myserver.com/mysite/. It's never something 
+  like /mysite/RPC2." 
+
+    --Jake Savin (Userland)
 
 =cut
 
@@ -98,7 +104,8 @@ sub Proxy {
 
 =head2 $pkg->AppKey()
 
-Returns true. Manila does not require a Blogger API key, but specifies something (anything) all the same.
+Returns true. Manila does not require a Blogger API key, but specifies 
+something (anything) all the same.
 
 =cut
 
@@ -111,7 +118,8 @@ sub AppKey {
 
 Get/Set the current blog id.
 
-Ensures that the blogid contains a trailing slash, without which the Frontier engine freaks out.
+Ensures that the blogid contains a trailing slash, without which the Frontier 
+engine freaks out.
 
 =cut
 
@@ -131,7 +139,10 @@ sub BlogId {
 
 By default, returns undef. In other words, there is no max post length for Manila.
 
-"As far as I know there is no max length for a post, certainly nothing you have to enforce on your end." --Dave Winer (Userland)
+ "As far as I know there is no max length for a post, certainly nothing you have 
+  to enforce on your end." 
+
+   --Dave Winer (Userland)
 
 =cut
 
@@ -143,7 +154,11 @@ sub MaxPostLength {
 
 =head1 metaWeblog API METHODS
 
+=cut
+
 =head2 $pkg->metaWeblog()
+
+Returns an object. Woot!
 
 =cut
 
@@ -166,127 +181,25 @@ return 1;
 
 =head1 VERSION
 
-0.3.1
+0.32
 
 =head1 DATE
 
-September 02, 2002
+$Date: 2003/03/05 03:34:20 $
 
 =head1 AUTHOR
 
 Aaron Straup Cope
 
-=head1 CHANGES
-
-=head2 0.3.1
-
-=over 4
-
-=item *
-
-Reset _client when I<Proxy> is called with a new value.
-
-=item *
-
-Updated POD
-
-=back
-
-=head2 0.3
-
-=over 4 
-
-=item *
-
-Added $pkg->metaWeblog()
-
-back
-
-=head2 0.2.3
-
-=over 4
-
-=item *
-
-Added quotes to I<$VERSION>
-
-=back
-
-=head2 0.2.2
-
-=over 4
-
-=item *
-
-Updated POD
-
-=back
-
-=head2 0.2.1
-
-=over 4
-
-=item * 
-
-Updated POD
-
-=back
-
-=head2 0.2
-
-=over 4
-
-=item *
-
-Switched base class to Net::Blogger::Base
-
-=item *
-
-Update POD.
-
-=back
-
-=head2 0.1.1
-
-=over 4
-
-=item *
-
-Modified Net::Blogger::Manila.pm I<Proxy> method to conform to the way Manila servers do XML-RPC.
-
-=item 
-
-Added Net::Blogger::Manila.pm I<MaxPostLength> method.
-
-=item
-
-Added Net::Blogger::Manila.pm private I<init> method to handle possible proxy argument.
-
-=item
-
-Updated POD.
-
-=back
-
-=head2 0.1
-
-=over 4
-
-=item
-
-Initial setup.
-
-=back
-
 =head1 SEE ALSO
 
-L<Blogger>
+L<Net::Blogger>
 
 http://frontier.userland.com/emulatingBloggerInManila
 
 =head1 LICENSE
 
-Copyright (c) 2001-2002 Aaron Straup Cope.
+Copyright (c) 2001-2003 Aaron Straup Cope.
 
 This is free software, you may use it and distribute it under the
 same terms as Perl itself.

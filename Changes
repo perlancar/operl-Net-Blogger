@@ -1,5 +1,21 @@
 Revision history for Perl extension Net::Blogger.
 
+0.85	 - Wed Feb 05 2003
+
+	 - Fixed struct/hash bugs in ::metaWeblog.pm when passing
+	   arguments to SOAP::Lite (props to mystery rt.cpan user
+	   for the bug report)
+
+	 - Updated methods to accept hash references where appropriate
+
+	 - Removed CHANGES from individual POD files because it was
+	   just a pain in the ass to keep track of that kind of thing
+	   in more than one place.
+
+	 - Replaced test.pl with t/00-basic.t
+
+	 - Updated POD (and sure everything returns OK w/ podchecker)
+
 0.8.4	 - Fri Jan 10 2003
 
 	 - Added support for the metaWeblog.newMediaObject method
@@ -8,40 +24,49 @@ Revision history for Perl extension Net::Blogger.
 
 0.8.3	 - Mon Sep 23 2002
 
-	 - Updated docs and POD (props to a nice person name 'rho' who was good enough to carefully read the docs and submit bug reports)
+	 - Updated docs and POD (props to a nice person name 'rho' 
+	   who was good enough to carefully read the docs and submit 
+	   bug reports)
 
 0.8.2	 - Mon Sep 02 2002
 
 	 - Added support for the metaWeblog API to the Manila engine
 
-	 - Modified Net::Blogger::Engine::Blogger to allow user-defined Proxy URI
+	 - Modified Net::Blogger::Engine::Blogger to allow
+	   user-defined Proxy URI
 
-	 - Updated Net::Blogger::Engine::Base to undef _client only when a new Proxy is defined
+	 - Updated Net::Blogger::Engine::Base to undef _client only 
+	   when a new Proxy is defined
 
-	 - Updated Net::Blogger::Engine::Userland to undef _client when a new Proxy is defined
+	 - Updated Net::Blogger::Engine::Userland to undef _client 
+	   when a new Proxy is defined
 
-	 - Moved $pkg->metaWeblog from Net::Blogger::Engine::Radio.pm into ::Engine::Userland.pm
+	 - Moved $pkg->metaWeblog from Net::Blogger::Engine::Radio.pm 
+	   into ::Engine::Userland.pm
 
 	 - Updated POD
 
 0.8.1	 - Thu Jun 17 2002
 
-	 - Added support for the mt.getTrackbackPings method in Net::Blogger::Engine::Movabletype::mt.pm
+	 - Added support for the mt.getTrackbackPings method in 
+	   Net::Blogger::Engine::Movabletype::mt.pm
 
 0.8	 - Fri May 31 2002
 
-	 - Added Net::Blogger::Engine::Slash and Net::Blogger::Engine::Slash::slashcode
+	 - Added Net::Blogger::Engine::Slash and 
+	   Net::Blogger::Engine::Slash::slashcode
 
 	 - Added check_* methods to Net::Blogger::API::Core
 
-	 - Added calls to check_* methods, to Engine::* files where necessary
+	 - Added calls to check_* methods, to Engine::* files where 
+	   necessary
 
 	 - Removed left-over deletePost method from Blogger.pm (gah!)
 
 	 - Added modules required by slashcode.pm to Makefile.PL
 
-	 - Added &Net::Blogger::Engine::Userland::BlogId to ensure that blogid contains
-	   a trailing slash.
+	 - Added &Net::Blogger::Engine::Userland::BlogId to ensure
+	   that blogid contains a trailing slash.
 
 	 - Updated POD
 

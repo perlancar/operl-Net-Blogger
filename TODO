@@ -1,10 +1,12 @@
 - Add support for new(er) Movable Type 'mt' methods
 
-- Change the interface to expect a hash reference instead; provide
-  backwards compatibility
+- Write 'bloxsom' engine. If someone's got an install I can test
+  against it will happen faster ;-)
 
-- use Test::More for tests
+- Write 'livejournal' engine (see above)
 
-- Finish POD in all the various child modules
+- write more tests
 
-$Id: TODO,v 1.1 2003/01/10 15:45:58 asc Exp $
+- write debugging output to file in tests.
+
+$Id: TODO,v 1.2 2003/03/05 14:40:42 asc Exp $

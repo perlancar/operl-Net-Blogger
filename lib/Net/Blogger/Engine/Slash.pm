@@ -25,7 +25,8 @@ Net::Blogger::Engine::Slash - Adds support for the Slashcode SOAP API.
 
 =head1 DESCRIPTION
 
-Net::Blogger::Engine::Slash allows a program to interact with the Slashcode SOAP API using the Blogger API. Neat, huh?
+Net::Blogger::Engine::Slash allows a program to interact with the Slashcode 
+SOAP API using the Blogger API. Neat, huh?
 
 =cut
 
@@ -37,12 +38,15 @@ use Net::Blogger::Engine::Base;
 
 use CGI qw (unescape);
 
-$Net::Blogger::Engine::Slash::VERSION   = 0.1;
+$Net::Blogger::Engine::Slash::VERSION   = '0.11';
+
 @Net::Blogger::Engine::Slash::ISA       = qw ( Net::Blogger::Engine::Base );
 @Net::Blogger::Engine::Slash::EXPORT    = qw ();
 @Net::Blogger::Engine::Slash::EXPORT_OK = qw ();
 
-=head1 Blogger API METHODS
+=head1 Blogger API OBJECT METHODS
+
+=cut
 
 =head2 $pkg->getUserBlogs()
 
@@ -80,13 +84,16 @@ sub getUserBlogs {
   return $self->{'__blogs'};
 }
 
-=head2 $pkg->newPost(%args)
+=head2 $pkg->newPost(\%args)
+
+Releases prior to Net::Blogger 0.85 accepted a list of arguments
+rather than a reference. Version 0.85+ are backwards compatible.
 
 =cut
 
 sub newPost {
   my $self = shift;
-  my $args = { @_ };
+  my $args = (ref($_[0]) eq "HASH") ? shift : { @_ };
 
   if (! $self->check_newPost($args)) { 
     return 0; 
@@ -95,7 +102,7 @@ sub newPost {
   return $self->slash()->add_entry(&_bloggerpost2slash($args->{'postbody'}));
 }
 
-=head2 $pkg->getPost(%args)
+=head2 $pkg->getPost($postid)
 
 =cut
 
@@ -112,13 +119,16 @@ sub getPost {
   return ($post) ? &_slashpost2blogger($post) : 0;
 }
 
-=head2 $pkg->getRecentPosts(%args)
+=head2 $pkg->getRecentPosts(\%args)
+
+Releases prior to Net::Blogger 0.85 accepted a list of arguments
+rather than a reference. Version 0.85+ are backwards compatible.
 
 =cut
 
 sub getRecentPosts {
   my $self = shift;
-  my $args = { @_ };
+  my $args = (ref($_[0]) eq "HASH") ? shift : { @_ };
 
   if (! $self->check_getRecentPosts($args)) { 
     return (0); 
@@ -135,13 +145,16 @@ sub getRecentPosts {
   return (1,@$posts);
 }
 
-=head2 $pkg->editPost(%args)
+=head2 $pkg->editPost(\%args)
+
+Releases prior to Net::Blogger 0.85 accepted a list of arguments
+rather than a reference. Version 0.85+ are backwards compatible.
 
 =cut
 
 sub editPost {
   my $self = shift;
-  my $args = { @_ };
+  my $args = (ref($_[0]) eq "HASH") ? shift : { @_ };
 
   if (! $self->check_editPost($args)) {
     return 0;
@@ -150,13 +163,16 @@ sub editPost {
   return $self->slash()->modify_entry($args->{'postid'},&_bloggerpost2slash($args->{'postbody'}));
 }
 
-=head2 $pkg->deletePost(%args)
+=head2 $pkg->deletePost(\%args)
+
+Releases prior to Net::Blogger 0.85 accepted a list of arguments
+rather than a reference. Version 0.85+ are backwards compatible.
 
 =cut
 
 sub deletePost {
   my $self = shift;
-  my $args = {@_};
+  my $args = (ref($_[0]) eq "HASH") ? shift : {@_};
 
   if (! $self->check_deletePost($args)) {
     return 0;
@@ -191,7 +207,11 @@ sub getTemplate {
 
 =head1 Slashcode API METHODS
 
+=cut
+
 =head2 $pkg->slash()
+
+Returns an object. Woot!
 
 =cut
 
@@ -216,12 +236,6 @@ sub slash {
   return $self->{'__slash'};
 }
 
-=head1 PRIVATE FUNCTIONS
-
-=head2 &_bloggerpost2slash(\$postbody)
-
-=cut
-
 sub _bloggerpost2slash {
   my @post = split("\n",${$_[0]});
   
@@ -230,10 +244,6 @@ sub _bloggerpost2slash {
 	  body    => ((scalar(@post) > 1) ? join("\n",@post[1..$#post]) : $post[0]),
 	 );
 }
-
-=head2 &_slashpost2blogger(\%post)
-
-=cut
 
 sub _slashpost2blogger {
   my $post = shift;
@@ -247,11 +257,11 @@ sub _slashpost2blogger {
 
 =head1 VERSION
 
-0.1
+0.11
 
 =head1 DATE
 
-May 31, 2002
+$Date: 2003/03/05 03:34:20 $
 
 =head1 AUTHOR
 
@@ -263,7 +273,7 @@ L<Net::Blogger::Engine::Slash::slashcode>
 
 =head1 LICENSE
 
-Copyright (c) 2002, Aaron Straup Cope. All Rights Reserved.
+Copyright (c) 2002-2003, Aaron Straup Cope. All Rights Reserved.
 
 This is free software, you may use it and distribute it under the same terms as Perl itself.
 

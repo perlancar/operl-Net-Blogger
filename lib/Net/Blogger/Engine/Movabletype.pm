@@ -7,29 +7,31 @@ Net::Blogger::Engine::Movabletype - Movabletype Blogger API engine
 =head1 SYNOPSIS
 
  my $mt = Net::Blogger->new(engine=>"movabletype");
- 
+
  $mt->Proxy("http://mtserver.com/mt-xmlrpc.cgi");
  $mt->Username("foo");
  $mt->Password("bar");
 
- my $postid_1 = $mt->newPost(postbody=>\"hello world") || croak $mt->LastError();
+ my $postid_1 = $mt->newPost(postbody=>\"hello world") 
+    || croak $mt->LastError();
 
  my $postid_2 = $mt->metaWeblog()->newPost(
 	   		                   title=>"hello",
 			                   description=>"world",
 			                   publish=>1,
 			                   );
- 
+
 =head1 DESCRIPTION
 
-This package inherits I<Net::Blogger::Engine::Base> and implements methods specific to a MovableType XML-RPC server.
+This package inherits I<Net::Blogger::Engine::Base> and implements 
+methods specific to a MovableType XML-RPC server.
 
 =cut
 
 package Net::Blogger::Engine::Movabletype;
 use strict;
 
-$Net::Blogger::Engine::Movabletype::VERSION   = '0.2';
+$Net::Blogger::Engine::Movabletype::VERSION   = '0.21';
 @Net::Blogger::Engine::Movabletype::ISA       = qw ( Exporter Net::Blogger::Engine::Base );
 @Net::Blogger::Engine::Movabletype::EXPORT    = qw ();
 @Net::Blogger::Engine::Movabletype::EXPORT_OK = qw ();
@@ -37,32 +39,41 @@ $Net::Blogger::Engine::Movabletype::VERSION   = '0.2';
 use Exporter;
 use Net::Blogger::Engine::Base;
 
-=head1 Blogger API METHODS
+=head1 Blogger API OBJECT METHODS
 
-=head2 $pkg->getRecentPosts(%args)
+=cut
+
+=head2 $pkg->getRecentPosts(\%args)
+
+Releases prior to Net::Blogger 0.85 accepted a list of arguments
+rather than a reference. Version 0.85+ are backwards compatible.
 
 =cut
 
 sub getRecentPosts {
     my $self = shift;
-    my %args = @_;
+    my $args = (ref($_[0]) eq "HASH") ? shift : {@_};
 
-    my $num   = (defined $args{'numposts'}) ? $args{'numposts'} : 1;
+    my $num   = (defined $args->{'numposts'}) ? $args->{'numposts'} : 1;
     my $posts = [];
 
     unless ($num =~ /^(-)*(\d+)$/) {
-	$self->LastError("Argument $args{'numposts'} isn't numeric.");
+	$self->LastError("Argument $args->{'numposts'} isn't numeric.");
         return 0;
     }
 
     if ($num > -1) { $num = 0; }
 
-    return $self->SUPER::getRecentPosts(%args);
+    return $self->SUPER::getRecentPosts($args);
 }
 
-=head1 MovableType (mt) API METHODS
+=head1 Movable Type (mt) API OBJECT METHODS
+
+=cut
 
 =head2 $pkg->mt()
+
+Returns an object. Woot!
 
 =cut
 
@@ -81,9 +92,13 @@ sub mt {
   return $self->{'__mt'};
 }
 
-=head1 metaWeblog API METHODS
+=head1 metaWeblog API OBJECT METHODS
+
+=cut
 
 =head2 $pkg->metaWeblog()
+
+Returns an object. Woot!
 
 =cut
 
@@ -104,11 +119,11 @@ sub metaWeblog {
 
 =head1 VERSION
 
-0.2
+0.21
 
 =head1 DATE
 
-May 04, 2002
+$Date: 2003/03/05 04:30:42 $
 
 =head1 AUTHOR
 
@@ -124,63 +139,9 @@ L<Net::Blogger::Engine::Userland::metaWeblog>
 
 http://aaronland.net/weblog/archive/3719
 
-=head1 CHANGES
-
-=head2 0.2
-
-=over
-
-=item *
-
-Added support for the I<mt> (MovableType) API
-
-=item *
-
-Added support for the I<metaWeblog> API
-
-=item *
-
-Added quotes to I<$VERSION>
-
-=item *
-
-Updated POD
-
-=back
-
-=head2 0.1.2
-
-=over
-
-=item *
-
-Updated POD
-
-=back
-
-=head2 0.1.1
-
-=over
-
-=item * 
-
-Updated POD
-
-=back
-
-=head2 0.1
-
-=over
-
-=item * 
-
-Initial revision
-
-=back
-
 =head1 LICENSE
 
-Copyright (c) 2001-2002 Aaron Straup Cope.
+Copyright (c) 2001-2003 Aaron Straup Cope.
 
 This is free software, you may use it and distribute it under the same terms as Perl itself.
 

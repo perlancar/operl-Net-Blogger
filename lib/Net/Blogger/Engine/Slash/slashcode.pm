@@ -26,7 +26,8 @@ use URI;
 
 use Net::Blogger::Engine::Base;
 
-$Net::Blogger::Engine::Slash::slashcode::VERSION   = 0.1;
+$Net::Blogger::Engine::Slash::slashcode::VERSION   = 0.11;
+
 @Net::Blogger::Engine::Slash::slashcode::ISA       = qw ( Net::Blogger::Engine::Base );
 @Net::Blogger::Engine::Slash::slashcode::EXPORT    = qw ();
 @Net::Blogger::Engine::Slash::slashcode::EXPORT_OK = qw ();
@@ -70,13 +71,16 @@ B<body>
 
 =back
 
+Releases prior to Net::Blogger 0.85 accepted a list of arguments
+rather than a reference. Version 0.85+ are backwards compatible.
+
 Returns a postid or false.
 
 =cut
 
 sub add_entry {
   my $self = shift;
-  my $args = { @_ };
+  my $args = (ref($_[0]) eq "HASH") ? shift : { @_ };
 
   my $call = $self->_Client()->call(
 				    "add_entry",
@@ -91,7 +95,7 @@ sub add_entry {
 
 Returns a hash ref whose keys are :
 
-=over
+=over 4
 
 =item *
 
@@ -165,7 +169,7 @@ sub get_entries {
   return ($call) ? $call->result() : return 0;
 }
 
-=head2 $pkg->modify_entry($id,%args)
+=head2 $pkg->modify_entry($id,\%args)
 
 Returns a postid or false.
 
@@ -174,7 +178,7 @@ Returns a postid or false.
 sub modify_entry {
   my $self   = shift;
   my $postid = shift;
-  my $args   = { @_ };
+  my $args   = (ref($_[0]) eq "HASH") ? shift : { @_ };
 
   my $call = $self->_Client()->call("modify_entry",
 				    $self->_Type(int=>$postid),
@@ -201,14 +205,6 @@ sub delete_entry {
   return ($call) ? $call->result() : return 0;
 }
 
-=head1 PRIVATE METHODS
-
-=head2 $pkg->_setUserCookie()
-
-Bakes the cookie required by the Slash server.
-
-=cut
-
 sub _setUserCookie {
   my $self = shift;
 
@@ -229,11 +225,11 @@ sub _setUserCookie {
 
 =head1 VERSION
 
-0.1
+0.11
 
 =head1 DATE
 
-May 31, 2002
+$Date: 2003/03/05 03:34:20 $
 
 =head1 AUTHOR
 
@@ -241,7 +237,7 @@ Aaron Straup Cope
 
 =head1 TO DO
 
-=over
+=over 4
 
 =item *
 
@@ -257,7 +253,7 @@ http://use.perl.org/~pudge/journal/3294
 
 =head1 LICENSE
 
-Copyright (c) 2002, Aaron Straup Cope. All Rights Reserved.
+Copyright (c) 2002-2003, Aaron Straup Cope. All Rights Reserved.
 
 This is free software, you may use it and distribute it under the same terms as Perl itself.
 

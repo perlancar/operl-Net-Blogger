@@ -6,11 +6,12 @@ Net::Blogger::API::Core - Blogger API methods
 
 =head1 SYNOPSIS
 
- TBW
+ It's very dark in here because this is a black box. 
 
 =head1 DESCRIPTION
 
-Net::Blogger::API::Core defined methods that correspond to the Blogger API.
+Net::Blogger::API::Core defined methods that correspond to the 
+Blogger API.
 
 It is inherited by I<Net::Blogger::Engine::Base.pm>
 
@@ -19,7 +20,7 @@ It is inherited by I<Net::Blogger::Engine::Base.pm>
 package Net::Blogger::API::Core;
 use strict;
 
-$Net::Blogger::API::Core::VERSION   = '0.2';
+$Net::Blogger::API::Core::VERSION   = '0.21';
 @Net::Blogger::API::Core::ISA       = qw ( Exporter );
 @Net::Blogger::API::Core::EXPORT    = qw ();
 @Net::Blogger::API::Core::EXPORT_OK = qw ();
@@ -30,7 +31,8 @@ use Exporter;
 
 =head2 $pkg->getUsersBlogs()
 
-Fetch the I<blogid>, I<url> and I<blogName> for each of the Blogger blogs the current user is registered to.
+Fetch the I<blogid>, I<url> and I<blogName> for each of the Blogger blogs 
+the current user is registered to.
 
 Returns an array ref of hashes.
 
@@ -50,7 +52,7 @@ sub getUsersBlogs {
     ($call) ? return $call->result() : return [];
 }
 
-=head2 $pkg->newPost(%args)
+=head2 $pkg->newPost(\%args)
 
 Add a new post to the Blogger server. 
 
@@ -72,7 +74,12 @@ Boolean.
 
 =back
 
-If the length of I<postbody> exceeds maximum length allowed by the Blogger servers -- 65,536 characters -- currently  the text will be chunked into smaller pieces are each piece will be posted separately.
+If the length of I<postbody> exceeds maximum length allowed by the Blogger servers 
+-- 65,536 characters -- currently  the text will be chunked into smaller pieces are 
+each piece will be posted separately.
+
+Releases prior to Net::Blogger 0.85 accepted a list of arguments
+rather than a reference. Version 0.85+ are backwards compatible.
 
 Returns an array containing one, or more, post ids.
 
@@ -80,7 +87,7 @@ Returns an array containing one, or more, post ids.
 
 sub newPost {
     my $self = shift;
-    my $args = { @_ };
+    my $args = (ref($_[0]) eq "HASH") ? shift : { @_ };
 
     if (! $self->check_newPost($args)) { 
       return 0; 
@@ -108,7 +115,8 @@ sub newPost {
 
 =head2 $pkg->getPost($postid)
 
-Returns a hash ref, containing the following keys : userid, postid, content and dateCreated.
+Returns a hash ref, containing the following keys : userid, postid, 
+content and dateCreated.
 
 =cut
 
@@ -142,9 +150,10 @@ sub getPost {
     return $post;
 }
 
-=head2 $pkg->getRecentPosts(%args)
+=head2 $pkg->getRecentPosts(\%args)
 
-Fetch the latest (n) number of posts for a given blog. The most recent posts are returned first.
+Fetch the latest (n) number of posts for a given blog. The most recent posts 
+are returned first.
 
 Valid arguments are 
 
@@ -162,13 +171,17 @@ expensive db access, so I want to be careful with it." --Ev
 
 =back
 
-Returns true or false, followed by an array of hash refs. Each hash ref contains the following keys : postid,content,userid,dateCreated
+Releases prior to Net::Blogger 0.85 accepted a list of arguments
+rather than a reference. Version 0.85+ are backwards compatible.
+
+Returns true or false, followed by an array of hash refs. Each hash ref 
+contains the following keys : postid,content,userid,dateCreated
 
 =cut
 
 sub getRecentPosts {
     my $self = shift;
-    my $args = { @_ };
+    my $args = (ref($_[0]) eq "HASH") ? shift : { @_ };
 
     if (! $self->check_getRecentPosts($args)) { 
       return (0); 
@@ -187,7 +200,7 @@ sub getRecentPosts {
     return @posts;
 }
 
-=head2 $pkg->editPost(%args)
+=head2 $pkg->editPost(\%args)
 
 Update the Blogger database. Set the body of entry $postid to $body.
 
@@ -203,9 +216,9 @@ Scalar ref or a valid filehandle.
 
 =item *
 
-B<postid> (required)
+B<postid>
 
-String.
+String. I<required>
 
 =item *
 
@@ -215,7 +228,12 @@ Boolean.
 
 =back
 
-If the length of I<postbody> exceeds maximum length allowed by the Blogger servers -- 65,536 characters -- currently  the text will be chunked into smaller pieces are each piece will be posted separately.
+If the length of I<postbody> exceeds maximum length allowed by the Blogger servers 
+-- 65,536 characters -- currently  the text will be chunked into smaller pieces are 
+each piece will be posted separately.
+
+Releases prior to Net::Blogger 0.85 accepted a list of arguments
+rather than a reference. Version 0.85+ are backwards compatible.
 
 Returns an array containing one, or more, post ids.
 
@@ -223,7 +241,7 @@ Returns an array containing one, or more, post ids.
 
 sub editPost {
     my $self = shift;
-    my $args = { @_ };
+    my $args = (ref($_[0]) eq "HASH") ? shift : { @_ };
 
     if (! $self->check_editPost($args)) { 
       return 0; 
@@ -257,19 +275,19 @@ sub editPost {
     ($call) ? return $call->result() : return 0;
 }
 
-=head2 $pkg->deletePost(%args) 
+=head2 $pkg->deletePost(\%args) 
 
 Delete a post from the Blogger server.
 
-Valid arguments are 
+Valid arguments are
 
 =over 4
 
 =item *
 
-B<postid> (required)
+B<postid> 
 
-String.
+String. I<required>
 
 =item *
 
@@ -279,13 +297,16 @@ Boolean.
 
 =back
 
+Releases prior to Net::Blogger 0.85 accepted a list of arguments
+rather than a reference. Version 0.85+ are backwards compatible.
+
 Returns true or false.
 
 =cut
 
 sub deletePost {
     my $self = shift;
-    my $args = { @_ };
+    my $args = (ref($_[0]) eq "HASH") ? shift : { @_ };
 
     if (! $self->check_deletePost($args)) { 
       return 0; 
@@ -306,11 +327,15 @@ sub deletePost {
     ($call) ? return $call->result() : return 0;
 }
 
-=head2 $pkg->setTemplate(%args)
+=head2 $pkg->setTemplate(\%args)
 
 Set the body of the template matching type I<$type>.
 
-<quote src = "ev">template is the HTML (XML, whatever -- Blogger can output any sort of text). Must contain opening and closing <Blogger> tags to be valid and accepted.</quote>
+ <quote src = "ev">
+  template is the HTML (XML, whatever -- Blogger can output any sort 
+  of text). Must contain opening and closing <Blogger> tags to be 
+  valid and accepted.
+ </quote>
 
 Valid arguments are 
 
@@ -318,17 +343,22 @@ Valid arguments are
 
 =item *
 
-B<template>  (required)
+B<template>
 
-Scalar ref.
+Scalar ref. I<required>
 
 =item *
 
-B<type> (required)
+B<type>
 
-String. Valid types are "main" and "archiveIndex"
+String. I<required>
+
+Valid types are "main" and "archiveIndex"
 
 =back
+
+Releases prior to Net::Blogger 0.85 accepted a list of arguments
+rather than a reference. Version 0.85+ are backwards compatible.
 
 Returns true or false.
 
@@ -336,7 +366,7 @@ Returns true or false.
 
 sub setTemplate {
     my $self = shift;
-    my $args = { @_ };
+    my $args = (ref($_[0]) eq "HASH") ? shift : { @_ };
 
     if (! $self->check_setTemplate($args)) {
       return 0;
@@ -355,7 +385,7 @@ sub setTemplate {
     ($call) ? return $call->result() : return 0;
 }
 
-=head2 $pkg->getTemplate(%args)
+=head2 $pkg->getTemplate(\%args)
 
 Fetch the body of the template matching type I<$type>.
 
@@ -365,11 +395,16 @@ Valid types are
 
 =item *
 
-B<type> (required)
+B<type>
 
-String. Valid types are "main" and "archiveIndex"
+String. I<required>
+
+Valid types are "main" and "archiveIndex"
 
 =back
+
+Releases prior to Net::Blogger 0.85 accepted a list of arguments
+rather than a reference. Version 0.85+ are backwards compatible.
 
 Returns a string.
 
@@ -377,7 +412,7 @@ Returns a string.
 
 sub getTemplate {
     my $self = shift;
-    my $args = { @_ };
+    my $args = (ref($_[0]) eq "HASH") ? shift : { @_ };
     
     if (! $self->check_getTemplate($args)) {
       return 0;
@@ -519,67 +554,11 @@ sub check_getTemplate {
 
 =head1 VERSION
 
-0.2
+0.21
 
 =head1 DATE
 
-September 23, 2002
-
-=head1 CHANGES
-
-=head2 0.2
-
-=over 4
-
-=item *
-
-Added I<check_*> methods.
-
-=item * 
-
-Updated POD
-
-=back
-
-=head2 0.1.3
-
-=over 4
-
-=item *
-
-Added quotes to I<$VERSION>
-
-=back
-
-=head2 0.1.2
-
-=over 4
-
-=item *
-
-Updated POD
-
-=back
-
-=head2 0.1.1
-
-=over 4
-
-=item * 
-
-Updated POD
-
-=back
-
-=head2 0.1
-
-=over 4
-
-=item *
-
-Initial revision.
-
-=back
+$Date: 2003/03/05 04:30:42 $
 
 =head1 AUTHOR
 
@@ -593,7 +572,7 @@ L<Net::Blogger::API::Extended>
 
 =head1 LICENSE
 
-Copyright (c) 2001-2002 Aaron Straup Cope.
+Copyright (c) 2001-2003 Aaron Straup Cope.
 
 This is free software, you may use it and distribute it under the same terms as Perl itself.
 

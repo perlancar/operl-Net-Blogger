@@ -28,7 +28,7 @@ This package is meant to be subclassed. It should not be used on it's own.
 package Net::Blogger::Engine::Userland::metaWeblog;
 use strict;
 
-$Net::Blogger::Engine::Userland::metaWeblog::VERSION   = '0.3';
+$Net::Blogger::Engine::Userland::metaWeblog::VERSION   = '0.4';
 
 @Net::Blogger::Engine::Userland::metaWeblog::ISA       = qw ( Exporter Net::Blogger::Engine::Base );
 @Net::Blogger::Engine::Userland::metaWeblog::EXPORT    = qw ();
@@ -37,23 +37,65 @@ $Net::Blogger::Engine::Userland::metaWeblog::VERSION   = '0.3';
 use Exporter;
 use Net::Blogger::Engine::Base;
 
-use File::Basename;
+=head1 OBJECTS METHODS
 
-=head1 PUBLIC METHODS
+=head2 $pkg->newPost(\%args)
 
-=head2 $pkg->newPost(%args)
+Valid arguments are :
+
+=over 4
+
+=item *
+
+B<title>
+
+String.
+
+=item *
+
+B<link>
+
+=item *
+
+B<description>
+
+String.
+
+=item *
+
+B<categories>
+
+Array reference.
+
+=item *
+
+B<publish>
+
+Boolean.
+
+=back
+
+Releases prior to Net::Blogger 0.85 accepted a list of arguments
+rather than a reference. Version 0.85+ are backwards compatible.
+
+Returns an int, or false.
 
 =cut
 
 sub newPost {
   my $self = shift;
-  my $args = {@_};
+  my $args = (ref($_[0]) eq "HASH") ? shift : {@_};
 
   my $publish = 0;
 
   if (exists $args->{publish}) {
     $publish = $args->{publish};
     delete $args->{publish};
+  }
+
+  if (($args->{categories}) && (ref($args->{categories}) ne "ARRAY")) {
+    $self->LastError("Categories must be passed as an array reference.");
+    return 0;
   }
 
   my $call = $self->_Client->call(
@@ -68,7 +110,7 @@ sub newPost {
   return ($call) ? $call->result() : return 0;
 }
 
-=head2 $pkg->newMediaObject(%args)
+=head2 $pkg->newMediaObject(\%args)
 
 Valid argument are :
 
@@ -116,42 +158,45 @@ using the I<MIME::Base64> package.
 
 =back
 
+Releases prior to Net::Blogger 0.85 accepted a list of arguments
+rather than a reference. Version 0.85+ are backwards compatible.
+
+Returns a hash reference, or undef.
+
 =cut
 
 sub newMediaObject {
-  my $self  = shift;
-  my %args = @_;
+  my $self = shift;
+  my $args = (ref($_[0]) eq "HASH") ? shift : {@_};
 
   #
 
-  if ($args{file}) {
+  if ($args->{file}) {
 
     my $pkg = "MIME::Base64";
     eval "require $pkg";
 
     if ($@) {
       $self->LastError("Failed to load $pkg for automagic encoding, $@");
-      return 0;
+      return undef;
     }
 
-    open(FILE, $args{file}) or &{
-      $self->LastError("Failed to open $args{file} for reading, $!");
-      return 0;
+    open(FILE, $args->{file}) or &{
+      $self->LastError("Failed to open $args->{file} for reading, $!");
+      return undef;
     };
 
     my $buf = undef;
 
     while (read(FILE, $buf, 60*57)) {
-      no strict "refs";
-      $args{bits} .= &{$pkg."::encode_base64"}($buf);
+      $args->{bits} .= &{$pkg."::encode_base64"}($buf);
     }
 
     close FILE;
 
     #
 
-    if (! $args{type}) {
-      my $pkg = "File::MMagic";
+    if (! $args->{type}) {
       eval "require $pkg";
 
       if ($@) {
@@ -162,24 +207,26 @@ sub newMediaObject {
       #
 
       my $mm = undef;
+
       eval { $mm = $pkg->new(); };
 
       if ($@) {
 	$self->LastError("Failed to instantiate $pkg for automagic type checking, $@");
-	return 0;
+	return undef;
       }
 
-      $args{type} = $mm->checktype_filename($args{file});
+      $args->{type} = $mm->checktype_filename($args->{file});
 
-      if (! $args{type}) {
+      if (! $args->{type}) {
 	$self->LastError("Unable to determine file type ");
       }
     }
 
     #
 
-    if (! $args{name}) {
-      $args{name} = &basename($args{file});
+    if (! $args->{name}) {
+      require "File::Basename";
+      $args->{name} = File::Basename::basename($args->{file});
     }
   }
 
@@ -187,9 +234,9 @@ sub newMediaObject {
 
   else {
     foreach ("name","type","bin") {
-      if (! $args{$_}) {
+      if (! $args->{$_}) {
 	$self->LastError("You must define a value for the $_ property.");
-	return 0;
+	return undef;
       }
     }
   }
@@ -201,21 +248,56 @@ sub newMediaObject {
 				  $self->_Type(string=>$self->BlogId()),
 				  $self->_Type(string=>$self->Username()),
 				  $self->_Type(string=>$self->Password()),
-				  $self->_Type(struct=>\%args),
+				  $self->_Type(hash=>$args),
 				 );
 
   return ($call) ? $call->result() : undef;
 }
 
-=head2 $pkg->editPost(%args)
+=head2 $pkg->editPost(\%args)
 
-TBW 
+=over 4
+
+=item *
+
+B<title>
+
+String.
+
+=item *
+
+B<link>
+
+=item *
+
+B<description>
+
+String.
+
+=item *
+
+B<categories>
+
+Array reference.
+
+=item *
+
+B<publish>
+
+Boolean.
+
+=back
+
+Releases prior to Net::Blogger 0.85 accepted a list of arguments
+rather than a reference. Version 0.85+ are backwards compatible.
+
+Returns true or false.
 
 =cut
 
 sub editPost {
   my $self = shift;
-  my $args = {@_};
+  my $args = (ref($_[0]) eq "HASH") ? shift : {@_};
 
   my $postid = $args->{postid};
 
@@ -243,22 +325,37 @@ sub editPost {
 				  $postid,
 				  $self->_Type(string=>$self->Username()),
 				  $self->_Type(string=>$self->Password()),
-				  $self->_Type(struct=>$args),
+				  $self->_Type(hash=>$args),
 				  $self->_Type(boolean=>$publish),
 				 );
 
   return ($call) ? $call->result() : undef;
 }
 
-=head2 $pkg->getPost(%args)
+=head2 $pkg->getPost(\%args)
 
-TBW
+Valid arguments are :
+
+=over 4
+
+=item *
+
+B<postid>
+
+Int. I<required>
+
+=back
+
+Releases prior to Net::Blogger 0.85 accepted a list of arguments
+rather than a reference. Version 0.85+ are backwards compatible.
+
+Returns a hash reference or undef.
 
 =cut
 
 sub getPost {
   my $self = shift;
-  my $args = {@_};
+  my $args = (ref($_[0]) eq "HASH") ? shift : {@_};
 
   my $postid = $args->{postid};
 
@@ -279,7 +376,7 @@ sub getPost {
 
 =head2 $pkg->getCategories()
 
-TBW
+Returns an array reference or undef.
 
 =cut
 
@@ -303,11 +400,11 @@ sub getCategories {
 
 =head1 VERSION
 
-0.3
+0.4
 
 =head1 DATE
 
-January 10, 2003
+$Date: 2003/03/05 04:30:43 $
 
 =head1 AUTHOR
 
@@ -326,66 +423,6 @@ http://groups.yahoo.com/group/weblog-devel/message/200
 =item [1]
 
 http://www.xmlrpc.com/discuss/msgReader$2393
-
-=back 
-
-=head1 CHANGES
-
-=head2 0.3
-
-=over
-
-=item *
-
-Added support for I<metaWeblog.newMediaObject> method.
-
-=item *
-
-Updated POD
-
-=back
-
-=head2 0.2
-
-=over
-
-=item *
-
-Added hooks to I<getCategories> to catch call by Movabletype engine.
-
-=item *
-
-Added quotes to I<$VERSION>
-
-=back
-
-=head2 0.1.2
-
-=over
-
-=item * 
-
-Updated POD
-
-=back
-
-=head2 0.1.1
-
-=over
-
-=item * 
-
-Updated POD
-
-=back
-
-=head2 0.1
-
-=over
-
-=item * 
-
-Initial revision
 
 =back
 

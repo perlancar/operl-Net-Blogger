@@ -14,5 +14,5 @@ lib/Net/Blogger/Engine/Userland/metaWeblog.pm
 Changes
 MANIFEST
 Makefile.PL
-test.pl
+t/00-basic.t
 TODO

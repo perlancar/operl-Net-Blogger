@@ -6,18 +6,19 @@ Net::Blogger::API::Extended - provides helper methods not defined in the Blogger
 
 =head1 SYNOPSIS
 
- TBW
+ It's very dark in here because this is a black box.
 
 =head1 DESCRIPTION
 
-This package is inherited by I<Net::Blogger::Engine::Base> and provides helper methods not defined in the Blogger API.
+This package is inherited by I<Net::Blogger::Engine::Base> and provides helper 
+methods not defined in the Blogger API.
 
 =cut
 
 package Net::Blogger::API::Extended;
 use strict;
 
-$Net::Blogger::API::Extended::VERSION   = '0.1.3';
+$Net::Blogger::API::Extended::VERSION   = '0.14';
 @Net::Blogger::API::Extended::ISA       = qw ( Exporter );
 @Net::Blogger::API::Extended::EXPORT    = qw ();
 @Net::Blogger::API::Extended::EXPORT_OK = qw ();
@@ -25,21 +26,17 @@ $Net::Blogger::API::Extended::VERSION   = '0.1.3';
 use Exporter;
 use FileHandle;
 
-=head1 PUBLIC METHODS
+=head1 OBJECT METHODS
 
 =cut
 
-=pod
-
-=head2 $pkg->MaxPostLength()
-
-=cut
+# mmmm, undocumented crunchi-ness.
 
 sub MaxPostLength {
     return undef;
 }
 
-=head2 $pkg->GetBlogId(%args) 
+=head2 $pkg->GetBlogId(\%args) 
 
 Return the unique blogid for I<$args{'blogname'}>.
 
@@ -53,13 +50,17 @@ B<blogname> => string.
 
 =back
 
-Returns a string. If no blogname is specified, the current blogid for the object is returned.
+Releases prior to Net::Blogger 0.85 accepted a list of arguments
+rather than a reference. Version 0.85+ are backwards compatible.
+
+Returns a string. If no blogname is specified, the current blogid for 
+the object is returned.
 
 =cut
 
 sub GetBlogId {
     my $self = shift;
-    my $args = { @_ };
+    my $args = (ref($_[0]) eq "HASH") ? shift : { @_ };
 
     my $blogid = undef;
 
@@ -80,9 +81,24 @@ sub GetBlogId {
     return $blogid;
 }
 
-=head2 $pkg->DeleteAllPosts(%args)
+=head2 $pkg->DeleteAllPosts(\%args)
 
-TBW
+Delete all the posts on a weblog. Valid arguments are :
+
+=over 4
+
+=item *
+
+B<publish>
+
+Boolean.
+
+=back
+
+Releases prior to Net::Blogger 0.85 accepted a list of arguments
+rather than a reference. Version 0.85+ are backwards compatible.
+
+Returns true or false.
 
 =cut
 
@@ -103,9 +119,12 @@ sub DeleteAllPosts {
     return $ok;
 }
 
-=head2 $pkg->PostFromFile(%args)
+=head2 $pkg->PostFromFile(\%args)
 
-Open a filehandle, and while true, post to Blogger. If the length of the amount read from the file exceeds the per-post limit assigned by the Blogger servers -- currently 65,536 characters -- the contents of the file will be posted in multiple "chunks".
+Open a filehandle, and while true, post to Blogger. If the length of the amount 
+read from the file exceeds the per-post limit assigned by the Blogger servers -- 
+currently 65,536 characters -- the contents of the file will be posted in multiple 
+"chunks".
 
 Valid arguments are 
 
@@ -113,9 +132,9 @@ Valid arguments are
 
 =item *
 
-B<file> (required)
+B<file>
 
-/path/to/file
+/path/to/file I<required>
 
 =item *
 
@@ -135,11 +154,17 @@ B<tail>
 
 Boolean.
 
-If true, the method will not attempt to post data whose length exceeds the limit set by the Blogger server in the order that the data is read. Translation : last in becomes last post becomes the first thing you see on your weblog.
+If true, the method will not attempt to post data whose length exceeds the limit 
+set by the Blogger server in the order that the data is read. Translation : last 
+in becomes last post becomes the first thing you see on your weblog.
 
 =back
 
-If a I<postid> argument is present, the method will call the Blogger API I<editPost> method with postid. Otherwise the method will call the Blogger API I<newPost> method.
+If a I<postid> argument is present, the method will call the Blogger API I<editPost> 
+method with postid. Otherwise the method will call the Blogger API I<newPost> method.
+
+Releases prior to Net::Blogger 0.85 accepted a list of arguments
+rather than a reference. Version 0.85+ are backwards compatible.
 
 Returns true or false, followed by an array of zero, or more, postids. 
 
@@ -147,7 +172,7 @@ Returns true or false, followed by an array of zero, or more, postids.
 
 sub PostFromFile {
     my $self = shift;
-    my $args = { @_ };
+    my $args = (ref($_[0]) eq "HASH") ? shift : { @_ };
 
     if (! -f $args->{'file'}) {
       $self->LastError("Not a file.");
@@ -230,13 +255,16 @@ sub PostFromFile {
     return (1,@postids);
 }
 
-=head2 $pkg->PostFromOutline(%args)
+=head2 $pkg->PostFromOutline(\%args)
 
 Like I<PostFromFile>, only this time the file is an outliner document. 
 
-This method uses Simon Kittle's Text::Outline::asRenderedHTML method for posting. As of this writing, the Text::Outline package has not been uploaded to the CPAN. See below for a link to the homepage/source.
+This method uses Simon Kittle's Text::Outline::asRenderedHTML method for 
+posting. As of this writing, the Text::Outline package has not been uploaded 
+to the CPAN. See below for a link to the homepage/source.
 
-Valid outline formats are OPML, tabbed text outline, Emacs' outline-mode format, and the GNOME Think format.
+Valid outline formats are OPML, tabbed text outline, Emacs' outline-mode format, 
+and the GNOME Think format.
 
 Valid arguments are 
 
@@ -244,9 +272,9 @@ Valid arguments are
 
 =item *
 
-B<file> (required)
+B<file>
 
-/path/to/file
+/path/to/file I<required>
 
 =item *
 
@@ -262,7 +290,11 @@ Boolean.
 
 =back
 
-If a I<postid> argument is present, the method will call the Blogger API I<editPost> method with postid. Otherwise the method will call the Blogger API I<newPost> method.
+If a I<postid> argument is present, the method will call the Blogger API I<editPost> 
+method with postid. Otherwise the method will call the Blogger API I<newPost> method.
+
+Releases prior to Net::Blogger 0.85 accepted a list of arguments
+rather than a reference. Version 0.85+ are backwards compatible.
 
 Returns true or false, followed by an array of zero, or more, postids. 
 
@@ -270,7 +302,7 @@ Returns true or false, followed by an array of zero, or more, postids.
 
 sub PostFromOutline {
     my $self = shift;
-    my $args = { @_ };
+    my $args = (ref($_[0]) eq "HASH") ? shift : { @_ };
 
     my $class = "Text::Outline";
 
@@ -289,19 +321,9 @@ sub PostFromOutline {
     return $self->$method(postbody=>\$postbody,%$args);
 }
 
-=head1 PRIVATE METHODS
-
-=cut
-
-=pod
-
-=head2 $pkg->_PostInChunks(%args)
-
-=cut
-
 sub _PostInChunks {
     my $self = shift;
-    my $args = { @_ };
+    my $args = (ref($_[0]) eq "HASH") ? shift : { @_ };
 
     my $caller  = (caller(1))[3];
     my @chunks  = ();
@@ -337,10 +359,6 @@ sub _PostInChunks {
     return @postids;
 }
 
-=head2 $pkg->_TrimPostBody(\$body)
-
-=cut
-
 sub _TrimPostBody {
     my $self = shift;
     my $body = shift;
@@ -353,15 +371,15 @@ sub _TrimPostBody {
 
 =head1 VERSION
 
-0.1.3
-
-=head1 NAME
-
-Aaron Straup Cope
+0.14
 
 =head1 DATE
 
-May 04, 2002
+$Date: 2003/03/05 04:30:42 $
+
+=head1 AUTHOR
+
+Aaron Straup Cope
 
 =head1 SEE ALSO
 
@@ -369,51 +387,9 @@ L<Net::Blogger::Engine::Base>
 
 L<Net::Blogger::API::Core>
 
-=head1 CHANGES
-
-=head2 0.1.3
-
-=over
-
-=item *
-
-Added quotes to I<$VERSION>
-
-=back
-
-=head2 0.1.2
-
-=over
-
-=item *
-
-Updated POD
-
-=back
-
-=head2 0.1.1
-
-=over
-
-=item * 
-
-Updated POD
-
-=back
-
-=head2 0.1
-
-=over
-
-=item *
-
-Initial revision
-
-=back
-
 =head1 LICENSE
 
-Copyright (c) 2001-2002 Aaron Straup Cope.
+Copyright (c) 2001-2003 Aaron Straup Cope.
 
 This is free software, you may use it and distribute it under the same terms as Perl itself.
 
