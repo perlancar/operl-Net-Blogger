@@ -1,5 +1,9 @@
 Revision history for Perl extension Net::Blogger.
 
+0.8.3	 - Mon Sep 23 2002
+
+	 - Updated docs and POD (props to a nice person name 'rho' who was good enough to carefully read the docs and submit bug reports)
+
 0.8.2	 - Mon Sep 02 2002
 
 	 - Added support for the metaWeblog API to the Manila engine

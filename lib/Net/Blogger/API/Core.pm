@@ -19,7 +19,7 @@ It is inherited by I<Net::Blogger::Engine::Base.pm>
 package Net::Blogger::API::Core;
 use strict;
 
-$Net::Blogger::API::Core::VERSION   = '0.1.3';
+$Net::Blogger::API::Core::VERSION   = '0.2';
 @Net::Blogger::API::Core::ISA       = qw ( Exporter );
 @Net::Blogger::API::Core::EXPORT    = qw ();
 @Net::Blogger::API::Core::EXPORT_OK = qw ();
@@ -28,7 +28,7 @@ use Exporter;
 
 =head1 Blogger API METHODS
 
-=head2 $pkg->getUserBlogs()
+=head2 $pkg->getUsersBlogs()
 
 Fetch the I<blogid>, I<url> and I<blogName> for each of the Blogger blogs the current user is registered to.
 
@@ -56,7 +56,7 @@ Add a new post to the Blogger server.
 
 Valid arguments are :
 
-=over
+=over 4
 
 =item *
 
@@ -148,7 +148,7 @@ Fetch the latest (n) number of posts for a given blog. The most recent posts are
 
 Valid arguments are 
 
-=over
+=over 4
 
 =item *
 
@@ -193,7 +193,7 @@ Update the Blogger database. Set the body of entry $postid to $body.
 
 Valid arguments are :
 
-=over
+=over 4
 
 =item *
 
@@ -263,7 +263,7 @@ Delete a post from the Blogger server.
 
 Valid arguments are 
 
-=over
+=over 4
 
 =item *
 
@@ -314,7 +314,7 @@ Set the body of the template matching type I<$type>.
 
 Valid arguments are 
 
-=over
+=over 4
 
 =item *
 
@@ -361,7 +361,7 @@ Fetch the body of the template matching type I<$type>.
 
 Valid types are 
 
-=over
+=over 4
 
 =item *
 
@@ -523,23 +523,27 @@ sub check_getTemplate {
 
 =head1 DATE
 
-May 17, 2002
+September 23, 2002
 
 =head1 CHANGES
 
 =head2 0.2
 
-=over
+=over 4
 
 =item *
 
 Added I<check_*> methods.
 
+=item * 
+
+Updated POD
+
 =back
 
 =head2 0.1.3
 
-=over
+=over 4
 
 =item *
 
@@ -549,7 +553,7 @@ Added quotes to I<$VERSION>
 
 =head2 0.1.2
 
-=over
+=over 4
 
 =item *
 
@@ -559,7 +563,7 @@ Updated POD
 
 =head2 0.1.1
 
-=over
+=over 4
 
 =item * 
 
@@ -569,7 +573,7 @@ Updated POD
 
 =head2 0.1
 
-=over
+=over 4
 
 =item *
 

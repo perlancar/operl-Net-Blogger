@@ -85,7 +85,7 @@ use Exporter;
 
 use vars qw ( $AUTOLOAD $LAST_ERROR );
 
-$Net::Blogger::VERSION   = '0.8.2';
+$Net::Blogger::VERSION   = '0.8.3';
 @Net::Blogger::ISA       = qw (Exporter);
 @Net::Blogger::EXPORT    = qw ();
 @Net::Blogger::EXPORT_OK = qw ();
@@ -99,7 +99,7 @@ Instantiate a new Blogger object.
 
 Valid arguments are :
 
-=over
+=over 4
 
 =item *
 
@@ -166,7 +166,7 @@ sub init {
 
 =head1 Blogger API METHODS
 
-=head2 $pkg->getUserBlogs()
+=head2 $pkg->getUsersBlogs()
 
 Fetch the I<blogid>, I<url> and I<blogName> for each of the Blogger blogs the current user is registered to.
 
@@ -178,7 +178,7 @@ Add a new post to the Blogger server.
 
 Valid arguments are :
 
-=over
+=over 4
 
 =item *
 
@@ -208,7 +208,7 @@ Fetch the latest (n) number of posts for a given blog. The most recent posts are
 
 Valid arguments are 
 
-=over
+=over 4
 
 =item * 
 
@@ -230,7 +230,7 @@ Update the Blogger database. Set the body of entry $postid to $body.
 
 Valid arguments are :
 
-=over
+=over 4
 
 =item * 
 
@@ -262,31 +262,7 @@ Delete a post from the Blogger server.
 
 Valid arguments are 
 
-=over
-
-=item * 
-
-B<postid> (required)
-
-String.
-
-=item * 
-
-B<publish> 
-
-Boolean.
-
-=back
-
-Returns true or false.
-
-=head2 $pkg->deletePost(%args) 
-
-Delete a post from the Blogger server.
-
-Valid arguments are 
-
-=over
+=over 4
 
 =item * 
 
@@ -312,7 +288,7 @@ Set the body of the template matching type I<$type>.
 
 Valid arguments are 
 
-=over
+=over 4
 
 =item * 
 
@@ -336,7 +312,7 @@ Fetch the body of the template matching type I<$type>.
 
 Valid types are 
 
-=over
+=over 4
 
 =item * 
 
@@ -360,7 +336,7 @@ Return the unique blogid for I<$args{'blogname'}>.
 
 Valid arguments are 
 
-=over
+=over 4
 
 =item * 
 
@@ -382,7 +358,7 @@ Open a filehandle, and while true, post to Blogger. If the length of the amount 
 
 Valid arguments are 
 
-=over 
+=over 4 
 
 =item *
 
@@ -426,7 +402,7 @@ Valid outline formats are OPML, tabbed text outline, Emacs' outline-mode format,
 
 Valid arguments are 
 
-=over 
+=over 4 
 
 =item * 
 
@@ -466,11 +442,11 @@ sub AUTOLOAD {
 
 =head1 VERSION
 
-0.8.2
+0.8.3
 
 =head1 DATE
 
-September 02, 2002
+September 23, 2002
 
 =head1 AUTHOR
 
@@ -486,9 +462,19 @@ http://plant.blogger.com/api/
 
 =head1 CHANGES
 
+=head2 0.8.3
+
+=over 4
+
+=item *
+
+Updated POD
+
+=back
+
 =head2 0.8.2
 
-=over
+=over 4
 
 =item *
 
@@ -498,7 +484,7 @@ Added support for the metaWeblog API to the Manila engine.
 
 =head2 0.8.1
 
-=over
+=over 4
 
 =item *
 
@@ -508,7 +494,7 @@ Added support for the mt.getTrackbackPings method in I<Net::Blogger::Engine::Mov
 
 =head2 0.8
 
-=over
+=over 4
 
 =item *
 
@@ -520,7 +506,7 @@ Added I<Slash> engine
 
 =head2 0.6.4
 
-=over
+=over 4
 
 =item *
 
@@ -534,7 +520,7 @@ Added quotes to all the VERSION numbers
 
 =head2 0.6.3
 
-=over
+=over 4
 
 =item *
 
@@ -544,7 +530,7 @@ Updated POD for I<Net::Blogger> and all child packages.
 
 =head2 0.6.2.2
 
-=over
+=over 4
 
 =item *
 
@@ -554,7 +540,7 @@ No changes. But, since I uploaded the current codebase to the CPAN as v 0.6.1.2,
 
 =head2 0.6.2.1
 
-=over
+=over 4
 
 =item * 
 
@@ -564,7 +550,7 @@ Updated POD.
 
 =head2 0.6.2
 
-=over
+=over 4
 
 =item * 
 
@@ -574,7 +560,7 @@ Added support for the UserLand metaWeblog API in the I<RadioUserLand> engine
 
 =head2 0.6.1
 
-=over
+=over 4
 
 =item *
 
@@ -584,7 +570,7 @@ Bugs fixes in I<Net::Blogger::Engine::Base>
 
 =head2 0.6
 
-=over
+=over 4
 
 =item *
 
@@ -602,7 +588,7 @@ Updated POD
 
 =head2 0.5.1
 
-=over
+=over 4
 
 =item *
 
@@ -616,7 +602,7 @@ Updated POD.
 
 =head2 0.5
 
-=over
+=over 4
 
 =item * 
 
@@ -630,7 +616,7 @@ Updated POD.
 
 =head2 0.4.6.1
 
-=over
+=over 4
 
 =item *
 
@@ -640,7 +626,7 @@ Added conditional, where necessary, to see if a maximum post length is applicabl
 
 =head2 0.4.6
 
-=over
+=over 4
 
 =item *
 
@@ -658,7 +644,7 @@ Updated POD
 
 =head2 0.4.5
 
-=over
+=over 4
 
 =item * 
 
@@ -672,7 +658,7 @@ Updated POD
 
 =head2 0.4.4.1
 
-=over
+=over 4
 
 =item *
 
@@ -686,7 +672,7 @@ Fixed remaining instances of "Error::Simple->record() and return 0" in &AUTOLOAD
 
 =head2 0.4.4
 
-=over
+=over 4
 
 =item * 
 
@@ -716,7 +702,7 @@ Updated POD.
 
 =head2 0.4.3
 
-=over
+=over 4
 
 =item * 
 
@@ -726,7 +712,7 @@ Made sure all Blogger.pm methods begin with title case.
 
 =head2 0.4.2
 
-=over
+=over 4
 
 =item * 
 
@@ -744,7 +730,7 @@ Fixed a bug in Blogger.pm I<_PostInChunks> method where I would end up subscript
 
 =head2 0.4.1
 
-=over
+=over 4
 
 =item *
 
@@ -754,7 +740,7 @@ Added idiot-level escaping of entities in Blogger.pm I<newPost> and I<editPost> 
 
 =head2 0.4
 
-=over
+=over 4
 
 =item *
 
@@ -780,7 +766,7 @@ Updated POD
 
 =head2 0.3.1
 
-=over
+=over 4
 
 =item *
 
@@ -790,7 +776,7 @@ Updated POD
 
 =head2 0.3
 
-=over
+=over 4
 
 =item *
 
@@ -812,7 +798,7 @@ Changed the return value of both the Blogger API I<newPost> and I<editPost> meth
 
 =head2 0.2
 
-=over
+=over 4
 
 =item * 
 
@@ -835,7 +821,7 @@ Modifed the Blogger API I<newPost> method to accept the option to publish.
 
 =head2 0.1
 
-=over
+=over 4
 
 =item *
 
@@ -855,6 +841,12 @@ Added the Blogger.pm I<Publish> method.
 
 
 =back
+
+=head1 BUGS
+
+Hopefully, few.
+
+Please reports all bugs to http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Net::Blogger
 
 =head1 LICENSE
 
