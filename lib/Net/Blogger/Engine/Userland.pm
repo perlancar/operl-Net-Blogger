@@ -105,6 +105,26 @@ sub AppKey {
     return 1;
 }
 
+=head2 $pkg->BlogId()
+
+Get/Set the current blog id.
+
+Ensures that the blogid contains a trailing slash, without which the Frontier engine freaks out.
+
+=cut
+
+sub BlogId {
+  my $self = shift;
+  my $id   = shift;
+
+  if ($id) {
+    unless ($id =~ /^(.*)\/$/) { $id .= "/"; }
+    $self->{'_blogid'} = $id;
+  }
+
+  return $self->{'_blogid'};
+}
+
 =head2 $pkg->MaxPostLength()
 
 By default, returns undef. In other words, there is no max post length for Manila.

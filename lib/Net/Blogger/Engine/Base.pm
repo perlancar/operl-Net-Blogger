@@ -37,7 +37,7 @@ use strict;
 
 use vars qw ( $AUTOLOAD );
 
-$Net::Blogger::Engine::Base::VERSION        = '0.2';
+$Net::Blogger::Engine::Base::VERSION        = '0.3';
 @Net::Blogger::Engine::Base::ISA            = qw ( Exporter Net::Blogger::API::Core Net::Blogger::API::Extended );
 @Net::Blogger::Engine::Base::ISA::EXPORT    = qw ();
 @Net::Blogger::Engine::Base::ISA::EXPORT_OK = qw ();
@@ -46,7 +46,7 @@ use Carp;
 use Error;
 use Exporter;
 
-use XMLRPC::Lite;
+use SOAP::Lite;
 
 use Net::Blogger::API::Core;
 use Net::Blogger::API::Extended;
@@ -179,34 +179,58 @@ sub LastError {
     return $e;
 }
 
+sub Transport {
+  return "XMLRPC";
+}
+
 =head1 PRIVATE METHODS
 
 =cut
 
 =head2 $pkg->_Client()
 
-Return an XML-RPC client object.
+Return an XML-RPC or SOAP client object.
 
 =cut
 
 sub _Client {
     my $self = shift;
 
-    if (ref($self->{"_xmlrpc"}) ne "XMLRPC::Lite") {
-      my $client = XMLRPC::Lite->new()
+    unless (ref($self->{"_client"}) =~ /^(XMLRPC|SOAP)::Lite$/) {
+
+      my $pkg = uc $self->Transport();
+
+      if ($pkg =~ /^(XMLRPC|SOAP)$/) {
+	$pkg = join("::",$pkg,"Lite");
+      } 
+
+      else {
+	die "Unknown transport : '$pkg'\n";
+	$self->LastError("Unknown transport : $pkg");
+	return undef;
+      }
+
+      eval "require $pkg";
+
+      if ($@) {
+	die "Failed to eval, $@\n";
+      }
+      my $client = $pkg->new()
 	|| Error->throw(-text=>$!);
 
       $client->on_fault(\&_ClientFault);
       $client->proxy($self->Proxy); 
+      $client->uri($self->Uri());
 
+      # Fix this.
       if ($self->{'debug'}) {
 	$client->on_debug(sub { print @_; });
       }
 
-      $self->{"_xmlrpc"} = $client;
+      $self->{"_client"} = $client;
     }
 
-    return $self->{"_xmlrpc"};
+    return $self->{"_client"};
 }
 
 sub _ClientFault {
@@ -228,10 +252,10 @@ sub _Type {
   my $name = shift;
 
   if ($name =~ /^(hash|array)$/) {
-    return XMLRPC::Data->name(args=>@_);
+    return SOAP::Data->name(args=>@_);
   }
 
-  return XMLRPC::Data->type($name,@_);
+  return SOAP::Data->type($name,@_);
 }
 
 sub DESTROY {
@@ -247,7 +271,7 @@ sub AUTOLOAD {
 	return undef;
     }
 
-    unless ($AUTOLOAD =~ /^(Proxy|AppKey|BlogId|Username|Password)$/) {
+    unless ($AUTOLOAD =~ /^(Proxy|Uri|AppKey|BlogId|Username|Password)$/) {
 	$self->LastError("Unkown method '$AUTOLOAD' called. Skipping.");
 	return undef;
     }
@@ -255,20 +279,24 @@ sub AUTOLOAD {
     my $property = lc "_".$AUTOLOAD;
 
     if (my $arg = shift) { 
-	$self->{ $property } = $arg; 
-
-	if (exists $self->{'__meta'}) {
-	  $self->{'__meta'}->$property($arg);
-	}
-
-	if (exists $self->{'__mt'}) {
-	  $self->{'__mt'}->$property($arg);
-	}
+      $self->{ $property } = $arg; 
+      
+      if (exists $self->{'__meta'}) {
+	$self->{'__meta'}->$property($arg);
+      }
+      
+      if (exists $self->{'__mt'}) {
+	$self->{'__mt'}->$property($arg);
+      }
+      
+      if (exists $self->{'__slash'}) {
+	$self->{'__slash'}->$property($arg);
+      }
 
     }
    
     if ($AUTOLOAD eq "Proxy") {
-	$self->{"_xmlrpc"} = undef;
+	$self->{"_client"} = undef;
     }
 
     return $self->{ $property };
@@ -276,11 +304,11 @@ sub AUTOLOAD {
 
 =head1 VERSION
 
-0.2
+0.3
 
 =head1 DATE
 
-May 04, 2002
+May 16, 2002
 
 =head1 AUTHOR
 
@@ -295,6 +323,20 @@ L<Net::Blogger::API::Extended>
 L<SOAP::Lite>
 
 =head1 CHANGES
+
+=head2 0.3
+
+=over
+
+=item * 
+
+Switched to SOAP::Lite rather than XMLRPC::Lite
+
+=item *
+
+Added I<Transport> and I<Uri>
+
+=back
 
 =head2 0.2
 

@@ -8,9 +8,13 @@ WriteMakefile(
 	      'VERSION_FROM' => 'lib/Net/Blogger.pm',
 	      'PREREQ_PM'    => {
 				 SOAP::Lite    => '0.55',
+				 CGI           => 0,
 				 Carp          => 0,
 				 Error         => 0,
-				 URI           => 0, 
+				 URI           => 0,
+				 Digest::MD5   => 0,
+				 HTTP::Cookies => 0,
+
 				 # For testing
 				 Term::ReadKey => 0,
 				},

@@ -85,7 +85,7 @@ use Exporter;
 
 use vars qw ( $AUTOLOAD $LAST_ERROR );
 
-$Net::Blogger::VERSION   = '0.7';
+$Net::Blogger::VERSION   = '0.8';
 @Net::Blogger::ISA       = qw (Exporter);
 @Net::Blogger::EXPORT    = qw ();
 @Net::Blogger::EXPORT_OK = qw ();
@@ -304,33 +304,6 @@ Boolean.
 
 Returns true or false.
 
-=cut
-
-sub deletePost {
-    my $self = shift;
-    my $args = { @_ };
-
-    my $postid = $args->{'postid'};
-
-    if (! $postid) {
-	$self->LastError("No post id.");
-	return 0;
-    }
-
-    my $publish = ($args->{'publish'}) ? 1 : 0;
-
-    my $call = $self->_Client->call(
-				    "blogger.deletePost",
-				    $self->_Type(string=>$self->AppKey()),
-				    $self->_Type(string=>$postid),
-				    $self->_Type(string=>$self->Username()),
-				    $self->_Type(string=>$self->Password()),
-				    $self->_Type(boolean=>$publish),
-				    );
-
-    ($call) ? return $call->result() : return 0;
-}
-
 =head2 $pkg->setTemplate(%args)
 
 Set the body of the template matching type I<$type>.
@@ -493,11 +466,11 @@ sub AUTOLOAD {
 
 =head1 VERSION
 
-0.7
+0.8
 
 =head1 DATE
 
-May 04, 2002
+May 31, 2002
 
 =head1 AUTHOR
 
@@ -512,6 +485,18 @@ L<Net::Blogger::Engine::Base>
 http://plant.blogger.com/api/
 
 =head1 CHANGES
+
+=head2 0.8
+
+=over
+
+=item *
+
+Added I<Slash> engine
+
+=back
+
+=head2 0.7
 
 =head2 0.6.4
 

@@ -82,18 +82,16 @@ sub newPost {
     my $self = shift;
     my $args = { @_ };
 
+    if (! $self->check_newPost($args)) { 
+      return 0; 
+    }
+
+    if ($self->check_exceedsMaxLength($args)) { 
+      return $self->_PostInChunks(%$args); 
+    }
+
     my $postbody = $args->{'postbody'};
-
-    if (ref($postbody) ne "SCALAR") {
-	$self->LastError("You must pass postbody as a scalar reference.");
-	return 0;
-    }
-
-    if (($self->MaxPostLength()) && (length($$postbody) > $self->MaxPostLength())) {
-	return $self->_PostInChunks(%$args);
-    }
-
-    my $publish = ($args->{'publish'}) ? 1 : 0;
+    my $publish  = ($args->{'publish'}) ? 1 : 0;
 
     my $call = $self->_Client->call(
 				    "blogger.newPost",
@@ -118,9 +116,8 @@ sub getPost {
     my $self   = shift;
     my $postid = shift;
 
-    if (! $postid) {
-	$self->LastError("You must specify a postid.");
-	return 0;
+    if (! $self->check_getPost($postid)) { 
+      return 0;
     }
     
     my $call = $self->_Client->call(
@@ -141,8 +138,7 @@ sub getPost {
 	$self->LastError("Unable to locate post.");
 	return 0;
     }
-    
-    #$post->{'dateCreated'} = $post->{'dateCreated'}->repr();
+
     return $post;
 }
 
@@ -172,28 +168,19 @@ Returns true or false, followed by an array of hash refs. Each hash ref contains
 
 sub getRecentPosts {
     my $self = shift;
-    my %args = @_;
+    my $args = { @_ };
 
-    my $num   = (defined $args{'numposts'}) ? $args{'numposts'} : 1;
-    my $posts = [];
-    
-    unless ($num =~ /^(\d+)$/) {
-      $self->LastError("Argument $args{'numposts'} isn't numeric.");
-	return (0,undef);
-    }
-
-    unless (($num >= 1) && ($num <= 20)) {
-      $self->LastError("You must specify 'numposts' as an integer between 1 and 20.");
-	return (0,undef);
+    if (! $self->check_getRecentPosts($args)) { 
+      return (0); 
     }
 
     my $call = $self->_Client->call(
-				  "blogger.getRecentPosts",
-				  $self->_Type(string=>$self->AppKey()),
-				  $self->_Type(string=>$self->BlogId()),
-				  $self->_Type(string=>$self->Username()),
-				  $self->_Type(string=>$self->Password()),
-				  $self->_Type(int=>$num),
+				    "blogger.getRecentPosts",
+				    $self->_Type(string=>$self->AppKey()),
+				    $self->_Type(string=>$self->BlogId()),
+				    $self->_Type(string=>$self->Username()),
+				    $self->_Type(string=>$self->Password()),
+				    $self->_Type(int=>$args->{'numposts'}),
 				  );
 
     my @posts = ($call) ? (1,@{$call->result()}) : (0,undef);
@@ -238,18 +225,16 @@ sub editPost {
     my $self = shift;
     my $args = { @_ };
 
+    if (! $self->check_editPost($args)) { 
+      return 0; 
+    }
+
+    if ($self->check_exceedsMaxLength($args)) { 
+      return $self->_PostInChunks(%$args); 
+    }
+
     my $postbody = $args->{'postbody'};
     my $postid   = $args->{'postid'};
-
-    if (! $postid) { 
-	$self->LastError("You must specify a postid.");
-	return 0; 
-    }
-    
-    if (ref($postbody) ne "SCALAR") {
-	$self->LastError("You must pass postbody as a scalar reference.");
-	return 0;
-    }
     
     if (($self->MaxPostLength()) && (length($$postbody) > $self->MaxPostLength())) {
 	return $self->_PostInChunks(%$args);
@@ -302,13 +287,11 @@ sub deletePost {
     my $self = shift;
     my $args = { @_ };
 
-    my $postid = $args->{'postid'};
-
-    if (! $postid) {
-	$self->LastError("No post id.");
-	return 0;
+    if (! $self->check_deletePost($args)) { 
+      return 0; 
     }
-
+    
+    my $postid  = $args->{'postid'};
     my $publish = ($args->{'publish'}) ? 1 : 0;
 
     my $call = $self->_Client->call(
@@ -354,24 +337,9 @@ Returns true or false.
 sub setTemplate {
     my $self = shift;
     my $args = { @_ };
-    
-    my $template = $args->{'template'};
-    my $type     = $args->{'type'};
 
-    if (ref($template) ne "SCALAR") {
-      $self->LastError("You must pass template as a scalar reference.");
-	return 0;
-    }
-    
-    unless ($type =~ /^(main|archiveIndex)$/) {
-	$self->LastError("Valid template types are 'main' and 'archiveIndex'.");
-	return 0;
-    }
-
-    # see also : The Perl Cookbook, chapter 6.15
-    unless ($$template =~ /(<Blogger>)[^<]*(?:(?! <\/?Blogger>)<[^<]*)*(<\/Blogger>)/m) {
-	$self->LastError("Your template must contain opening and closing <Blogger> tags.");
-	return 0;
+    if (! $self->check_setTemplate($args)) {
+      return 0;
     }
 
     my $call = $self->_Client->call(
@@ -380,8 +348,8 @@ sub setTemplate {
 				    $self->_Type(string=>$self->BlogId()),
 				    $self->_Type(string=>$self->Username()),
 				    $self->_Type(string=>$self->Password()),
-				    $self->_Type(string=>$$template),
-				    $self->_Type(string=>$type),
+				    $self->_Type(string=>${$args->{'template'}}),
+				    $self->_Type(string=>$args->{'type'}),
 				    );
 
     ($call) ? return $call->result() : return 0;
@@ -411,11 +379,10 @@ sub getTemplate {
     my $self = shift;
     my $args = { @_ };
     
-    unless ($args->{'type'} =~ /^(main|archiveIndex)$/) {
-	$self->LastError("Valid template types are 'main' and 'archiveIndex'.");
-	return 0;
+    if (! $self->check_getTemplate($args)) {
+      return 0;
     }
-    
+
     my $call = $self->_Client->call(
 				    "blogger.getTemplate",
 				    $self->_Type(string=>$self->AppKey()),
@@ -428,15 +395,147 @@ sub getTemplate {
     ($call) ? return $call->result() : return 0;
 }
 
+sub check_exceedsMaxLength {
+  my $self = shift;
+  my $args = shift;
+
+  if (! $self->MaxPostLength()) {
+    return 0;
+  }
+
+  if (length(${$args->{'postbody'}}) < $self->MaxPostLength()) {
+    return 0;
+  }
+
+  return 1;
+}
+
+sub check_newPost {
+  my $self = shift;
+  my $args = shift;
+
+  if (ref($args->{'postbody'}) ne "SCALAR") {
+    $self->LastError("You must pass postbody as a scalar reference.");
+    return 0;
+  }
+    
+  return 1;
+}
+
+sub check_getPost {
+  my $self   = shift;
+  my $postid = shift;
+
+  if (! $postid) {
+    $self->LastError("You must specify a postid.");
+    return 0;
+  }
+
+  return 1;
+}
+
+sub check_getRecentPosts {
+  my $self = shift;
+  my $args = shift;
+
+  my $num   = (defined $args->{'numposts'}) ? $args->{'numposts'} : 1;
+  
+  unless ($num =~ /^(\d+)$/) {
+    $self->LastError("Argument $args->{'numposts'} isn't numeric.");
+    return 0;
+  }
+  
+  unless (($num >= 1) && ($num <= 20)) {
+    $self->LastError("You must specify 'numposts' as an integer between 1 and 20.");
+    return (0);
+  }
+  
+  return 1;
+}
+
+sub check_editPost {
+  my $self = shift;
+  my $args = shift;
+
+  if (! $args->{'postid'}) { 
+    $self->LastError("You must specify a postid.");
+    return 0; 
+  }
+  
+  if (ref($args->{'postbody'}) ne "SCALAR") {
+    $self->LastError("You must pass postbody as a scalar reference.");
+    return 0;
+  }
+  
+    return 1;
+}
+
+sub check_deletePost {
+  my $self = shift;
+  my $args = shift;
+
+  if (! $args->{'postid'}) {
+    $self->LastError("No post id.");
+    return 0;
+  }
+  
+  return 1;
+}
+
+sub check_setTemplate {
+  my $self = shift;
+  my $args = shift;
+
+  if (ref($args->{'template'}) ne "SCALAR") {
+    $self->LastError("You must pass template as a scalar reference.");
+    return 0;
+  }
+  
+  unless ($args->{'type'} =~ /^(main|archiveIndex)$/) {
+    $self->LastError("Valid template types are 'main' and 'archiveIndex'.");
+    return 0;
+  }
+
+  # see also : The Perl Cookbook, chapter 6.15
+  unless (${$args->{'template'}} =~ /(<Blogger>)[^<]*(?:(?! <\/?Blogger>)<[^<]*)*(<\/Blogger>)/m) {
+    $self->LastError("Your template must contain opening and closing <Blogger> tags.");
+    return 0;
+  }
+  
+  return 1;
+}
+
+sub check_getTemplate {
+  my $self = shift;
+  my $args = shift;
+
+  unless ($args->{'type'} =~ /^(main|archiveIndex)$/) {
+    $self->LastError("Valid template types are 'main' and 'archiveIndex'.");
+    return 0;
+  }
+
+  return 1;
+}
+
 =head1 VERSION
 
-0.1.3
+0.2
 
 =head1 DATE
 
-May 04, 2002
+May 17, 2002
 
 =head1 CHANGES
+
+=head2 0.2
+
+=over
+
+=item *
+
+Added I<check_*> methods.
+
+=back
 
 =head2 0.1.3
 

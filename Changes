@@ -1,5 +1,22 @@
 Revision history for Perl extension Net::Blogger.
 
+0.8	 - Fri May 31 2002
+
+	 - Added Net::Blogger::Engine::Slash and Net::Blogger::Engine::Slash::slashcode
+
+	 - Added check_* methods to Net::Blogger::API::Core
+
+	 - Added calls to check_* methods, to Engine::* files where necessary
+
+	 - Removed left-over deletePost method from Blogger.pm (gah!)
+
+	 - Added modules required by slashcode.pm to Makefile.PL
+
+	 - Added &Net::Blogger::Engine::Userland::BlogId to ensure that blogid contains
+	   a trailing slash.
+
+	 - Updated POD
+
 0.7	 - Sat May 04 2002
 
 	 - Added hooks to Net::Blogger::Engine::Base::_Type to deal with
