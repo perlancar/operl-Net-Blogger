@@ -20,7 +20,7 @@ use strict;
 use constant BLOGGER_PROXY  => "http://plant.blogger.com/api/RPC2";
 use constant MAX_POSTLENGTH => 65536;
 
-$Net::Blogger::Engine::Blogger::VERSION   = '0.1.3';
+$Net::Blogger::Engine::Blogger::VERSION   = '0.2';
 @Net::Blogger::Engine::Blogger::ISA       = qw ( Exporter Net::Blogger::Engine::Base );
 @Net::Blogger::Engine::Blogger::EXPORT    = qw ();
 @Net::Blogger::Engine::Blogger::EXPORT_OK = qw ();
@@ -54,7 +54,8 @@ Return the URI of the Blogger XML-RPC proxy
 =cut
 
 sub Proxy {
-    return BLOGGER_PROXY;
+  my $self = shift;
+  return $self->SUPER::Proxy(@_) || BLOGGER_PROXY;
 }
 
 =head2 $pkg->MaxPostLength()
@@ -73,7 +74,7 @@ sub DESTROY {
 
 =head1 KNOWN ISSUES
 
-=over
+=over 4
 
 =item *
 
@@ -93,11 +94,11 @@ B<setTemplate()>
 
 =head1 VERSION
 
-0.1.3
+0.2
 
 =head1 DATE
 
-May 04, 2002
+September 02, 2002
 
 =head1 AUTHOR
 
@@ -105,9 +106,23 @@ Aaron Straup Cope
 
 =head1 CHANGES
 
+=head2 0.2
+
+=over 4
+
+=item *
+
+Updated I<Proxy> to allow user defined URI.
+
+=item * 
+
+Updated POD
+
+=back
+
 =head2 0.1.3
 
-=over
+=over 4
 
 =item *
 
@@ -117,7 +132,7 @@ Added quotes to I<$VERSION>
 
 =head2 0.1.2
 
-=over
+=over 4
 
 =item *
 
@@ -127,7 +142,7 @@ Updated POD
 
 =head2 0.1.1
 
-=over
+=over 4
 
 =item * 
 
@@ -137,7 +152,7 @@ Updated POD
 
 =head2 0.1
 
-=over
+=over 4
 
 =item *
 

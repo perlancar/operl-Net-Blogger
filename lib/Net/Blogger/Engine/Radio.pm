@@ -31,7 +31,7 @@ This package inherits I<Net::Blogger::Engine::Userland> and implements methods s
 package Net::Blogger::Engine::Radio;
 use strict;
 
-$Net::Blogger::Engine::Radio::VERSION   = '0.2.3';
+$Net::Blogger::Engine::Radio::VERSION   = '0.2.4';
 @Net::Blogger::Engine::Radio::ISA       = qw (
                                          Exporter
                                          Net::Blogger::Engine::Userland
@@ -92,40 +92,29 @@ sub BlogId {
   return $self->GetBlogId();
 }
 
-=head1 metaWeblog API METHODS
-
-=head2 $pkg->metaWeblog()
-
-=cut
-
-sub metaWeblog {
-  my $self = shift;
-
-  if (! $self->{__meta}) {
-
-    require Net::Blogger::Engine::Userland::metaWeblog;
-    my $meta = Net::Blogger::Engine::Userland::metaWeblog->new(debug=>$self->{debug});
-
-    map { $meta->$_($self->$_()); } qw (BlogId Proxy Username Password );
-    $self->{__meta} = $meta;
-  }
-
-  return $self->{__meta};
-}
-
 =head1 VERSION
 
-0.2.3
+0.2.4
 
 =head1 DATE
 
-May 04, 2002
+July 05, 2002
 
 =head1 AUTHOR
 
 Aaron Straup Cope
 
 =head1 CHANGES
+
+=head2 0.2.4
+
+=over
+
+=item * 
+
+Move $pkg->metaWeblog into I<Net::Blogger::Engine::Userland>
+
+=back
 
 =head2 0.2.3
 

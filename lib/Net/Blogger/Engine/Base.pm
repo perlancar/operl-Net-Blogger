@@ -37,7 +37,7 @@ use strict;
 
 use vars qw ( $AUTOLOAD );
 
-$Net::Blogger::Engine::Base::VERSION        = '0.3';
+$Net::Blogger::Engine::Base::VERSION        = '0.3.1';
 @Net::Blogger::Engine::Base::ISA            = qw ( Exporter Net::Blogger::API::Core Net::Blogger::API::Extended );
 @Net::Blogger::Engine::Base::ISA::EXPORT    = qw ();
 @Net::Blogger::Engine::Base::ISA::EXPORT_OK = qw ();
@@ -59,7 +59,7 @@ Instantiate a new Blogger object.
 
 Valid arguments are :
 
-=over
+=over 4
 
 =item *
 
@@ -280,7 +280,13 @@ sub AUTOLOAD {
 
     if (my $arg = shift) { 
       $self->{ $property } = $arg; 
+     
+      if ($AUTOLOAD eq "Proxy") {
+	$self->{"_client"} = undef;
+      }
       
+      #
+
       if (exists $self->{'__meta'}) {
 	$self->{'__meta'}->$property($arg);
       }
@@ -295,20 +301,16 @@ sub AUTOLOAD {
 
     }
    
-    if ($AUTOLOAD eq "Proxy") {
-	$self->{"_client"} = undef;
-    }
-
     return $self->{ $property };
 }
 
 =head1 VERSION
 
-0.3
+0.3.1
 
 =head1 DATE
 
-May 16, 2002
+September 02, 2002
 
 =head1 AUTHOR
 
@@ -324,9 +326,23 @@ L<SOAP::Lite>
 
 =head1 CHANGES
 
+=head2 0.3.1
+
+=over 4
+
+=item *
+
+Fixed to undef _client only if arg is passed to I<Proxy>
+
+=item * 
+
+Updated POD.
+
+=back
+
 =head2 0.3
 
-=over
+=over 4
 
 =item * 
 
@@ -340,7 +356,7 @@ Added I<Transport> and I<Uri>
 
 =head2 0.2
 
-=over
+=over 4
 
 =item *
 
@@ -358,7 +374,7 @@ Added quotes to I<$VERSION>
 
 =head2 0.1.3
 
-=over
+=over 4
 
 =item *
 
@@ -368,7 +384,7 @@ Updated POD
 
 =head2 0.1.2
 
-=over
+=over 4
 
 =item * 
 
@@ -378,7 +394,7 @@ Updated POD
 
 =head2 0.1.1
 
-=over
+=over 4
 
 =item *
 
@@ -392,7 +408,7 @@ No need to pass I<$self> to I<&_ClientFault>.
 
 =head2 0.1
 
-=over
+=over 4
 
 =item *
 

@@ -19,7 +19,7 @@ This package should not be called directly. It is a base class used by I<Net::Bl
 package Net::Blogger::Engine::Userland;
 use strict;
 
-$Net::Blogger::Engine::Userland::VERSION   = '0.2.3';
+$Net::Blogger::Engine::Userland::VERSION   = '0.3.1';
 @Net::Blogger::Engine::Userland::ISA       = qw ( Exporter Net::Blogger::Engine::Base );
 @Net::Blogger::Engine::Userland::EXPORT    = qw ();
 @Net::Blogger::Engine::Userland::EXPORT_OK = qw ();
@@ -87,6 +87,8 @@ sub Proxy {
     if (my $blog = $self->BlogId()) {
 	my $uri = URI->new($blog);
 	$self->{"_proxy"} = $uri->scheme()."://".$uri->host()."/RPC2";
+
+	$self->{"_client"} = undef;
 	return $self->{"_proxy"};
     }
 
@@ -138,15 +140,37 @@ sub MaxPostLength {
     return undef;
 }
 
+
+=head1 metaWeblog API METHODS
+
+=head2 $pkg->metaWeblog()
+
+=cut
+
+sub metaWeblog {
+  my $self = shift;
+
+  if (! $self->{__meta}) {
+
+    require Net::Blogger::Engine::Userland::metaWeblog;
+    my $meta = Net::Blogger::Engine::Userland::metaWeblog->new(debug=>$self->{debug});
+
+    map { $meta->$_($self->$_()); } qw (BlogId Proxy Username Password );
+    $self->{__meta} = $meta;
+  }
+
+  return $self->{__meta};
+}
+
 return 1;
 
 =head1 VERSION
 
-0.2.3
+0.3.1
 
 =head1 DATE
 
-May 04, 2002
+September 02, 2002
 
 =head1 AUTHOR
 
@@ -154,9 +178,33 @@ Aaron Straup Cope
 
 =head1 CHANGES
 
+=head2 0.3.1
+
+=over 4
+
+=item *
+
+Reset _client when I<Proxy> is called with a new value.
+
+=item *
+
+Updated POD
+
+=back
+
+=head2 0.3
+
+=over 4 
+
+=item *
+
+Added $pkg->metaWeblog()
+
+back
+
 =head2 0.2.3
 
-=over
+=over 4
 
 =item *
 
@@ -166,7 +214,7 @@ Added quotes to I<$VERSION>
 
 =head2 0.2.2
 
-=over
+=over 4
 
 =item *
 
@@ -176,7 +224,7 @@ Updated POD
 
 =head2 0.2.1
 
-=over
+=over 4
 
 =item * 
 
@@ -186,7 +234,7 @@ Updated POD
 
 =head2 0.2
 
-=over
+=over 4
 
 =item *
 
@@ -200,7 +248,7 @@ Update POD.
 
 =head2 0.1.1
 
-=over
+=over 4
 
 =item *
 
@@ -222,7 +270,7 @@ Updated POD.
 
 =head2 0.1
 
-=over
+=over 4
 
 =item
 

@@ -85,7 +85,7 @@ use Exporter;
 
 use vars qw ( $AUTOLOAD $LAST_ERROR );
 
-$Net::Blogger::VERSION   = '0.8.1';
+$Net::Blogger::VERSION   = '0.8.2';
 @Net::Blogger::ISA       = qw (Exporter);
 @Net::Blogger::EXPORT    = qw ();
 @Net::Blogger::EXPORT_OK = qw ();
@@ -466,11 +466,11 @@ sub AUTOLOAD {
 
 =head1 VERSION
 
-0.8.1
+0.8.2
 
 =head1 DATE
 
-June 27, 2002
+September 02, 2002
 
 =head1 AUTHOR
 
@@ -485,6 +485,16 @@ L<Net::Blogger::Engine::Base>
 http://plant.blogger.com/api/
 
 =head1 CHANGES
+
+=head2 0.8.2
+
+=over
+
+=item *
+
+Added support for the metaWeblog API to the Manila engine.
+
+=back
 
 =head2 0.8.1
 

@@ -1,5 +1,19 @@
 Revision history for Perl extension Net::Blogger.
 
+0.8.2	 - Mon Sep 02 2002
+
+	 - Added support for the metaWeblog API to the Manila engine
+
+	 - Modified Net::Blogger::Engine::Blogger to allow user-defined Proxy URI
+
+	 - Updated Net::Blogger::Engine::Base to undef _client only when a new Proxy is defined
+
+	 - Updated Net::Blogger::Engine::Userland to undef _client when a new Proxy is defined
+
+	 - Moved $pkg->metaWeblog from Net::Blogger::Engine::Radio.pm into ::Engine::Userland.pm
+
+	 - Updated POD
+
 0.8.1	 - Thu Jun 17 2002
 
 	 - Added support for the mt.getTrackbackPings method in Net::Blogger::Engine::Movabletype::mt.pm
