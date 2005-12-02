@@ -42,7 +42,7 @@ use strict;
 
 use vars qw ( $AUTOLOAD );
 
-$Net::Blogger::Engine::Base::VERSION        = '0.6';
+$Net::Blogger::Engine::Base::VERSION        = '1.0';
 @Net::Blogger::Engine::Base::ISA            = qw ( Exporter Net::Blogger::API::Core Net::Blogger::API::Extended );
 @Net::Blogger::Engine::Base::ISA::EXPORT    = qw ();
 @Net::Blogger::Engine::Base::ISA::EXPORT_OK = qw ();
@@ -225,7 +225,15 @@ sub _Client {
 	|| Error->throw(-text=>$!);
 
       $client->on_fault(\&_ClientFault);
-      $client->proxy($self->Proxy); 
+
+      # Obey $http_proxy, if set.
+
+      if (defined($ENV{http_proxy})) {
+	  $client->proxy($self->Proxy, proxy => ['http' => $ENV{http_proxy} ]);
+      } else {
+	  $client->proxy($self->Proxy);
+      }
+
       $client->uri($self->Uri());
 
       # Fix this.
@@ -308,11 +316,11 @@ sub AUTOLOAD {
 
 =head1 VERSION
 
-0.6
+1.0
 
 =head1 DATE
 
-$Date: 2004/02/10 15:55:45 $
+$Date: 2005/03/26 19:29:08 $
 
 =head1 AUTHOR
 
@@ -328,7 +336,7 @@ L<SOAP::Lite>
 
 =head1 LICENSE
 
-Copyright (c) 2001-2004 Aaron Straup Cope.
+Copyright (c) 2001-2005 Aaron Straup Cope.
 
 This is free software, you may use it and distribute it under the same terms as Perl itself.
 

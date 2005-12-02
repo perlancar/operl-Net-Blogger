@@ -62,7 +62,7 @@ use strict;
 use Exporter;
 use Net::Blogger::Engine::Base;
 
-$Net::Blogger::Engine::Movabletype::mt::VERSION   = '0.4';
+$Net::Blogger::Engine::Movabletype::mt::VERSION   = '1.0';
 
 @Net::Blogger::Engine::Movabletype::mt::ISA       = qw ( Exporter Net::Blogger::Engine::Base );
 @Net::Blogger::Engine::Movabletype::mt::EXPORT    = qw ();
@@ -390,11 +390,11 @@ sub publishPost {
 
 =head1 VERSION
 
-0.4
+1.0
 
 =head1 DATE
 
-$Date: 2004/02/10 15:55:45 $
+$Date: 2005/03/26 19:29:08 $
 
 =head1 AUTHOR
 
@@ -408,7 +408,7 @@ http://www.movabletype.org/mt-static/docs/mtmanual_programmatic.html#xmlrpc%20ap
 
 =head1 LICENSE
 
-Copyright (c) 2002-2004, Aaron Straup Cope. All Rights Reserved.
+Copyright (c) 2002-2005, Aaron Straup Cope. All Rights Reserved.
 
 This is free software, you may use it and distribute it under the same terms as Perl itself.
 

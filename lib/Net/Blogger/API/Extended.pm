@@ -18,7 +18,7 @@ methods not defined in the Blogger API.
 package Net::Blogger::API::Extended;
 use strict;
 
-$Net::Blogger::API::Extended::VERSION   = '0.2';
+$Net::Blogger::API::Extended::VERSION   = '1.0';
 @Net::Blogger::API::Extended::ISA       = qw ( Exporter );
 @Net::Blogger::API::Extended::EXPORT    = qw ();
 @Net::Blogger::API::Extended::EXPORT_OK = qw ();
@@ -371,11 +371,11 @@ sub _TrimPostBody {
 
 =head1 VERSION
 
-0.2
+1.0
 
 =head1 DATE
 
-$Date: 2004/02/10 15:55:45 $
+$Date: 2005/03/26 19:29:08 $
 
 =head1 AUTHOR
 
@@ -389,7 +389,7 @@ L<Net::Blogger::API::Core>
 
 =head1 LICENSE
 
-Copyright (c) 2001-2004 Aaron Straup Cope.
+Copyright (c) 2001-2005 Aaron Straup Cope.
 
 This is free software, you may use it and distribute it under the same terms as Perl itself.
 

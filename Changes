@@ -1,5 +1,23 @@
 Revision history for Perl extension Net::Blogger.
 
+1.0	 - Fri Dec 02, 2005
+
+	 - The Nothing Special release - it's just been 4 years
+	   and Blogger is finally doing the 2.0/Atom thing for
+	   real :
+
+	    http://code.blogspot.com/archives/atom-docs.html	   
+
+	   I think we can call it 1.0, don't you?
+
+	 - Respect $ENV{http_proxy} (RT ticket 8580)
+
+	 - Updated POD
+
+	 - Replace ExtUtils::MakeMaker with Module::Build
+
+         - Pass maintainership on to CLACO
+
 0.87	 - Tue Feb 10, 2004
 
 	 - Added NOTES concerning content-negotiation (RT bug

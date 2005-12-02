@@ -31,7 +31,7 @@ methods specific to a MovableType XML-RPC server.
 package Net::Blogger::Engine::Movabletype;
 use strict;
 
-$Net::Blogger::Engine::Movabletype::VERSION   = '0.3';
+$Net::Blogger::Engine::Movabletype::VERSION   = '1.0';
 @Net::Blogger::Engine::Movabletype::ISA       = qw ( Exporter Net::Blogger::Engine::Base );
 @Net::Blogger::Engine::Movabletype::EXPORT    = qw ();
 @Net::Blogger::Engine::Movabletype::EXPORT_OK = qw ();
@@ -119,11 +119,11 @@ sub metaWeblog {
 
 =head1 VERSION
 
-0.3
+1.0
 
 =head1 DATE
 
-$Date: 2004/02/10 15:55:45 $
+$Date: 2005/03/26 19:29:08 $
 
 =head1 AUTHOR
 
@@ -141,7 +141,7 @@ http://aaronland.net/weblog/archive/3719
 
 =head1 LICENSE
 
-Copyright (c) 2001-2004 Aaron Straup Cope.
+Copyright (c) 2001-2005 Aaron Straup Cope.
 
 This is free software, you may use it and distribute it under the same terms as Perl itself.
 

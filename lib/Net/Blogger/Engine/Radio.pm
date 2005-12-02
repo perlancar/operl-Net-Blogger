@@ -32,7 +32,7 @@ methods specifc to a RadioUserLand XML-RPC server.
 package Net::Blogger::Engine::Radio;
 use strict;
 
-$Net::Blogger::Engine::Radio::VERSION   = '0.3';
+$Net::Blogger::Engine::Radio::VERSION   = '1.0';
 @Net::Blogger::Engine::Radio::ISA       = qw (
                                          Exporter
                                          Net::Blogger::Engine::Userland
@@ -103,11 +103,11 @@ sub BlogId {
 
 =head1 VERSION
 
-0.3
+1.0
 
 =head1 DATE
 
-$Date: 2004/02/10 15:55:45 $
+$Date: 2005/03/26 19:29:08 $
 
 =head1 AUTHOR
 
@@ -123,7 +123,7 @@ http://frontier.userland.com/emulatingBloggerInManila
 
 =head1 LICENSE
 
-Copyright (c) 2001-2004 Aaron Straup Cope.
+Copyright (c) 2001-2005 Aaron Straup Cope.
 
 This is free software, you may use it and distribute it under the same terms as Perl itself.
 

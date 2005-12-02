@@ -26,7 +26,7 @@ use URI;
 
 use Net::Blogger::Engine::Base;
 
-$Net::Blogger::Engine::Slash::slashcode::VERSION   = 0.2;
+$Net::Blogger::Engine::Slash::slashcode::VERSION   = '1.0';
 
 @Net::Blogger::Engine::Slash::slashcode::ISA       = qw ( Net::Blogger::Engine::Base );
 @Net::Blogger::Engine::Slash::slashcode::EXPORT    = qw ();
@@ -225,11 +225,11 @@ sub _setUserCookie {
 
 =head1 VERSION
 
-0.2
+1.0
 
 =head1 DATE
 
-$Date: 2004/02/10 15:55:45 $
+$Date: 2005/03/26 19:29:08 $
 
 =head1 AUTHOR
 
@@ -253,7 +253,7 @@ http://use.perl.org/~pudge/journal/3294
 
 =head1 LICENSE
 
-Copyright (c) 2002-2004, Aaron Straup Cope. All Rights Reserved.
+Copyright (c) 2002-2005, Aaron Straup Cope. All Rights Reserved.
 
 This is free software, you may use it and distribute it under the same terms as Perl itself.
 

@@ -21,7 +21,7 @@ use strict;
 use constant BLOGGER_PROXY  => "http://plant.blogger.com/api/RPC2";
 use constant MAX_POSTLENGTH => 65536;
 
-$Net::Blogger::Engine::Blogger::VERSION   = '0.3';
+$Net::Blogger::Engine::Blogger::VERSION   = '1.0';
 @Net::Blogger::Engine::Blogger::ISA       = qw ( Exporter Net::Blogger::Engine::Base );
 @Net::Blogger::Engine::Blogger::EXPORT    = qw ();
 @Net::Blogger::Engine::Blogger::EXPORT_OK = qw ();
@@ -104,11 +104,11 @@ B<setTemplate()>
 
 =head1 VERSION
 
-0.3
+1.0
 
 =head1 DATE
 
-$Date: 2004/02/10 15:55:45 $
+$Date: 2005/03/26 19:29:08 $
 
 =head1 AUTHOR
 
@@ -122,7 +122,7 @@ http://plant.blogger.com/api/
 
 =head1 LICENSE
 
-Copyright (c) 2001-2004 Aaron Straup Cope.
+Copyright (c) 2001-2005 Aaron Straup Cope.
 
 This is free software, you may use it and distribute it under the
 same terms as Perl itself.

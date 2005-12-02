@@ -98,7 +98,7 @@ use strict;
 
 use vars qw ( $AUTOLOAD $LAST_ERROR );
 
-$Net::Blogger::VERSION   = '0.87';
+$Net::Blogger::VERSION   = '1.0';
 
 =head1 PACKAGE METHODS
 
@@ -543,11 +543,11 @@ See also :
 
 =head1 VERSION
 
-0.87
+1.0
 
 =head1 DATE
 
-$Date: 2004/02/10 15:55:45 $
+$Date: 2005/03/26 19:29:08 $
 
 =head1 AUTHOR
 
@@ -569,7 +569,7 @@ Hopefully, few. Please reports all bugs to :
 
 =head1 LICENSE
 
-Copyright (c) 2001-2004 Aaron Straup Cope.
+Copyright (c) 2001-2005 Aaron Straup Cope.
 
 This is free software, you may use it and distribute it under 
 the same terms as Perl itself.

@@ -1,3 +1,5 @@
+Build.PL
+Changes
 lib/Net/Blogger.pm
 lib/Net/Blogger/API/Core.pm
 lib/Net/Blogger/API/Extended.pm
@@ -11,9 +13,8 @@ lib/Net/Blogger/Engine/Slash.pm
 lib/Net/Blogger/Engine/Slash/slashcode.pm
 lib/Net/Blogger/Engine/Userland.pm
 lib/Net/Blogger/Engine/Userland/metaWeblog.pm
-Changes
-MANIFEST
 Makefile.PL
+MANIFEST
+README
 t/00-basic.t
-TODO
-META.yml                                 Module meta-data (added by MakeMaker)
+
