@@ -25,7 +25,7 @@ Net::Blogger::Engine::Radio - UserLand Radio Blogger API engine
 =head1 DESCRIPTION
 
 This package inherits I<Net::Blogger::Engine::Userland> and implements 
-methods specifc to a RadioUserLand XML-RPC server.
+methods specific to a RadioUserLand XML-RPC server.
 
 =cut
 

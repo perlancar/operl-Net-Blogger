@@ -1,12 +1,18 @@
 Revision history for Perl extension Net::Blogger.
 
+1.01 Fri Dec 2 18:10:35 2005
+    - Added pod coverages, spelling, and syntex tests
+    - Added MANIFEST.SKIP
+    - Added META.yml to MANIFEST
+    - Added metaWeblog.getRecentPosts to Userland::metaWeblog API
+
 1.0	 - Fri Dec 02, 2005
 
 	 - The Nothing Special release - it's just been 4 years
 	   and Blogger is finally doing the 2.0/Atom thing for
 	   real :
 
-	    http://code.blogspot.com/archives/atom-docs.html	   
+	    http://code.blogspot.com/archives/atom-docs.html
 
 	   I think we can call it 1.0, don't you?
 
@@ -37,8 +43,8 @@ Revision history for Perl extension Net::Blogger.
 
 	 - Added support for the getRecentPostTitles() and
            publishPost() methods in ::Engine::Movabletype::mt.pm
-	   
-	 - Added fix to regex(p) in ::Engine::Base.pm used to 
+
+	 - Added fix to regex(p) in ::Engine::Base.pm used to
 	   determine parent API engine to make 'warnings' shut
 	   up. (thanks andi!)
 
@@ -50,7 +56,7 @@ Revision history for Perl extension Net::Blogger.
 
 	 - Updated POD in ::Userland::metaWeblog to indicated
 	   required 'postid' for editPost()
- 
+
 	 - Fixed typo in ::Engine::Base.pm
 
 	 - Added [y/n] to ask_yesno() prompt in 00-basic.t
@@ -82,8 +88,8 @@ Revision history for Perl extension Net::Blogger.
 
 0.8.3	 - Mon Sep 23 2002
 
-	 - Updated docs and POD (props to a nice person name 'rho' 
-	   who was good enough to carefully read the docs and submit 
+	 - Updated docs and POD (props to a nice person name 'rho'
+	   who was good enough to carefully read the docs and submit
 	   bug reports)
 
 0.8.2	 - Mon Sep 02 2002
@@ -93,30 +99,30 @@ Revision history for Perl extension Net::Blogger.
 	 - Modified Net::Blogger::Engine::Blogger to allow
 	   user-defined Proxy URI
 
-	 - Updated Net::Blogger::Engine::Base to undef _client only 
+	 - Updated Net::Blogger::Engine::Base to undef _client only
 	   when a new Proxy is defined
 
-	 - Updated Net::Blogger::Engine::Userland to undef _client 
+	 - Updated Net::Blogger::Engine::Userland to undef _client
 	   when a new Proxy is defined
 
-	 - Moved $pkg->metaWeblog from Net::Blogger::Engine::Radio.pm 
+	 - Moved $pkg->metaWeblog from Net::Blogger::Engine::Radio.pm
 	   into ::Engine::Userland.pm
 
 	 - Updated POD
 
 0.8.1	 - Thu Jun 17 2002
 
-	 - Added support for the mt.getTrackbackPings method in 
+	 - Added support for the mt.getTrackbackPings method in
 	   Net::Blogger::Engine::Movabletype::mt.pm
 
 0.8	 - Fri May 31 2002
 
-	 - Added Net::Blogger::Engine::Slash and 
+	 - Added Net::Blogger::Engine::Slash and
 	   Net::Blogger::Engine::Slash::slashcode
 
 	 - Added check_* methods to Net::Blogger::API::Core
 
-	 - Added calls to check_* methods, to Engine::* files where 
+	 - Added calls to check_* methods, to Engine::* files where
 	   necessary
 
 	 - Removed left-over deletePost method from Blogger.pm (gah!)
@@ -143,7 +149,7 @@ Revision history for Perl extension Net::Blogger.
 	 - Added support for the mt (MovableType) API in the MovableType
 	   engine
 
-	 - Added hooks in Net::Blogger::Base to filter changes to login 
+	 - Added hooks in Net::Blogger::Base to filter changes to login
 	   data in a parent engine to child APIs
 
 	 - Added hooks in Net::Blogger::Engine::Userland::metaWeblog to
@@ -162,8 +168,8 @@ Revision history for Perl extension Net::Blogger.
 
 0.6.2.2	 - Sun Apr 14 2002
 
-	 - No changes. But, since I uploaded the current codebase 
-	   to the CPAN as v 0.6.1.2, I decided to upload a new 
+	 - No changes. But, since I uploaded the current codebase
+	   to the CPAN as v 0.6.1.2, I decided to upload a new
 	   version with a new version number just to keep everyone
            on first.
 
@@ -171,7 +177,7 @@ Revision history for Perl extension Net::Blogger.
 
 
    Updated POD
-	
+
 0.6.2
 
 

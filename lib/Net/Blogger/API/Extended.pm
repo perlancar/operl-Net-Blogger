@@ -10,7 +10,7 @@ Net::Blogger::API::Extended - provides helper methods not defined in the Blogger
 
 =head1 DESCRIPTION
 
-This package is inherited by I<Net::Blogger::Engine::Base> and provides helper 
+This package is inherited by I<Net::Blogger::Engine::Base> and provides helper
 methods not defined in the Blogger API.
 
 =cut
@@ -28,19 +28,21 @@ use FileHandle;
 
 =head1 OBJECT METHODS
 
-=cut
+=head2 $pkg->MaxPostLength
 
-# mmmm, undocumented crunchi-ness.
+Abstract method for returning the max post length
+
+=cut
 
 sub MaxPostLength {
     return undef;
 }
 
-=head2 $pkg->GetBlogId(\%args) 
+=head2 $pkg->GetBlogId(\%args)
 
 Return the unique blogid for I<$args{'blogname'}>.
 
-Valid arguments are 
+Valid arguments are
 
 =over
 
@@ -53,7 +55,7 @@ B<blogname> => string.
 Releases prior to Net::Blogger 0.85 accepted a list of arguments
 rather than a reference. Version 0.85+ are backwards compatible.
 
-Returns a string. If no blogname is specified, the current blogid for 
+Returns a string. If no blogname is specified, the current blogid for
 the object is returned.
 
 =cut
@@ -77,7 +79,7 @@ sub GetBlogId {
 	    last;
 	}
     }
-    
+
     return $blogid;
 }
 
@@ -110,7 +112,7 @@ sub DeleteAllPosts {
 
     while (@pids) {
 	foreach my $p (@pids) {
-	    $self->deletePost(postid=>$p->{'postid'},publish=>$args->{'publish'}); 
+	    $self->deletePost(postid=>$p->{'postid'},publish=>$args->{'publish'});
 	}
 
 	($ok,@pids) = $self->getRecentPosts(numposts=>20);
@@ -121,14 +123,14 @@ sub DeleteAllPosts {
 
 =head2 $pkg->PostFromFile(\%args)
 
-Open a filehandle, and while true, post to Blogger. If the length of the amount 
-read from the file exceeds the per-post limit assigned by the Blogger servers -- 
-currently 65,536 characters -- the contents of the file will be posted in multiple 
+Open a filehandle, and while true, post to Blogger. If the length of the amount
+read from the file exceeds the per-post limit assigned by the Blogger servers --
+currently 65,536 characters -- the contents of the file will be posted in multiple
 "chunks".
 
-Valid arguments are 
+Valid arguments are
 
-=over 
+=over
 
 =item *
 
@@ -138,35 +140,35 @@ B<file>
 
 =item *
 
-B<postid> 
+B<postid>
 
 String.
 
 =item *
 
-B<publish> 
+B<publish>
 
 Boolean.
 
 =item *
 
-B<tail> 
+B<tail>
 
 Boolean.
 
-If true, the method will not attempt to post data whose length exceeds the limit 
-set by the Blogger server in the order that the data is read. Translation : last 
+If true, the method will not attempt to post data whose length exceeds the limit
+set by the Blogger server in the order that the data is read. Translation : last
 in becomes last post becomes the first thing you see on your weblog.
 
 =back
 
-If a I<postid> argument is present, the method will call the Blogger API I<editPost> 
+If a I<postid> argument is present, the method will call the Blogger API I<editPost>
 method with postid. Otherwise the method will call the Blogger API I<newPost> method.
 
 Releases prior to Net::Blogger 0.85 accepted a list of arguments
 rather than a reference. Version 0.85+ are backwards compatible.
 
-Returns true or false, followed by an array of zero, or more, postids. 
+Returns true or false, followed by an array of zero, or more, postids.
 
 =cut
 
@@ -223,11 +225,11 @@ sub PostFromFile {
 
 	    if (! $pid) {
 		$fh->close();
-		
+
 	      $self->LastError("Encountered an error posting. Exiting prematurely.");
 		return (0,@postids);
 	    }
-	    
+
 	    push(@postids,$pid);
 	    $post = $remainder.substr($post,$self->MaxPostLength(),$len);
 	}
@@ -245,30 +247,30 @@ sub PostFromFile {
 			       postid   => $args->{'postid'},
 			       publish  => $args->{'publish'},
 			       );
-    
+
     if (! $pid) {
       $self->LastError("Encountered an error posting last chunk : ".Error->prior());
 	return (0, @postids);
-    } 
-    
-    push (@postids,$pid);    
+    }
+
+    push (@postids,$pid);
     return (1,@postids);
 }
 
 =head2 $pkg->PostFromOutline(\%args)
 
-Like I<PostFromFile>, only this time the file is an outliner document. 
+Like I<PostFromFile>, only this time the file is an outliner document.
 
-This method uses Simon Kittle's Text::Outline::asRenderedHTML method for 
-posting. As of this writing, the Text::Outline package has not been uploaded 
+This method uses Simon Kittle's Text::Outline::asRenderedHTML method for
+posting. As of this writing, the Text::Outline package has not been uploaded
 to the CPAN. See below for a link to the homepage/source.
 
-Valid outline formats are OPML, tabbed text outline, Emacs' outline-mode format, 
+Valid outline formats are OPML, tabbed text outline, Emacs' outline-mode format,
 and the GNOME Think format.
 
-Valid arguments are 
+Valid arguments are
 
-=over 
+=over
 
 =item *
 
@@ -278,25 +280,25 @@ B<file>
 
 =item *
 
-B<postid> 
+B<postid>
 
 String.
 
 =item *
 
-B<publish> 
+B<publish>
 
 Boolean.
 
 =back
 
-If a I<postid> argument is present, the method will call the Blogger API I<editPost> 
+If a I<postid> argument is present, the method will call the Blogger API I<editPost>
 method with postid. Otherwise the method will call the Blogger API I<newPost> method.
 
 Releases prior to Net::Blogger 0.85 accepted a list of arguments
 rather than a reference. Version 0.85+ are backwards compatible.
 
-Returns true or false, followed by an array of zero, or more, postids. 
+Returns true or false, followed by an array of zero, or more, postids.
 
 =cut
 
@@ -310,12 +312,12 @@ sub PostFromOutline {
     # Makefile is ever written...
     eval "require $class"
 	|| &{ $self->LastError($@); return 0; };
-    
+
     my $outline = $class->new(load=>$args->{'file'})
 	|| &{ $self->LastError($!); return 0; };
-    
+
     my $postbody = $outline->asRenderedHTML();
-    
+
     my $method   = ($args->{'postid'}) ? "editPost" : "newPost";
 
     return $self->$method(postbody=>\$postbody,%$args);
@@ -335,14 +337,14 @@ sub _PostInChunks {
     }
 
     my $text = $args->{"postbody"};
-    
+
     while ( $$text ) {
 	my $chunk     = substr($$text,0,$self->MaxPostLength());
 	my $remainder = $self->_TrimPostBody(\$chunk);
 
 	$$text = $remainder.substr($$text,length($chunk),length($$text));
 
-	# Since Blogger posts are chronological, we add chunks 
+	# Since Blogger posts are chronological, we add chunks
 	# to the top of the stack. That way, the 'end' pieces get
 	# added first and, in the end, the text will be displayed
 	# in the order it was written.
@@ -350,10 +352,10 @@ sub _PostInChunks {
 
 	unshift (@chunks, \$chunk);
     }
-    
-    map { 
+
+    map {
 	$args->{"postbody"} = $_;
-	push(@postids, $self->$caller(%$args)); 
+	push(@postids, $self->$caller(%$args));
     } @chunks;
 
     return @postids;
@@ -366,7 +368,7 @@ sub _TrimPostBody {
     if (ref($body) ne "SCALAR") {
 	$self->LastError("Input must be a scalar ref.");
 	return undef;
-    }    
+    }
 }
 
 =head1 VERSION

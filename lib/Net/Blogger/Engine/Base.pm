@@ -28,8 +28,8 @@ Base.pm is used a base class by implementation specific modules
 for the Blogger API.
 
 If an implementation follows the Blogger API to the letter then,
-conceivably, all it's package would need to define is a constructor 
-and I<Proxy> method to define the 
+conceivably, all it's package would need to define is a constructor
+and I<Proxy> method to define the
 URI of it's XML-RPC server.
 
 Base.pm inherits the functionality of Net::Blogger::Base::API and
@@ -70,7 +70,7 @@ Valid arguments are :
 
 =item *
 
-B<appkey> 
+B<appkey>
 
 String. The magic appkey for connecting to the Blogger XMLRPC server.
 
@@ -98,6 +98,10 @@ Releases prior to Net::Blogger 0.85 accepted a list of arguments
 rather than a reference. Version 0.85+ are backwards compatible.
 
 Returns an object. Woot!
+
+=head2 __PACKAGE__->init
+
+Initializes the option values
 
 =cut
 
@@ -183,17 +187,23 @@ Returns a string.
 sub LastError {
     my $self = shift;
     my $e    = shift;
-    
+
     if ($e) {
 	Error::Simple->record($e);
 	return 1;
     }
-    
+
     $e = Error->prior();
     chomp $e;
 
     return $e;
 }
+
+=head2 $pkg->Transport
+
+Just returns XMLRPC by default
+
+=cut
 
 sub Transport {
   return "XMLRPC";
@@ -208,7 +218,7 @@ sub _Client {
 
       if ($pkg =~ /^(XMLRPC|SOAP)$/) {
 	$pkg = join("::",$pkg,"Lite");
-      } 
+      }
 
       else {
 	die "Unknown transport : '$pkg'\n";
@@ -254,7 +264,7 @@ sub _ClientFault {
 			       "Fatal client error.",
 			       ((ref $res) ? $res->faultstring() : $client->transport->status()))
 			  );
-    return 0; 
+    return 0;
 }
 
 sub _Type {
@@ -288,29 +298,29 @@ sub AUTOLOAD {
 
     my $property = lc "_".$AUTOLOAD;
 
-    if (my $arg = shift) { 
-      $self->{ $property } = $arg; 
-     
+    if (my $arg = shift) {
+      $self->{ $property } = $arg;
+
       if ($AUTOLOAD eq "Proxy") {
 	$self->{"_client"} = undef;
       }
-      
+
       #
 
       if (exists $self->{'__meta'}) {
 	$self->{'__meta'}->$property($arg);
       }
-      
+
       if (exists $self->{'__mt'}) {
 	$self->{'__mt'}->$property($arg);
       }
-      
+
       if (exists $self->{'__slash'}) {
 	$self->{'__slash'}->$property($arg);
       }
 
     }
-   
+
     return $self->{ $property };
 }
 

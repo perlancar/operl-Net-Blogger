@@ -10,7 +10,7 @@ Net::Blogger::Engine::Blogger - Pyra Blogger API engine
 
 =head1 DESCRIPTION
 
-This package inherits I<Net::Blogger::Engine::Base> and defines methods specific 
+This package inherits I<Net::Blogger::Engine::Base> and defines methods specific
 the the Pyra (blogger.com) XML-RPC server.
 
 =cut
@@ -34,7 +34,7 @@ sub new {
 
     my $self = {};
     bless $self,$pkg;
-    
+
     if (! $self->SUPER::init(@_)) {
 	return 0;
     }
@@ -42,9 +42,13 @@ sub new {
     return $self;
 }
 
-=head1 OBJECT MEHODS
+=head1 PACKAGE METHODS
 
-=cut
+=head2 __PACKAGE__->new()
+
+Instantiate a new Blogger Engine object.
+
+=head1 OBJECT METHODS
 
 =pod
 
@@ -81,11 +85,11 @@ sub DESTROY {
 
 B<Delays>
 
-It remains uncertain how long a program needs to wait between the time that a new 
-post is submitted to the Blogger servers and that that may post may be acted upon. 
+It remains uncertain how long a program needs to wait between the time that a new
+post is submitted to the Blogger servers and that that may post may be acted upon.
 
-The applies to the Blogger API I<getPost>, I<editPost> and I<deletePost> methods equally. 
-Anything under a 10 second will often result in a "post not found" fault. A delay of 10 
+The applies to the Blogger API I<getPost>, I<editPost> and I<deletePost> methods equally.
+Anything under a 10 second will often result in a "post not found" fault. A delay of 10
 seconds or more is usually successful. Your mileage may vary.
 
 =item *
@@ -93,8 +97,8 @@ seconds or more is usually successful. Your mileage may vary.
 B<setTemplate()>
 
  <quote src = "ev">
-  There are some blogs for which setTemplate will return a permission denied error. Newly 
-  created blogs will work. Sufficiently older blogs will work. A meanwhile work-around: 
+  There are some blogs for which setTemplate will return a permission denied error. Newly
+  created blogs will work. Sufficiently older blogs will work. A meanwhile work-around:
   edit the template through Blogger UI first.
  </quote>
 

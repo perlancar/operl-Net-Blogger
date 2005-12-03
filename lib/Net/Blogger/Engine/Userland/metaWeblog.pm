@@ -80,7 +80,36 @@ rather than a reference. Version 0.85+ are backwards compatible.
 
 Returns an int, or false.
 
+=head2 $pkg->getRecentPosts(\%args)
+
+Returns the most recent posts
+
+Valid arguments are:
+
+=over
+
+=item numberOfPosts
+
+The maximum number of posts to return
+
+=back
+
 =cut
+
+sub getRecentPosts {
+  my $self = shift;
+  my $args = (ref($_[0]) eq "HASH") ? shift : {@_};
+  my $call = $self->_Client()->call(
+				    "metaWeblog.getRecentPosts",
+				    $self->_Type(string=>$self->BlogId()),
+				    $self->_Type(string=>$self->Username()),
+				    $self->_Type(string=>$self->Password()),
+                    $self->_Type(int=>$args->{'numberOfPosts'}),
+				    );
+
+    my @posts = ($call) ? (1,@{$call->result()}) : (0,undef);
+    return @posts;
+};
 
 sub newPost {
   my $self = shift;
@@ -129,9 +158,9 @@ for automagic encoding.
 
 B<name>
 
-String. "It may be used to determine the name of the file that stores the object, 
-or to display it in a list of objects. It determines how the weblog refers to 
-the object. If the name is the same as an existing object stored in the weblog, 
+String. "It may be used to determine the name of the file that stores the object,
+or to display it in a list of objects. It determines how the weblog refers to
+the object. If the name is the same as an existing object stored in the weblog,
 it replaces the existing object." [1]
 
 If a I<file> argument is present and no I<name> argument is defined, this property
@@ -141,7 +170,7 @@ will be defined using the I<File::Basename::basename> function.
 
 B<type>
 
-String. "It indicates the type of the object, it's a standard MIME type, 
+String. "It indicates the type of the object, it's a standard MIME type,
 like audio/mpeg or image/jpeg or video/quicktime." [1]
 
 If a I<file> argument is present and no I<type> argument is defined, the package

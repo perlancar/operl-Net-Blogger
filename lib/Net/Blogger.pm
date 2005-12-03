@@ -57,38 +57,38 @@ the Blogger XML-RPC API.
 
 =head1 DESCRIPTION
 
-Blogger.pm provides an OOP-ish interface for accessing a weblog 
+Blogger.pm provides an OOP-ish interface for accessing a weblog
 via the Blogger XML-RPC API.
 
 =head1 ENGINES
 
-Blogger.pm relies on "engines" to implement it's functionality. 
+Blogger.pm relies on "engines" to implement it's functionality.
 The Blogger.pm package itself is little more than a wrapper file
-that happens to use a default "Blogger" engine is none other is 
+that happens to use a default "Blogger" engine is none other is
 specified.
 
    my $manila = Net::Blogger->new(engine=>"manila");
 
-But wait!, you say. It's an API that servers implements and all I should have to 
+But wait!, you say. It's an API that servers implements and all I should have to
 do is changed the login data. Why do I need an engine?
 
-Indeed. Every server pretty much gets the spirit of the API right, but each implements 
+Indeed. Every server pretty much gets the spirit of the API right, but each implements
 the details slightly differently. For example :
 
-The MovableType XML-RPC server follows the spec for the I<getRecentPost> but because of 
-the way Perl auto-vivifies hashes it turns out you can slurp all the posts for a blog 
+The MovableType XML-RPC server follows the spec for the I<getRecentPost> but because of
+the way Perl auto-vivifies hashes it turns out you can slurp all the posts for a blog
 rather than the just the 20 most recent.
 
-The Userland Manila server doesn't support the I<getUsersBlogs> method; the Userland 
+The Userland Manila server doesn't support the I<getUsersBlogs> method; the Userland
 RadioUserland server does.
 
-The Blogger server imposes a limit on the maximum length of a post. Other servers don't. 
-(Granted the server in question will return a fault, if necessary, but Blogger.pm tries 
-to do the right thing and check for these sorts of things before adding to the traffic 
+The Blogger server imposes a limit on the maximum length of a post. Other servers don't.
+(Granted the server in question will return a fault, if necessary, but Blogger.pm tries
+to do the right thing and check for these sorts of things before adding to the traffic
 on the network.)
 
-Lots of weblog-like applications don't support the Blogger API but do have a traditional 
-REST interface. With the introduction of Blogger.pm "engines", support for these applications 
+Lots of weblog-like applications don't support the Blogger API but do have a traditional
+REST interface. With the introduction of Blogger.pm "engines", support for these applications
 via the API can be added with all the magic happening behind the curtain, so to speak.
 
 =cut
@@ -98,7 +98,7 @@ use strict;
 
 use vars qw ( $AUTOLOAD $LAST_ERROR );
 
-$Net::Blogger::VERSION   = '1.0';
+$Net::Blogger::VERSION   = '1.01';
 
 =head1 PACKAGE METHODS
 
@@ -118,25 +118,25 @@ B<engine> (required)
 
 String. Default is "blogger".
 
-=item * 
+=item *
 
-B<appkey> 
+B<appkey>
 
 String. The magic appkey for connecting to the Blogger XMLRPC server.
 
-=item * 
+=item *
 
 B<blogid>
 
 String. The unique ID that Blogger uses for your weblog
 
-=item * 
+=item *
 
 B<username>
 
 String. A valid username for blogid
 
-=item * 
+=item *
 
 B<password>
 
@@ -148,6 +148,10 @@ Releases prior to Net::Blogger 0.85 accepted a list of arguments
 rather than a reference. Version 0.85+ are backwards compatible.
 
 Returns an object. Woot!
+
+=head2 __PACKAGE__->init()
+
+Initializes the specified engine
 
 =cut
 
@@ -165,7 +169,7 @@ sub init {
 
     my $engine = $args->{'engine'} || "blogger";
     my $class  = join("::",__PACKAGE__,"Engine",ucfirst $engine);
- 
+
     eval "require $class";
 
     if ($@) {
@@ -174,9 +178,9 @@ sub init {
 	return 0;
     }
 
-    $self->{"_class"} = $class->new(%$args) 
+    $self->{"_class"} = $class->new(%$args)
 	|| &{ $LAST_ERROR = Error->prior(); return 0; };
-    
+
     return 1;
 }
 
@@ -184,7 +188,7 @@ sub init {
 
 =head2 $pkg->getUsersBlogs()
 
-Fetch the I<blogid>, I<url> and I<blogName> for each of the Blogger blogs 
+Fetch the I<blogid>, I<url> and I<blogName> for each of the Blogger blogs
 the current user is registered to.
 
 Returns an array ref of hashes.
@@ -203,7 +207,7 @@ B<postbody>
 
 Scalar ref. I<required>
 
-=item * 
+=item *
 
 B<publish>
 
@@ -211,8 +215,8 @@ Boolean.
 
 =back
 
-If the length of I<postbody> exceeds maximum length allowed by the Blogger servers 
--- 65,536 characters -- currently  the text will be chunked into smaller pieces are 
+If the length of I<postbody> exceeds maximum length allowed by the Blogger servers
+-- 65,536 characters -- currently  the text will be chunked into smaller pieces are
 each piece will be posted separately.
 
 Returns an array containing one, or more, post ids.
@@ -223,21 +227,21 @@ Returns a hash ref, containing the following keys : userid, postid, content and 
 
 =head2 $pkg->getRecentPosts(\%args)
 
-Fetch the latest (n) number of posts for a given blog. The most recent posts are returned 
+Fetch the latest (n) number of posts for a given blog. The most recent posts are returned
 first.
 
-Valid arguments are 
+Valid arguments are
 
 =over 4
 
-=item * 
+=item *
 
 B<numposts>
 
 Int. If no argument is passed to the method, default is 1.
 
-"NumberOfPosts is limitemd to 20 at this time. Let me know if this 
-gets annoying. Letting this number get too high could result in some 
+"NumberOfPosts is limited to 20 at this time. Let me know if this
+gets annoying. Letting this number get too high could result in some
 expensive db access, so I want to be careful with it." --Ev
 
 =back
@@ -245,7 +249,7 @@ expensive db access, so I want to be careful with it." --Ev
 Releases prior to Net::Blogger 0.85 accepted a list of arguments
 rather than a reference. Version 0.85+ are backwards compatible.
 
-Returns true or false, followed by an array of hash refs. Each hash ref contains the following 
+Returns true or false, followed by an array of hash refs. Each hash ref contains the following
 keys : postid,content,userid,dateCreated
 
 =head2 $pkg->editPost(\%args)
@@ -256,28 +260,28 @@ Valid arguments are :
 
 =over 4
 
-=item * 
+=item *
 
 B<postbody> (required)
 
 Scalar ref or a valid filehandle.
 
-=item * 
+=item *
 
 B<postid> (required)
 
 String.
 
-=item * 
+=item *
 
-B<publish> 
+B<publish>
 
 Boolean.
 
 =back
 
-If the length of I<postbody> exceeds maximum length allowed by the Blogger servers 
--- 65,536 characters -- currently  the text will be chunked into smaller pieces are 
+If the length of I<postbody> exceeds maximum length allowed by the Blogger servers
+-- 65,536 characters -- currently  the text will be chunked into smaller pieces are
 each piece will be posted separately.
 
 Releases prior to Net::Blogger 0.85 accepted a list of arguments
@@ -285,23 +289,23 @@ rather than a reference. Version 0.85+ are backwards compatible.
 
 Returns an array containing one, or more, post ids.
 
-=head2 $pkg->deletePost(\%args) 
+=head2 $pkg->deletePost(\%args)
 
 Delete a post from the Blogger server.
 
-Valid arguments are 
+Valid arguments are
 
 =over 4
 
-=item * 
+=item *
 
 B<postid> (required)
 
 String.
 
-=item * 
+=item *
 
-B<publish> 
+B<publish>
 
 Boolean.
 
@@ -320,23 +324,23 @@ Set the body of the template matching type I<$type>.
   Must contain opening and closing <Blogger> tags to be valid and accepted."
      --Evan
 
-Valid arguments are 
+Valid arguments are
 
 =over 4
 
-=item * 
+=item *
 
 B<template>
 
 Scalar ref. I<required>
 
-=item * 
+=item *
 
 B<type>
 
 String. I<required>
 
-Valid types are "main" and "archiveIndex" 
+Valid types are "main" and "archiveIndex"
 
 =back
 
@@ -349,11 +353,11 @@ Returns true or false.
 
 Fetch the body of the template matching type I<$type>.
 
-Valid types are 
+Valid types are
 
 =over 4
 
-=item * 
+=item *
 
 B<type>
 
@@ -372,17 +376,17 @@ Returns a string.
 
 =cut
 
-=head2 $pkg->GetBlogId(\%args) 
+=head2 $pkg->GetBlogId(\%args)
 
 Return the unique blogid for I<$args->{'blogname'}>.
 
-Valid arguments are 
+Valid arguments are
 
 =over 4
 
-=item * 
+=item *
 
-B<blogname> 
+B<blogname>
 
 String.
 
@@ -391,7 +395,7 @@ String.
 Releases prior to Net::Blogger 0.85 accepted a list of arguments
 rather than a reference. Version 0.85+ are backwards compatible.
 
-Returns a string. If no blogname is specified, the current blogid for 
+Returns a string. If no blogname is specified, the current blogid for
 the object is returned.
 
 =head2 $pkg->DeleteAllPosts(\%args)
@@ -413,14 +417,14 @@ rather than a reference. Version 0.85+ are backwards compatible.
 
 =head2 $pkg->PostFromFile(\%args)
 
-Open a filehandle, and while true, post to Blogger. If the length of the 
-amount read from the file exceeds the per-post limit assigned by the Blogger 
-servers -- currently 65,536 characters -- the contents of the file will be 
+Open a filehandle, and while true, post to Blogger. If the length of the
+amount read from the file exceeds the per-post limit assigned by the Blogger
+servers -- currently 65,536 characters -- the contents of the file will be
 posted in multiple "chunks".
 
-Valid arguments are 
+Valid arguments are
 
-=over 4 
+=over 4
 
 =item *
 
@@ -428,81 +432,81 @@ B<file>
 
 /path/to/file I<required>
 
-=item * 
+=item *
 
-B<postid> 
+B<postid>
 
 String.
 
-=item * 
+=item *
 
-B<publish> 
-
-Boolean.
-
-=item * 
-
-B<tail> 
+B<publish>
 
 Boolean.
 
-If true, the method will not attempt to post data whose length exceeds the 
-limit set by the Blogger server in the order that the data is read. Translation : 
+=item *
+
+B<tail>
+
+Boolean.
+
+If true, the method will not attempt to post data whose length exceeds the
+limit set by the Blogger server in the order that the data is read. Translation :
 last in becomes last post becomes the first thing you see on your weblog.
 
 =back
 
-If a I<postid> argument is present, the method will call the Blogger API I<editPost> 
+If a I<postid> argument is present, the method will call the Blogger API I<editPost>
 method with postid. Otherwise the method will call the Blogger API I<newPost> method.
 
 Releases prior to Net::Blogger 0.85 accepted a list of arguments
 rather than a reference. Version 0.85+ are backwards compatible.
 
-Returns true or false, followed by an array of zero, or more, postids. 
+Returns true or false, followed by an array of zero, or more, postids.
 
 =head2 $pkg->PostFromOutline(\%args)
 
-Like I<PostFromFile>, only this time the file is an outliner document. 
+Like I<PostFromFile>, only this time the file is an outliner document.
 
-This method uses Simon Kittle's Text::Outline::asRenderedHTML method for posting. As of 
-this writing, the Text::Outline package has not been uploaded to the CPAN. See below for 
+This method uses Simon Kittle's Text::Outline::asRenderedHTML method for posting. As of
+this writing, the Text::Outline package has not been uploaded to the CPAN. See below for
 a link to the homepage/source.
 
-Valid outline formats are OPML, tabbed text outline, Emacs' outline-mode format, and the 
+Valid outline formats are OPML, tabbed text outline, Emacs' outline-mode format, and the
 GNOME Think format.
 
-Valid arguments are 
+Valid arguments are
 
-=over 4 
+=over 4
 
-=item * 
+=item *
 
 B<file>
 
 /path/to/file I<required>
 
-=item * 
+=item *
 
-B<postid> 
+B<postid>
 
 String.
 
-=item * 
+=item *
 
-B<publish> 
+B<publish>
 
 Boolean.
 
 =back
 
-If a I<postid> argument is present, the method will call the Blogger API 
-I<editPost> method with postid. Otherwise the method will call the Blogger 
+If a I<postid> argument is present, the method will call the Blogger API
+I<editPost> method with postid. Otherwise the method will call the Blogger
 API I<newPost> method.
 
 Releases prior to Net::Blogger 0.85 accepted a list of arguments
 rather than a reference. Version 0.85+ are backwards compatible.
 
-Returns true or false, followed by an array of zero, or more, postids. 
+Returns true or false, followed by an array of zero, or more, postids.
 
 =cut
 
@@ -521,9 +525,9 @@ sub AUTOLOAD {
 =head2 The Atom API
 
 In January 2004, Blogger announced their support for the Atom
-API. 
+API.
 
-As of this writing (version 0.87) this package does B<not> 
+As of this writing (version 0.87) this package does B<not>
 support the Atom API. If you need to do things Atom-ish, your
 best bet is to use the L<XML::Atom> package.
 
@@ -534,24 +538,17 @@ content negotiation should not be surprised if they encounter
 weirdness and/or errors. Specifically, a HTTP 406 error.
 
 Some preliminary investigation suggests that, if there's a bug
-at play here, it's a bug somewhere deep in SOAP::Lite/HTTP::* 
-land. 
+at play here, it's a bug somewhere deep in SOAP::Lite/HTTP::*
+land.
 
 Patches are welcome. Otherwise, you've been warned. :-)
 
-See also : 
+See also :
 
-=head1 VERSION
+=head1 AUTHORS
 
-1.0
-
-=head1 DATE
-
-$Date: 2005/03/26 19:29:08 $
-
-=head1 AUTHOR
-
-Aaron Straup Cope
+    Originally authored by Aaron Straup Cope
+    Adopted by Christopher H. Laco
 
 =head1 SEE ALSO
 
@@ -567,11 +564,16 @@ Hopefully, few. Please reports all bugs to :
 
  http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Net::Blogger
 
+=head1 SOURCE
+
+You can get the latest version of the source code from the Subversion repository
+at http://handelframework.com/svn/CPAN/Net-Blogger/
+
 =head1 LICENSE
 
 Copyright (c) 2001-2005 Aaron Straup Cope.
 
-This is free software, you may use it and distribute it under 
+This is free software, you may use it and distribute it under
 the same terms as Perl itself.
 
 =cut

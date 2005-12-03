@@ -15,6 +15,10 @@ lib/Net/Blogger/Engine/Userland.pm
 lib/Net/Blogger/Engine/Userland/metaWeblog.pm
 Makefile.PL
 MANIFEST
+MANIFEST.SKIP
+META.yml
 README
-t/00-basic.t
-
+t/basic.t
+t/pod_syntax.t
+t/pod_coverage.t
+t/pod_spelling.t

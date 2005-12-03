@@ -53,6 +53,16 @@ sub Proxy {
 	  );
 }
 
+=head1 OBJECT METHODS
+
+=head2 $pkg->Proxy()
+
+Return the URI of the Slashcode XML-RPC proxy
+
+=head2 $pkg->Transport
+
+Just returns SOAP by default
+
 =head1 SLASHCODE SOAP METHODS
 
 =head2 $pkg->add_entry(\%args)
@@ -245,7 +255,7 @@ Add full support for arguments that may be passed to I<add_entry> and I<modify_e
 
 =back
 
-=head1 SEE ALSO 
+=head1 SEE ALSO
 
 L<Net::Blogger::Engine::Slash>
 
