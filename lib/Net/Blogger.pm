@@ -98,7 +98,7 @@ use strict;
 
 use vars qw ( $AUTOLOAD $LAST_ERROR );
 
-$Net::Blogger::VERSION   = '1.01';
+$Net::Blogger::VERSION   = '1.02';
 
 =head1 PACKAGE METHODS
 

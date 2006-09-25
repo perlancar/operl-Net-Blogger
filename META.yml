@@ -1,26 +1,29 @@
 ---
 name: Net-Blogger
-version: 1.01
-author: ~
+version: 1.02
+author:
+  - 'Christopher H. Laco <claco@chrislaco.com>'
 abstract: |-
   an OOP-ish interface for accessing a weblog via
   the Blogger XML-RPC API.
 license: perl
+resources:
+  license: http://dev.perl.org/licenses/
 requires:
-  CGI: >= 0
-  Carp: >= 0
-  Digest::MD5: >= 0
-  Error: >= 0
-  HTTP::Cookies: >= 0
-  SOAP::Lite: >= 0.55
-  URI: >= 0
+  CGI: '>= 0'
+  Carp: '>= 0'
+  Digest::MD5: '>= 0'
+  Error: '>= 0'
+  HTTP::Cookies: '>= 0'
+  SOAP::Lite: '>= 0.55'
+  URI: '>= 0'
 build_requires:
-  Term::ReadKey: >= 0
-  Test::Simple: >= 0.47
+  Term::ReadKey: '>= 0'
+  Test::Simple: '>= 0.47'
 provides:
   Net::Blogger:
     file: lib/Net/Blogger.pm
-    version: 1.01
+    version: 1.02
   Net::Blogger::API::Core:
     file: lib/Net/Blogger/API/Core.pm
     version: 1.0
@@ -57,4 +60,7 @@ provides:
   Net::Blogger::Engine::Userland::metaWeblog:
     file: lib/Net/Blogger/Engine/Userland/metaWeblog.pm
     version: 1.0
-generated_by: Module::Build version 0.26
+generated_by: Module::Build version 0.28
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.2.html
+  version: 1.2
