@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Net::Blogger - an OOP-ish interface for accessing a weblog via
+Net::Blogger - (DEPRECATED) an OOP-ish interface for accessing a weblog via
 the Blogger XML-RPC API.
 
 =head1 SYNOPSIS
@@ -56,6 +56,10 @@ the Blogger XML-RPC API.
  print "Text for last post was $post->{'content'}\n";
 
 =head1 DESCRIPTION
+
+B<DEPRECATION NOTICE.> This module no longer works and is deprecated. In fact,
+as of this writing (2020-10-19), none of the CPAN modules for Blogger (including
+WebService::Blogger) currently work.
 
 Blogger.pm provides an OOP-ish interface for accessing a weblog
 via the Blogger XML-RPC API.
